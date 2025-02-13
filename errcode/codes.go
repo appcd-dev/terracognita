@@ -26,5 +26,5 @@ var (
 	// using its APIs (authorization error, unavailable operation, ...)
 	ErrProviderAPI = errors.New("error while requesting the provider APIs")
 
-	ErrAccessDenied = errors.New("accessDenied")
+	ErrAccessDenied = errors.New("AccessDenied")
 )
