@@ -25,4 +25,6 @@ var (
 	// ErrProviderAPI will be raised when an error occurs provider side while
 	// using its APIs (authorization error, unavailable operation, ...)
 	ErrProviderAPI = errors.New("error while requesting the provider APIs")
+
+	ErrAccessDenied = errors.New("accessDenied")
 )

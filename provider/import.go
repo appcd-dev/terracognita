@@ -91,6 +91,9 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 				// the import but we print the error.
 				if errors.Is(err, errcode.ErrProviderAPI) {
 					logger.Log("msg", fmt.Sprintf("unable to import resource %s: %s\n", t, err.Error()))
+				} else if errors.Is(err, errcode.ErrAccessDenied) {
+					// skip access denied errors, since we might not have access to all resources when trying to import based on tags
+					logger.Log("msg", fmt.Sprintf("unable to import resource, access denied %s: %s\n", t, err.Error()))
 				} else {
 					return errors.WithStack(err)
 				}
