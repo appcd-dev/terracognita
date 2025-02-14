@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"regexp"
 
+	"github.com/aws/smithy-go"
 	"github.com/cycloidio/terracognita/aws/reader"
 	"github.com/cycloidio/terracognita/cache"
 	"github.com/cycloidio/terracognita/errcode"
@@ -102,12 +103,13 @@ func (a *aws) Resources(ctx context.Context, t string, f *filter.Filter) ([]prov
 	if err != nil {
 		// we filter the error from AWS and return a custom error
 		// type if it's an error that we want to skip
-		//TODO(sks): Re-enable this when we have the error codes
-		// if reqErr, ok := err.(awserr.Error); ok {
-		// 	if _, ok := skippableCodes[reqErr.Code()]; ok {
-		// 		return nil, fmt.Errorf("%w: %v", errcode.ErrProviderAPI, reqErr)
-		// 	}
-		// }
+		var apiErr smithy.APIError
+		if errors.As(err, &apiErr) {
+			if _, ok := skippableCodes[apiErr.ErrorCode()]; ok {
+				return nil, fmt.Errorf("%w: %v", errcode.ErrProviderAPI, apiErr)
+			}
+		}
+
 		return nil, errors.Wrapf(err, "error while reading from resource %q", t)
 	}
 
