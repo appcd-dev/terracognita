@@ -9,8 +9,8 @@ require (
 	github.com/Azure/go-autorest/autorest v0.11.27
 	github.com/adrg/xdg v0.2.3
 	github.com/aws/aws-sdk-go-v2 v1.36.1
-	github.com/aws/aws-sdk-go-v2/config v1.15.0
-	github.com/aws/aws-sdk-go-v2/credentials v1.10.0
+	github.com/aws/aws-sdk-go-v2/config v1.29.6
+	github.com/aws/aws-sdk-go-v2/credentials v1.17.59
 	github.com/aws/aws-sdk-go-v2/service/apigateway v1.28.11
 	github.com/aws/aws-sdk-go-v2/service/athena v1.49.10
 	github.com/aws/aws-sdk-go-v2/service/autoscaling v1.51.12
@@ -35,7 +35,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/emr v1.47.12
 	github.com/aws/aws-sdk-go-v2/service/fsx v1.52.0
 	github.com/aws/aws-sdk-go-v2/service/glue v1.105.9
-	github.com/aws/aws-sdk-go-v2/service/iam v1.18.0
+	github.com/aws/aws-sdk-go-v2/service/iam v1.39.1
 	github.com/aws/aws-sdk-go-v2/service/kinesis v1.32.18
 	github.com/aws/aws-sdk-go-v2/service/lambda v1.69.12
 	github.com/aws/aws-sdk-go-v2/service/lightsail v1.42.15
@@ -50,7 +50,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ses v1.29.10
 	github.com/aws/aws-sdk-go-v2/service/sqs v1.37.14
 	github.com/aws/aws-sdk-go-v2/service/storagegateway v1.35.0
-	github.com/aws/aws-sdk-go-v2/service/sts v1.16.0
+	github.com/aws/aws-sdk-go-v2/service/sts v1.33.14
 	github.com/chr4/pwgen v1.1.0
 	github.com/cycloidio/mxwriter v1.0.4
 	github.com/cycloidio/tfdocs v0.0.0-20230516095646-1dc8f8412d50
@@ -101,18 +101,19 @@ require (
 	github.com/apparentlymart/go-versions v1.0.1 // indirect
 	github.com/aws/aws-sdk-go v1.43.34 // indirect
 	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.6.8 // indirect
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.12.0 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.16.28 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.32 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.6.32 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/ini v1.3.7 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/ini v1.8.2 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/v4a v1.3.32 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.12.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/checksum v1.6.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.10.13 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.12.13 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/s3shared v1.18.13 // indirect
-	github.com/aws/aws-sdk-go-v2/service/route53domains v1.12.3 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.11.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/route53domains v1.28.9 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.24.15 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.28.14 // indirect
 	github.com/aws/smithy-go v1.22.2 // indirect
 	github.com/beevik/etree v1.1.0 // indirect
 	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d // indirect
