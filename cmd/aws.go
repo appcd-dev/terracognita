@@ -3,8 +3,7 @@ package cmd
 import (
 	"context"
 
-	"github.com/aws/aws-sdk-go/aws/awserr"
-	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go-v2/config"
 	kitlog "github.com/go-kit/kit/log"
 
 	"github.com/cycloidio/terracognita/aws"
@@ -49,7 +48,7 @@ var (
 			logger := log.Get()
 			logger = kitlog.With(logger, "func", "cmd.aws.RunE")
 
-			loadAWSCredentials()
+			loadAWSCredentials(cmd.Context())
 
 			// Validate required flags
 			if err := requiredStringFlags("access-key", "secret-key", "region"); err != nil {
@@ -95,23 +94,17 @@ func init() {
 
 // loadAWSCredentials will first read from ENV and if AccessKey and SecretAccessKey are not found (both of them)
 // will fallback to the SharedCredentials with the profile
-func loadAWSCredentials() error {
-	creds := credentials.NewCredentials(&credentials.ChainProvider{
-		Providers: []credentials.Provider{
-			&credentials.EnvProvider{},
-			&credentials.SharedCredentialsProvider{Filename: viper.GetString("aws-shared-credentials-file"), Profile: viper.GetString("aws-profile")},
-		},
-	})
-
-	value, err := creds.Get()
+func loadAWSCredentials(ctx context.Context) error {
+	cfg, err := config.LoadDefaultConfig(ctx,
+		config.WithSharedConfigProfile(viper.GetString("aws-profile")),
+		config.WithSharedCredentialsFiles([]string{viper.GetString("aws-shared-credentials-file")}),
+	)
 	if err != nil {
-		// The NoCredentialProviders is an error returned by Get to identify that none
-		// of the Providers (credentials.EnvProvider and credentials.SharedCredentialsProvider)
-		// did find any information.
-		// So we escape it means nothing was found by AWS
-		if awsE, ok := err.(awserr.Error); ok && awsE.Code() == "NoCredentialProviders" {
-			return nil
-		}
+		return err
+	}
+
+	creds, err := cfg.Credentials.Retrieve(context.TODO())
+	if err != nil {
 		return err
 	}
 
@@ -119,15 +112,15 @@ func loadAWSCredentials() error {
 	// it'll not be override as they
 	// are more relevant
 	if !viper.IsSet("access-key") {
-		viper.Set("access-key", value.AccessKeyID)
+		viper.Set("access-key", creds.AccessKeyID)
 	}
 
 	if !viper.IsSet("secret-key") {
-		viper.Set("secret-key", value.SecretAccessKey)
+		viper.Set("secret-key", creds.SecretAccessKey)
 	}
 
 	if !viper.IsSet("session-token") {
-		viper.Set("session-token", value.SessionToken)
+		viper.Set("session-token", creds.SessionToken)
 	}
 
 	return nil

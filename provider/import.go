@@ -12,7 +12,6 @@ import (
 	"github.com/cycloidio/terracognita/filter"
 	"github.com/cycloidio/terracognita/interpolator"
 	"github.com/cycloidio/terracognita/log"
-	"github.com/cycloidio/terracognita/util"
 	"github.com/cycloidio/terracognita/writer"
 	"github.com/pkg/errors"
 )
@@ -123,7 +122,7 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 			// we create a new slice with those elements and iterate
 			// over it
 			for _, r := range append([]Resource{re}, res...) {
-				err = util.RetryDefault(func() error { return r.Read(f) })
+				err = r.Read(f)
 				if err != nil {
 					// Errors are ignored. If a resource is invalid we assume it can be skipped, it can be related to inconsistencies in deployed resources.
 					// So instead of failing and stopping execution we ignore them and continue (we log them if -v is specified)

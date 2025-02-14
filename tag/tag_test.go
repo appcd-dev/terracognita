@@ -3,10 +3,10 @@ package tag_test
 import (
 	"testing"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/service/ec2"
-	"github.com/aws/aws-sdk-go/service/neptune"
-	"github.com/aws/aws-sdk-go/service/rds"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	ec2types "github.com/aws/aws-sdk-go-v2/service/ec2/types"
+	neptunetypes "github.com/aws/aws-sdk-go-v2/service/neptune/types"
+	rdstypes "github.com/aws/aws-sdk-go-v2/service/rds/types"
 	"github.com/cycloidio/terracognita/errcode"
 	"github.com/cycloidio/terracognita/tag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,9 +17,9 @@ import (
 func TestToEC2Filer(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {
 		tt := tag.Tag{Name: "tag-name", Value: "tag-value"}
-		assert.Equal(t, &ec2.Filter{
+		assert.Equal(t, &ec2types.Filter{
 			Name:   aws.String("tag:tag-name"),
-			Values: []*string{aws.String("tag-value")},
+			Values: []string{"tag-value"},
 		}, tt.ToEC2Filter())
 	})
 }
@@ -27,9 +27,9 @@ func TestToEC2Filer(t *testing.T) {
 func TestToNeptuneFiler(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {
 		tt := tag.Tag{Name: "tag-name", Value: "tag-value"}
-		assert.Equal(t, &neptune.Filter{
+		assert.Equal(t, &neptunetypes.Filter{
 			Name:   aws.String("tag:tag-name"),
-			Values: []*string{aws.String("tag-value")},
+			Values: []string{"tag-value"},
 		}, tt.ToNeptuneFilter())
 	})
 }
@@ -37,9 +37,9 @@ func TestToNeptuneFiler(t *testing.T) {
 func TestToRDSFiler(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {
 		tt := tag.Tag{Name: "tag-name", Value: "tag-value"}
-		assert.Equal(t, &rds.Filter{
+		assert.Equal(t, &rdstypes.Filter{
 			Name:   aws.String("tag:tag-name"),
-			Values: []*string{aws.String("tag-value")},
+			Values: []string{"tag-value"},
 		}, tt.ToRDSFilter())
 	})
 }
