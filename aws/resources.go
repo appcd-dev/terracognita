@@ -6,24 +6,24 @@ import (
 	"strconv"
 	"strings"
 
-	awsSDK "github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/service/apigateway"
-	"github.com/aws/aws-sdk-go/service/autoscaling"
-	"github.com/aws/aws-sdk-go/service/dax"
-	"github.com/aws/aws-sdk-go/service/ec2"
-	"github.com/aws/aws-sdk-go/service/ecs"
-	"github.com/aws/aws-sdk-go/service/eks"
-	"github.com/aws/aws-sdk-go/service/elasticsearchservice"
-	"github.com/aws/aws-sdk-go/service/elb"
-	"github.com/aws/aws-sdk-go/service/elbv2"
-	"github.com/aws/aws-sdk-go/service/glue"
-	"github.com/aws/aws-sdk-go/service/iam"
-	"github.com/aws/aws-sdk-go/service/lambda"
-	"github.com/aws/aws-sdk-go/service/mediastore"
-	"github.com/aws/aws-sdk-go/service/redshift"
-	"github.com/aws/aws-sdk-go/service/route53"
-	"github.com/aws/aws-sdk-go/service/ses"
-	"github.com/aws/aws-sdk-go/service/sqs"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/service/apigateway"
+	"github.com/aws/aws-sdk-go-v2/service/autoscaling"
+	"github.com/aws/aws-sdk-go-v2/service/dax"
+	"github.com/aws/aws-sdk-go-v2/service/ec2"
+	"github.com/aws/aws-sdk-go-v2/service/ecs"
+	"github.com/aws/aws-sdk-go-v2/service/eks"
+	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancing"
+	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2"
+	"github.com/aws/aws-sdk-go-v2/service/elasticsearchservice"
+	"github.com/aws/aws-sdk-go-v2/service/glue"
+	"github.com/aws/aws-sdk-go-v2/service/iam"
+	"github.com/aws/aws-sdk-go-v2/service/lambda"
+	"github.com/aws/aws-sdk-go-v2/service/mediastore"
+	"github.com/aws/aws-sdk-go-v2/service/redshift"
+	"github.com/aws/aws-sdk-go-v2/service/route53"
+	"github.com/aws/aws-sdk-go-v2/service/ses"
+	"github.com/aws/aws-sdk-go-v2/service/sqs"
 	"github.com/cycloidio/terracognita/filter"
 	"github.com/cycloidio/terracognita/provider"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
@@ -347,8 +347,8 @@ func albListenerCertificates(ctx context.Context, a *aws, resourceType string, f
 	resources := make([]provider.Resource, 0)
 	for _, l := range ALBListeners {
 
-		input := &elbv2.DescribeListenerCertificatesInput{
-			ListenerArn: awsSDK.String(l),
+		input := &elasticloadbalancingv2.DescribeListenerCertificatesInput{
+			ListenerArn: aws.String(l),
 		}
 
 		albListenerCertificates, err := a.awsr.GetListenerCertificates(ctx, input)
@@ -409,8 +409,8 @@ func albListenerRules(ctx context.Context, a *aws, resourceType string, filters 
 	resources := make([]provider.Resource, 0)
 	for _, l := range ALBListeners {
 
-		input := &elbv2.DescribeRulesInput{
-			ListenerArn: awsSDK.String(l),
+		input := &elasticloadbalancingv2.DescribeRulesInput{
+			ListenerArn: aws.String(l),
 		}
 
 		albListenerRules, err := a.awsr.GetLoadBalancersV2Rules(ctx, input)
@@ -443,8 +443,8 @@ func albListeners(ctx context.Context, a *aws, resourceType string, filters *fil
 	resources := make([]provider.Resource, 0)
 	for _, alb := range ALBArns {
 
-		input := &elbv2.DescribeListenersInput{
-			LoadBalancerArn: awsSDK.String(alb),
+		input := &elasticloadbalancingv2.DescribeListenersInput{
+			LoadBalancerArn: aws.String(alb),
 		}
 
 		albListeners, err := a.awsr.GetLoadBalancersV2Listeners(ctx, input)
@@ -496,7 +496,7 @@ func albTargetGroupAttachments(ctx context.Context, a *aws, resourceType string,
 	resources := make([]provider.Resource, 0)
 	for _, i := range albTargetGroups {
 
-		input := &elbv2.DescribeTargetHealthInput{
+		input := &elasticloadbalancingv2.DescribeTargetHealthInput{
 			TargetGroupArn: i.TargetGroupArn,
 		}
 
@@ -610,8 +610,8 @@ func apiGatewayDeployments(ctx context.Context, a *aws, resourceType string, fil
 	for _, rapi := range apiGatewayRestApis {
 
 		var input = &apigateway.GetDeploymentsInput{
-			RestApiId: awsSDK.String(rapi),
-			Limit:     awsSDK.Int64(500),
+			RestApiId: aws.String(rapi),
+			Limit:     aws.Int64(500),
 		}
 
 		apiGatewayDeployments, err := a.awsr.GetAPIGatewayDeployments(ctx, input)
@@ -663,8 +663,8 @@ func apiGatewayResources(ctx context.Context, a *aws, resourceType string, filte
 	for _, rapi := range apiGatewayRestApis {
 
 		var input = &apigateway.GetResourcesInput{
-			RestApiId: awsSDK.String(rapi),
-			Limit:     awsSDK.Int64(500),
+			RestApiId: aws.String(rapi),
+			Limit:     aws.Int64(500),
 		}
 
 		apiGatewayResources, err := a.awsr.GetAPIGatewayResources(ctx, input)
@@ -686,7 +686,7 @@ func apiGatewayResources(ctx context.Context, a *aws, resourceType string, filte
 
 func apiGatewayRestApis(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	var input = &apigateway.GetRestApisInput{
-		Limit: awsSDK.Int64(500),
+		Limit: aws.Int64(500),
 	}
 	apiGatewayRestApis, err := a.awsr.GetAPIGatewayRestAPIs(ctx, input)
 
@@ -719,7 +719,7 @@ func apiGatewayStages(ctx context.Context, a *aws, resourceType string, filters 
 	for _, rapi := range apiGatewayRestApis {
 
 		var input = &apigateway.GetStagesInput{
-			RestApiId: awsSDK.String(rapi),
+			RestApiId: aws.String(rapi),
 		}
 
 		apiGatewayStages, err := a.awsr.GetAPIGatewayStages(ctx, input)
@@ -766,7 +766,7 @@ func athenaWorkgroups(ctx context.Context, a *aws, resourceType string, filters 
 
 func autoscalingGroups(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	var input = &autoscaling.DescribeAutoScalingGroupsInput{
-		MaxRecords: awsSDK.Int64(100),
+		MaxRecords: aws.Int64(100),
 	}
 	autoscalingGroups, err := a.awsr.GetAutoScalingGroups(ctx, input)
 
@@ -790,7 +790,7 @@ func autoscalingGroups(ctx context.Context, a *aws, resourceType string, filters
 
 func autoscalingPolicies(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	var input = &autoscaling.DescribePoliciesInput{
-		MaxRecords: awsSDK.Int64(100),
+		MaxRecords: aws.Int64(100),
 	}
 	autoscalingPolicies, err := a.awsr.GetAutoScalingPolicies(ctx, input)
 
@@ -814,7 +814,7 @@ func autoscalingPolicies(ctx context.Context, a *aws, resourceType string, filte
 
 func autoscalingSchedules(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	var input = &autoscaling.DescribeScheduledActionsInput{
-		MaxRecords: awsSDK.Int64(100),
+		MaxRecords: aws.Int64(100),
 	}
 	autoscalingSchedules, err := a.awsr.GetAutoScalingScheduledActions(ctx, input)
 
@@ -930,7 +930,7 @@ func cloudwatchMetricAlarms(ctx context.Context, a *aws, resourceType string, fi
 
 func daxClusters(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	var input = &dax.DescribeClustersInput{
-		MaxResults: awsSDK.Int64(100),
+		MaxResults: aws.Int64(100),
 	}
 	daxClusters, err := a.awsr.GetDAXClusters(ctx, input)
 	if err != nil {
@@ -1217,7 +1217,7 @@ func ecsServices(ctx context.Context, a *aws, resourceType string, filters *filt
 		// optimisation to get 100 by 100 instead of default 10
 		var input = &ecs.ListServicesInput{
 			Cluster:    &ca,
-			MaxResults: awsSDK.Int64(100),
+			MaxResults: aws.Int64(100),
 		}
 
 		ecsServicesArns, err := a.awsr.GetECSServicesArns(ctx, input)
@@ -1394,7 +1394,7 @@ func ec2TransitGatewayPrefixListReferences(ctx context.Context, a *aws, resource
 	resources := make([]provider.Resource, 0)
 	for _, tableID := range routeTablesIDs {
 		input := &ec2.GetTransitGatewayPrefixListReferencesInput{
-			TransitGatewayRouteTableId: awsSDK.String(tableID),
+			TransitGatewayRouteTableId: aws.String(tableID),
 		}
 		prefixListReferences, err := a.awsr.GetTransitGatewayPrefixListReference(ctx, input)
 		if err != nil {
@@ -1422,13 +1422,13 @@ func ec2TransitGatewayRoutes(ctx context.Context, a *aws, resourceType string, f
 	resources := make([]provider.Resource, 0)
 	for _, tableID := range routeTablesIDs {
 		input := &ec2.SearchTransitGatewayRoutesInput{
-			Filters: []*ec2.Filter{
-				&ec2.Filter{
-					Name:   awsSDK.String("type"),
-					Values: []*string{awsSDK.String(ec2.TransitGatewayRouteTypeStatic)},
+			Filters: []ec2types.Filter{
+				{
+					Name:   aws.String("type"),
+					Values: []string{ec2types.TransitGatewayRouteTypeStatic},
 				},
 			},
-			TransitGatewayRouteTableId: awsSDK.String(tableID),
+			TransitGatewayRouteTableId: aws.String(tableID),
 		}
 		routes, err := a.awsr.GetTransitGatewayRoutes(ctx, input)
 		if err != nil {
@@ -1456,7 +1456,7 @@ func ec2TransitGatewayRouteTableAssociations(ctx context.Context, a *aws, resour
 	resources := make([]provider.Resource, 0)
 	for _, tableID := range routeTablesIDs {
 		input := &ec2.GetTransitGatewayRouteTableAssociationsInput{
-			TransitGatewayRouteTableId: awsSDK.String(tableID),
+			TransitGatewayRouteTableId: aws.String(tableID),
 		}
 		associations, err := a.awsr.GetTransitGatewayRouteTableAssociations(ctx, input)
 		if err != nil {
@@ -1484,7 +1484,7 @@ func ec2TransitGatewayRouteTablePropagations(ctx context.Context, a *aws, resour
 	resources := make([]provider.Resource, 0)
 	for _, tableID := range routeTablesIDs {
 		input := &ec2.GetTransitGatewayRouteTablePropagationsInput{
-			TransitGatewayRouteTableId: awsSDK.String(tableID),
+			TransitGatewayRouteTableId: aws.String(tableID),
 		}
 		propagations, err := a.awsr.GetTransitGatewayRouteTablePropagations(ctx, input)
 		if err != nil {
@@ -1644,9 +1644,9 @@ func elasticsearchDomains(ctx context.Context, a *aws, resourceType string, filt
 		return nil, err
 	}
 
-	var names []*string
+	var names []string
 	for _, dn := range dnames {
-		names = append(names, dn.DomainName)
+		names = append(names, *dn.DomainName)
 	}
 
 	if len(names) == 0 {
@@ -1818,7 +1818,7 @@ func iamAccessKeys(ctx context.Context, a *aws, resourceType string, filters *fi
 
 	for _, un := range userNames {
 		// get access keys from a user
-		iamAccessKeys, err := a.awsr.GetAccessKeys(ctx, &iam.ListAccessKeysInput{UserName: awsSDK.String(un)})
+		iamAccessKeys, err := a.awsr.GetAccessKeys(ctx, &iam.ListAccessKeysInput{UserName: aws.String(un)})
 		if err != nil {
 			return nil, err
 		}
@@ -1876,7 +1876,7 @@ func iamGroupMemberships(ctx context.Context, a *aws, resourceType string, filte
 
 	for _, i := range groupNames {
 		input := &iam.GetGroupInput{
-			GroupName: awsSDK.String(i),
+			GroupName: aws.String(i),
 		}
 
 		// Check if group have users. If not do not keep it
@@ -1925,7 +1925,7 @@ func iamGroupPolicies(ctx context.Context, a *aws, resourceType string, filters 
 	resources := make([]provider.Resource, 0)
 	for _, gn := range groupNames {
 		input := &iam.ListGroupPoliciesInput{
-			GroupName: awsSDK.String(gn),
+			GroupName: aws.String(gn),
 		}
 		groupPolicies, err := a.awsr.GetGroupPolicies(ctx, input)
 		if err != nil {
@@ -1955,7 +1955,7 @@ func iamGroupPolicyAttachments(ctx context.Context, a *aws, resourceType string,
 	resources := make([]provider.Resource, 0)
 	for _, gn := range groupNames {
 		input := &iam.ListAttachedGroupPoliciesInput{
-			GroupName: awsSDK.String(gn),
+			GroupName: aws.String(gn),
 		}
 		groupPolicies, err := a.awsr.GetAttachedGroupPolicies(ctx, input)
 		if err != nil {
@@ -2030,7 +2030,7 @@ func iamOpenidConnectProviders(ctx context.Context, a *aws, resourceType string,
 
 func iamPolicies(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	input := &iam.ListPoliciesInput{
-		Scope: awsSDK.String("Local"),
+		Scope: "Local",
 	}
 	policies, err := a.awsr.GetPolicies(ctx, input)
 	if err != nil {
@@ -2058,7 +2058,7 @@ func iamRolePolicies(ctx context.Context, a *aws, resourceType string, filters *
 	resources := make([]provider.Resource, 0)
 	for _, rn := range roleNames {
 		input := &iam.ListRolePoliciesInput{
-			RoleName: awsSDK.String(rn),
+			RoleName: aws.String(rn),
 		}
 		rolePolicies, err := a.awsr.GetRolePolicies(ctx, input)
 		if err != nil {
@@ -2086,7 +2086,7 @@ func iamRolePolicyAttachments(ctx context.Context, a *aws, resourceType string, 
 	resources := make([]provider.Resource, 0)
 	for _, rn := range roleNames {
 		input := &iam.ListAttachedRolePoliciesInput{
-			RoleName: awsSDK.String(rn),
+			RoleName: aws.String(rn),
 		}
 		rolePolicies, err := a.awsr.GetAttachedRolePolicies(ctx, input)
 		if err != nil {
@@ -2173,7 +2173,7 @@ func iamUserGroupMemberships(ctx context.Context, a *aws, resourceType string, f
 
 	for _, un := range userNames {
 		var input = &iam.ListGroupsForUserInput{
-			UserName: awsSDK.String(un),
+			UserName: aws.String(un),
 		}
 
 		groups, err := a.awsr.GetGroupsForUser(ctx, input)
@@ -2211,7 +2211,7 @@ func iamUserPolicies(ctx context.Context, a *aws, resourceType string, filters *
 	resources := make([]provider.Resource, 0)
 	for _, un := range userNames {
 		input := &iam.ListUserPoliciesInput{
-			UserName: awsSDK.String(un),
+			UserName: aws.String(un),
 		}
 		userPolicies, err := a.awsr.GetUserPolicies(ctx, input)
 		if err != nil {
@@ -2239,7 +2239,7 @@ func iamUserPolicyAttachments(ctx context.Context, a *aws, resourceType string, 
 	resources := make([]provider.Resource, 0)
 	for _, un := range userNames {
 		input := &iam.ListAttachedUserPoliciesInput{
-			UserName: awsSDK.String(un),
+			UserName: aws.String(un),
 		}
 		userPolicies, err := a.awsr.GetAttachedUserPolicies(ctx, input)
 		if err != nil {
@@ -2286,7 +2286,7 @@ func iamUserSSHKeys(ctx context.Context, a *aws, resourceType string, filters *f
 	resources := make([]provider.Resource, 0)
 	for _, un := range userNames {
 		// get ssh pub Keys from a user
-		sshPublicKeys, err := a.awsr.GetSSHPublicKeys(ctx, &iam.ListSSHPublicKeysInput{UserName: awsSDK.String(un)})
+		sshPublicKeys, err := a.awsr.GetSSHPublicKeys(ctx, &iam.ListSSHPublicKeysInput{UserName: aws.String(un)})
 		if err != nil {
 			return nil, err
 		}
@@ -2308,7 +2308,7 @@ func iamUserSSHKeys(ctx context.Context, a *aws, resourceType string, filters *f
 func instances(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	var input = &ec2.DescribeInstancesInput{
 		Filters:    toEC2Filters(filters),
-		MaxResults: awsSDK.Int64(1000),
+		MaxResults: aws.Int64(1000),
 	}
 
 	instances, err := a.awsr.GetInstances(ctx, input)
@@ -2394,7 +2394,7 @@ func kinesisStreams(ctx context.Context, a *aws, resourceType string, filters *f
 
 func lambdaFunctions(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	var input = &lambda.ListFunctionsInput{
-		MaxItems: awsSDK.Int64(50),
+		MaxItems: aws.Int64(50),
 	}
 
 	lambdaFunctions, err := a.awsr.GetLambdaFunctions(ctx, input)
@@ -2417,7 +2417,7 @@ func lambdaFunctions(ctx context.Context, a *aws, resourceType string, filters *
 
 func launchConfigurations(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	var input = &autoscaling.DescribeLaunchConfigurationsInput{
-		MaxRecords: awsSDK.Int64(100),
+		MaxRecords: aws.Int64(100),
 	}
 	launchConfigurations, err := a.awsr.GetLaunchConfigurations(ctx, input)
 	if err != nil {
@@ -2440,7 +2440,7 @@ func launchConfigurations(ctx context.Context, a *aws, resourceType string, filt
 func launchTemplates(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	var input = &ec2.DescribeLaunchTemplatesInput{
 		Filters:    toEC2Filters(filters),
-		MaxResults: awsSDK.Int64(200),
+		MaxResults: aws.Int64(200),
 	}
 
 	launchTemplates, err := a.awsr.GetLaunchTemplates(ctx, input)
@@ -2471,7 +2471,7 @@ func lbCookieStickinessPolicies(ctx context.Context, a *aws, resourceType string
 	resources := make([]provider.Resource, 0)
 	for _, l := range lbs {
 		for _, listener := range l.ListenerDescriptions {
-			input := &elb.DescribeLoadBalancerPoliciesInput{
+			input := &elasticloadbalancing.DescribeLoadBalancerPoliciesInput{
 				LoadBalancerName: l.LoadBalancerName,
 				PolicyNames:      listener.PolicyNames,
 			}
@@ -2545,7 +2545,7 @@ func lightsailInstances(ctx context.Context, a *aws, resourceType string, filter
 
 func mediaStoreContainers(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	var input = &mediastore.ListContainersInput{
-		MaxResults: awsSDK.Int64(100),
+		MaxResults: aws.Int64(100),
 	}
 	mediaStoreContainers, err := a.awsr.GetMediastoreContainers(ctx, input)
 	if err != nil {
@@ -2751,7 +2751,7 @@ func route53Records(ctx context.Context, a *aws, resourceType string, filters *f
 	resources := make([]provider.Resource, 0)
 	for _, z := range zones {
 		input := &route53.ListResourceRecordSetsInput{
-			HostedZoneId: awsSDK.String(z),
+			HostedZoneId: aws.String(z),
 		}
 		r53Records, err := a.awsr.GetResourceRecordSets(ctx, input)
 		if err != nil {
@@ -2819,7 +2819,7 @@ func route53ZoneAssociations(ctx context.Context, a *aws, resourceType string, f
 	resources := make([]provider.Resource, 0)
 	for _, z := range zones {
 		input := &route53.ListVPCAssociationAuthorizationsInput{
-			HostedZoneId: awsSDK.String(z),
+			HostedZoneId: aws.String(z),
 		}
 		r53ZoneAssociations, err := a.awsr.GetVPCAssociationAuthorizations(ctx, input)
 		if err != nil {
@@ -2972,7 +2972,7 @@ func sesDomainGeneral(ctx context.Context, a *aws, resourceType string, filters 
 
 func sesDomainIdentities(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	var input = &ses.ListIdentitiesInput{
-		MaxItems: awsSDK.Int64(1000),
+		MaxItems: aws.Int64(1000),
 	}
 	sesDomainIdentities, err := a.awsr.GetIdentities(ctx, input)
 	if err != nil {
@@ -3003,7 +3003,7 @@ func sesIdentityNotificationTopics(ctx context.Context, a *aws, resourceType str
 		// but then we would not not which NotificationAttributes
 		// is of each identity so we have to do it one by one
 		input := &ses.GetIdentityNotificationAttributesInput{
-			Identities: []*string{&d},
+			Identities: []string{d},
 		}
 
 		sesIdentityNotificationTopics, err := a.awsr.GetIdentityNotificationAttributes(ctx, input)
@@ -3116,7 +3116,7 @@ func sesTemplates(ctx context.Context, a *aws, resourceType string, filters *fil
 
 func sqsQueues(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	var input = &sqs.ListQueuesInput{
-		MaxResults: awsSDK.Int64(1000),
+		MaxResults: aws.Int64(1000),
 	}
 
 	sqsQueues, err := a.awsr.GetSQSQueues(ctx, input)
@@ -3255,7 +3255,7 @@ func vpcs(ctx context.Context, a *aws, resourceType string, filters *filter.Filt
 func vpcEndpoints(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	var input = &ec2.DescribeVpcEndpointsInput{
 		Filters:    toEC2Filters(filters),
-		MaxResults: awsSDK.Int64(1000),
+		MaxResults: aws.Int64(1000),
 	}
 
 	vpcsedp, err := a.awsr.GetVpcEndpoints(ctx, input)
@@ -3297,12 +3297,12 @@ func vpnGateways(ctx context.Context, a *aws, resourceType string, filters *filt
 	return resources, nil
 }
 
-func toEC2Filters(filters *filter.Filter) []*ec2.Filter {
+func toEC2Filters(filters *filter.Filter) []ec2types.Filter {
 	tags := filters.Tags
 	if len(tags) == 0 {
 		return nil
 	}
-	filtersEc2 := make([]*ec2.Filter, 0, len(tags))
+	filtersEc2 := make([]ec2types.Filter, 0, len(tags))
 
 	for _, t := range tags {
 		filtersEc2 = append(filtersEc2, t.ToEC2Filter())
@@ -3311,16 +3311,16 @@ func toEC2Filters(filters *filter.Filter) []*ec2.Filter {
 	return filtersEc2
 }
 
-func toRedshiftTag(filters *filter.Filter) ([]*string, []*string) {
+func toRedshiftTag(filters *filter.Filter) ([]string, []string) {
 	tags := filters.Tags
 	if len(tags) == 0 {
 		return nil, nil
 	}
-	filtersRedshiftTagKey := make([]*string, 0, len(tags))
-	filtersRedshiftTagValue := make([]*string, 0, len(tags))
+	filtersRedshiftTagKey := make([]string, 0, len(tags))
+	filtersRedshiftTagValue := make([]string, 0, len(tags))
 	for _, t := range tags {
-		filtersRedshiftTagKey = append(filtersRedshiftTagKey, &t.Name)
-		filtersRedshiftTagValue = append(filtersRedshiftTagValue, &t.Value)
+		filtersRedshiftTagKey = append(filtersRedshiftTagKey, t.Name)
+		filtersRedshiftTagValue = append(filtersRedshiftTagValue, t.Value)
 	}
 	return filtersRedshiftTagKey, filtersRedshiftTagValue
 }
