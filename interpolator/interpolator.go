@@ -110,7 +110,7 @@ func (i *Interpolator) Interpolate(k, v string) (string, bool) {
 // match it wit the attribute `.id`
 func (i *Interpolator) checkAttributes(sk []string, v string, ngi int, ng string, rns map[string]map[string]string) string {
 	for rn, attrs := range rns {
-		att := strings.Join(sk[(len(sk)-(ngi)):], "_")
+		att := strings.Join(sk[(len(sk)-(ngi)):len(sk)], "_")
 		if av, ok := attrs[att]; ok && strings.ToLower(av) == strings.ToLower(v) {
 			return fmt.Sprintf("${%s.%s.%s}", fmt.Sprintf("%s_%s", i.provider, ng), rn, att)
 		}
