@@ -4,9 +4,12 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"runtime"
 	"strings"
+	"sync"
 
 	kitlog "github.com/go-kit/kit/log"
+	"golang.org/x/sync/errgroup"
 
 	"github.com/cycloidio/terracognita/errcode"
 	"github.com/cycloidio/terracognita/filter"
@@ -101,70 +104,84 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 		}
 
 		resourceLen := len(resources)
+		errGroup, ctx := errgroup.WithContext(ctx)
+		errGroup.SetLimit(runtime.NumCPU())
+		lock := sync.Mutex{}
 		for i, re := range resources {
 			logger := kitlog.With(logger, "id", re.ID(), "total", resourceLen, "current", i+1)
 			fmt.Fprintf(out, "\rScanning %s [%d/%d]", t, i+1, resourceLen)
 
 			logger.Log("msg", "reading from TF")
-			res, err := re.ImportState(ctx)
-			if err != nil {
-				return err
-			}
-
-			// If the InstanceState is nil after the ImportState it
-			// means that nothing was imported (potentially is not even Importable)
-			// so we have to skip the resource
-			if re.InstanceState() == nil {
-				continue
-			}
-
-			// In case there is more than one State to import
-			// we create a new slice with those elements and iterate
-			// over it
-			for _, r := range append([]Resource{re}, res...) {
-				err = r.Read(ctx, f)
+			errGroup.Go(func() error {
+				res, err := re.ImportState(ctx)
 				if err != nil {
-					// Errors are ignored. If a resource is invalid we assume it can be skipped, it can be related to inconsistencies in deployed resources.
-					// So instead of failing and stopping execution we ignore them and continue (we log them if -v is specified)
-
-					logger.Log("error", err)
-
-					continue
+					return err
 				}
 
-				if hcl != nil {
-					logger.Log("msg", "calculating HCL")
-					err = r.HCL(hcl)
-					if err != nil {
-						return errors.Wrapf(err, "error while calculating the Config of resource %q", t)
-					}
+				// If the InstanceState is nil after the ImportState it
+				// means that nothing was imported (potentially is not even Importable)
+				// so we have to skip the resource
+				if re.InstanceState() == nil {
+					return nil
 				}
 
-				if tfstate != nil {
-					logger.Log("msg", "calculating TFState")
-					err = r.State(tfstate)
+				// In case there is more than one State to import
+				// we create a new slice with those elements and iterate
+				// over it
+				for _, r := range append([]Resource{re}, res...) {
+					err = r.Read(ctx, f)
 					if err != nil {
-						return errors.Wrapf(err, "error while calculating the satate of resource %q", t)
-					}
-				}
-				state := r.InstanceState()
+						// Errors are ignored. If a resource is invalid we assume it can be skipped, it can be related to inconsistencies in deployed resources.
+						// So instead of failing and stopping execution we ignore them and continue (we log them if -v is specified)
 
-				if state != nil {
-					attributes, err := re.AttributesReference()
-					if err != nil {
-						return errors.Wrapf(err, "unable to fetch attributes of resource")
+						logger.Log("error", err)
+
+						continue
 					}
-					attrs := make(map[string]string)
-					for _, attribute := range attributes {
-						value, ok := state.Attributes[attribute]
-						if !ok || len(value) == 0 {
-							continue
+
+					if hcl != nil {
+						logger.Log("msg", "calculating HCL")
+						err = r.HCL(hcl)
+						if err != nil {
+							return errors.Wrapf(err, "error while calculating the Config of resource %q", t)
 						}
-						attrs[attribute] = value
 					}
-					interpolation.AddResourceAttributes(fmt.Sprintf("%s.%s", r.Type(), r.Name()), attrs)
+
+					if tfstate != nil {
+						logger.Log("msg", "calculating TFState")
+						lock.Lock()
+						err = r.State(tfstate)
+						lock.Unlock()
+						if err != nil {
+							return errors.Wrapf(err, "error while calculating the satate of resource %q", t)
+						}
+					}
+					state := r.InstanceState()
+
+					if state != nil {
+						attributes, err := re.AttributesReference()
+						if err != nil {
+							return errors.Wrapf(err, "unable to fetch attributes of resource")
+						}
+						attrs := make(map[string]string)
+						for _, attribute := range attributes {
+							value, ok := state.Attributes[attribute]
+							if !ok || len(value) == 0 {
+								continue
+							}
+							attrs[attribute] = value
+						}
+						lock.Lock()
+						interpolation.AddResourceAttributes(fmt.Sprintf("%s.%s", r.Type(), r.Name()), attrs)
+						lock.Unlock()
+					}
 				}
-			}
+				return nil
+			})
+		}
+		err := errGroup.Wait()
+		if err != nil {
+			return errors.Wrapf(err, "error while reading the resources")
 		}
 		if resourceLen > 0 {
 			fmt.Fprintf(out, "\rScanning %s [%d/%d] Done!\n", t, resourceLen, resourceLen)
