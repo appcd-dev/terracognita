@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
@@ -59,7 +58,7 @@ var (
 			// will be initialized and structured logs will be used
 			// and if 'd' it's defined TF_LOG will be used too
 			if viper.GetBool("verbose") || viper.GetBool("debug") {
-				logsOut = ioutil.Discard
+				logsOut = io.Discard
 				w := io.MultiWriter(os.Stdout, logFile)
 				log.Init(w, viper.GetBool("debug"))
 			} else {
@@ -258,7 +257,7 @@ func getWriterOptions() (*writer.Options, error) {
 		module = filepath.Base(m)
 
 		if pmv := viper.GetString("module-variables"); pmv != "" {
-			b, err := ioutil.ReadFile(pmv)
+			b, err := os.ReadFile(pmv)
 			if err != nil {
 				return nil, fmt.Errorf("could not ReadFile on path %q: %w", pmv, err)
 			}

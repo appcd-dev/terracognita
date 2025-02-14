@@ -32,16 +32,16 @@ help: Makefile ## This help dialog
 	done
 
 $(MOCKGEN):
-	@go get -u github.com/golang/mock/mockgen
+	go install github.com/golang/mock/mockgen
 
 $(GOIMPORTS):
-	@go get -u golang.org/x/tools/cmd/goimports
+	@go install golang.org/x/tools/cmd/goimports
 
 $(ENUMER):
-	@go get -u github.com/dmarkham/enumer
+	@go install github.com/dmarkham/enumer
 
 $(GOLINT):
-	@go get -u golang.org/x/lint/golint
+	@go install golang.org/x/lint/golint
 
 .PHONY: lint
 lint: $(GOLINT) $(GOIMPORTS) ## Runs the linter

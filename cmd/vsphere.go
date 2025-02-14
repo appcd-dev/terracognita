@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"context"
-
 	kitlog "github.com/go-kit/kit/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -38,10 +36,8 @@ var (
 				return err
 			}
 
-			ctx := context.Background()
-
 			vsphereProvider, err := vsphere.NewProvider(
-				ctx,
+				cmd.Context(),
 				viper.GetString("soap-url"),
 				viper.GetString("username"),
 				viper.GetString("password"),
@@ -52,7 +48,7 @@ var (
 				return err
 			}
 
-			err = importProvider(ctx, logger, vsphereProvider, noTags)
+			err = importProvider(cmd.Context(), logger, vsphereProvider, noTags)
 			if err != nil {
 				return err
 			}

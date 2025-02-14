@@ -4,9 +4,12 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"runtime"
 	"strings"
+	"sync"
 
 	kitlog "github.com/go-kit/kit/log"
+	"golang.org/x/sync/errgroup"
 
 	"github.com/cycloidio/terracognita/errcode"
 	"github.com/cycloidio/terracognita/filter"
@@ -15,6 +18,81 @@ import (
 	"github.com/cycloidio/terracognita/writer"
 	"github.com/pkg/errors"
 )
+
+func readResource(ctx context.Context,
+	re Resource,
+	t string,
+	hcl, tfstate writer.Writer,
+	interpolation *interpolator.Interpolator,
+	lock *sync.Mutex,
+	f *filter.Filter,
+	logger kitlog.Logger,
+) error {
+	res, err := re.ImportState(ctx)
+	if err != nil {
+		return err
+	}
+
+	// If the InstanceState is nil after the ImportState it
+	// means that nothing was imported (potentially is not even Importable)
+	// so we have to skip the resource
+	if re.InstanceState() == nil {
+		return nil
+	}
+
+	// In case there is more than one State to import
+	// we create a new slice with those elements and iterate
+	// over it
+	for _, r := range append([]Resource{re}, res...) {
+		err = r.Read(ctx, f)
+		if err != nil {
+			// Errors are ignored. If a resource is invalid we assume it can be skipped, it can be related to inconsistencies in deployed resources.
+			// So instead of failing and stopping execution we ignore them and continue (we log them if -v is specified)
+
+			logger.Log("error", err)
+
+			continue
+		}
+
+		if hcl != nil {
+			logger.Log("msg", "calculating HCL")
+			err = r.HCL(hcl)
+			if err != nil {
+				return errors.Wrapf(err, "error while calculating the Config of resource %q", t)
+			}
+		}
+
+		if tfstate != nil {
+			logger.Log("msg", "calculating TFState")
+			lock.Lock()
+			err = r.State(tfstate)
+			lock.Unlock()
+			if err != nil {
+				return errors.Wrapf(err, "error while calculating the satate of resource %q", t)
+			}
+		}
+		state := r.InstanceState()
+
+		if state != nil {
+			attributes, err := re.AttributesReference()
+			if err != nil {
+				return errors.Wrapf(err, "unable to fetch attributes of resource")
+			}
+			attrs := make(map[string]string)
+			for _, attribute := range attributes {
+				value, ok := state.Attributes[attribute]
+				if !ok || len(value) == 0 {
+					continue
+				}
+				attrs[attribute] = value
+			}
+			lock.Lock()
+			interpolation.AddResourceAttributes(fmt.Sprintf("%s.%s", r.Type(), r.Name()), attrs)
+			lock.Unlock()
+		}
+	}
+	return nil
+}
 
 // Import imports from the Provider p all the resources filtered by f and writes
 // the result to the hcl or tfstate if those are not nil
@@ -67,110 +145,70 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 	logger.Log("filters", f.String())
 
 	interpolation := interpolator.New(p.String())
-
+	lock := &sync.Mutex{}
+	resTypeErrGroup, rtCtx := errgroup.WithContext(ctx)
 	for _, t := range types {
-		logger := kitlog.With(logger, "resource", t)
+		t := t
+		resTypeErrGroup.Go(func() error {
+			logger := kitlog.With(logger, "resource", t)
 
-		if f.IsExcluded(t) {
-			logger.Log("msg", "excluded")
-			continue
-		}
-
-		logger.Log("msg", "fetching the list of resources")
-
-		var resources []Resource
-
-		if typesWithIDs != nil {
-			for _, ID := range typesWithIDs[t] {
-				resources = append(resources, NewResource(ID, t, p))
+			if f.IsExcluded(t) {
+				logger.Log("msg", "excluded")
+				return nil
 			}
-		} else {
-			resources, err = p.Resources(ctx, t, f)
-			if err != nil {
-				// we filter the error: if it's an error provider side, we continue
-				// the import but we print the error.
-				if errors.Is(err, errcode.ErrProviderAPI) {
-					logger.Log("msg", fmt.Sprintf("unable to import resource %s: %s\n", t, err.Error()))
-				} else if strings.Contains(err.Error(), "AccessDenied") {
-					// skip access denied errors, since we might not have access to all resources when trying to import based on tags
-					logger.Log("msg", fmt.Sprintf("unable to import resource, access denied %s: %s\n", t, err.Error()))
-				} else {
-					return errors.WithStack(err)
+
+			logger.Log("msg", "fetching the list of resources")
+
+			var resources []Resource
+
+			if typesWithIDs != nil {
+				for _, ID := range typesWithIDs[t] {
+					resources = append(resources, NewResource(ID, t, p))
 				}
-			}
-		}
-
-		resourceLen := len(resources)
-		for i, re := range resources {
-			logger := kitlog.With(logger, "id", re.ID(), "total", resourceLen, "current", i+1)
-			fmt.Fprintf(out, "\rScanning %s [%d/%d]", t, i+1, resourceLen)
-
-			logger.Log("msg", "reading from TF")
-			res, err := re.ImportState()
-			if err != nil {
-				return err
-			}
-
-			// If the InstanceState is nil after the ImportState it
-			// means that nothing was imported (potentially is not even Importable)
-			// so we have to skip the resource
-			if re.InstanceState() == nil {
-				continue
-			}
-
-			// In case there is more than one State to import
-			// we create a new slice with those elements and iterate
-			// over it
-			for _, r := range append([]Resource{re}, res...) {
-				err = r.Read(f)
+			} else {
+				resources, err = p.Resources(ctx, t, f)
 				if err != nil {
-					// Errors are ignored. If a resource is invalid we assume it can be skipped, it can be related to inconsistencies in deployed resources.
-					// So instead of failing and stopping execution we ignore them and continue (we log them if -v is specified)
-
-					logger.Log("error", err)
-
-					continue
-				}
-
-				if hcl != nil {
-					logger.Log("msg", "calculating HCL")
-					err = r.HCL(hcl)
-					if err != nil {
-						return errors.Wrapf(err, "error while calculating the Config of resource %q", t)
+					// we filter the error: if it's an error provider side, we continue
+					// the import but we print the error.
+					if errors.Is(err, errcode.ErrProviderAPI) {
+						logger.Log("msg", fmt.Sprintf("unable to import resource %s: %s\n", t, err.Error()))
+					} else if strings.Contains(err.Error(), "AccessDenied") {
+						// skip access denied errors, since we might not have access to all resources when trying to import based on tags
+						logger.Log("msg", fmt.Sprintf("unable to import resource, access denied %s: %s\n", t, err.Error()))
+					} else {
+						return errors.WithStack(err)
 					}
-				}
-
-				if tfstate != nil {
-					logger.Log("msg", "calculating TFState")
-					err = r.State(tfstate)
-					if err != nil {
-						return errors.Wrapf(err, "error while calculating the satate of resource %q", t)
-					}
-				}
-				state := r.InstanceState()
-
-				if state != nil {
-					attributes, err := re.AttributesReference()
-					if err != nil {
-						return errors.Wrapf(err, "unable to fetch attributes of resource")
-					}
-					attrs := make(map[string]string)
-					for _, attribute := range attributes {
-						value, ok := state.Attributes[attribute]
-						if !ok || len(value) == 0 {
-							continue
-						}
-						attrs[attribute] = value
-					}
-					interpolation.AddResourceAttributes(fmt.Sprintf("%s.%s", r.Type(), r.Name()), attrs)
 				}
 			}
-		}
-		if resourceLen > 0 {
-			fmt.Fprintf(out, "\rScanning %s [%d/%d] Done!\n", t, resourceLen, resourceLen)
-		}
-		logger.Log("msg", "Scanning done")
+
+			resourceLen := len(resources)
+			resErrGroup, ectx := errgroup.WithContext(rtCtx)
+			resErrGroup.SetLimit(runtime.NumCPU())
+			for i, re := range resources {
+				logger := kitlog.With(logger, "id", re.ID(), "total", resourceLen, "current", i+1)
+				fmt.Fprintf(out, "\rScanning %s [%d/%d]", t, i+1, resourceLen)
+
+				logger.Log("msg", "reading from TF")
+				resErrGroup.Go(func() error {
+					return readResource(ectx, re, t, hcl, tfstate, interpolation, lock, f, logger)
+				})
+			}
+			err := resErrGroup.Wait()
+			if err != nil {
+				return fmt.Errorf("error while reading the resources of type: %s: %w", t, err)
+			}
+			if resourceLen > 0 {
+				fmt.Fprintf(out, "\rScanning %s [%d/%d] Done!\n", t, resourceLen, resourceLen)
+			}
+			return nil
+		})
+
 	}
+	err = resTypeErrGroup.Wait()
+	if err != nil {
+		return fmt.Errorf("error while reading the resources: %w", err)
+	}
+	logger.Log("msg", "Scanning done")
 
 	if hcl != nil {
 		hcl.Interpolate(interpolation)

@@ -1,9 +1,8 @@
 package provider_test
 
 import (
-	"context"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"testing"
 
 	"github.com/cycloidio/terracognita/errcode"
@@ -22,7 +21,7 @@ func TestImport(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {
 		var (
 			ctrl = gomock.NewController(t)
-			ctx  = context.Background()
+			ctx  = t.Context()
 
 			p                 = mock.NewProvider(ctrl)
 			hw                = mock.NewWriter(ctrl)
@@ -49,20 +48,20 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().ID().Return("3")
 		iamUser2.EXPECT().ID().Return("4")
 
-		instanceResource1.EXPECT().ImportState().Return(nil, nil)
-		instanceResource2.EXPECT().ImportState().Return(nil, nil)
-		iamUser1.EXPECT().ImportState().Return(nil, nil)
-		iamUser2.EXPECT().ImportState().Return(nil, nil)
+		instanceResource1.EXPECT().ImportState(t.Context()).Return(nil, nil)
+		instanceResource2.EXPECT().ImportState(t.Context()).Return(nil, nil)
+		iamUser1.EXPECT().ImportState(t.Context()).Return(nil, nil)
+		iamUser2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
 		instanceResource1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 		instanceResource2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 
-		instanceResource1.EXPECT().Read(f).Return(nil)
-		instanceResource2.EXPECT().Read(f).Return(nil)
-		iamUser1.EXPECT().Read(f).Return(nil)
-		iamUser2.EXPECT().Read(f).Return(nil)
+		instanceResource1.EXPECT().Read(t.Context(), f).Return(nil)
+		instanceResource2.EXPECT().Read(t.Context(), f).Return(nil)
+		iamUser1.EXPECT().Read(t.Context(), f).Return(nil)
+		iamUser2.EXPECT().Read(t.Context(), f).Return(nil)
 
 		instanceResource1.EXPECT().HCL(hw).Return(nil)
 		instanceResource2.EXPECT().HCL(hw).Return(nil)
@@ -84,13 +83,13 @@ func TestImport(t *testing.T) {
 		sw.EXPECT().Sync().Return(nil)
 		sw.EXPECT().Interpolate(i)
 
-		err := provider.Import(ctx, p, hw, sw, f, ioutil.Discard)
+		err := provider.Import(ctx, p, hw, sw, f, io.Discard)
 		require.NoError(t, err)
 	})
 	t.Run("SuccessWithFilterInclude", func(t *testing.T) {
 		var (
 			ctrl = gomock.NewController(t)
-			ctx  = context.Background()
+			ctx  = t.Context()
 
 			p                 = mock.NewProvider(ctrl)
 			hw                = mock.NewWriter(ctrl)
@@ -113,14 +112,14 @@ func TestImport(t *testing.T) {
 		instanceResource1.EXPECT().ID().Return("1")
 		instanceResource2.EXPECT().ID().Return("2")
 
-		instanceResource1.EXPECT().ImportState().Return(nil, nil)
-		instanceResource2.EXPECT().ImportState().Return(nil, nil)
+		instanceResource1.EXPECT().ImportState(t.Context()).Return(nil, nil)
+		instanceResource2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
 		instanceResource1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 		instanceResource2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 
-		instanceResource1.EXPECT().Read(f).Return(nil)
-		instanceResource2.EXPECT().Read(f).Return(nil)
+		instanceResource1.EXPECT().Read(t.Context(), f).Return(nil)
+		instanceResource2.EXPECT().Read(t.Context(), f).Return(nil)
 
 		instanceResource1.EXPECT().HCL(hw).Return(nil)
 		instanceResource2.EXPECT().HCL(hw).Return(nil)
@@ -136,13 +135,13 @@ func TestImport(t *testing.T) {
 		sw.EXPECT().Sync().Return(nil)
 		sw.EXPECT().Interpolate(i)
 
-		err := provider.Import(ctx, p, hw, sw, f, ioutil.Discard)
+		err := provider.Import(ctx, p, hw, sw, f, io.Discard)
 		require.NoError(t, err)
 	})
 	t.Run("SuccessWithExclude", func(t *testing.T) {
 		var (
 			ctrl = gomock.NewController(t)
-			ctx  = context.Background()
+			ctx  = t.Context()
 
 			p        = mock.NewProvider(ctrl)
 			hw       = mock.NewWriter(ctrl)
@@ -167,14 +166,14 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().ID().Return("1")
 		iamUser2.EXPECT().ID().Return("2")
 
-		iamUser1.EXPECT().ImportState().Return(nil, nil)
-		iamUser2.EXPECT().ImportState().Return(nil, nil)
+		iamUser1.EXPECT().ImportState(t.Context()).Return(nil, nil)
+		iamUser2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
 		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 
-		iamUser1.EXPECT().Read(f).Return(nil)
-		iamUser2.EXPECT().Read(f).Return(nil)
+		iamUser1.EXPECT().Read(t.Context(), f).Return(nil)
+		iamUser2.EXPECT().Read(t.Context(), f).Return(nil)
 
 		iamUser1.EXPECT().HCL(hw).Return(nil)
 		iamUser2.EXPECT().HCL(hw).Return(nil)
@@ -190,13 +189,13 @@ func TestImport(t *testing.T) {
 		sw.EXPECT().Sync().Return(nil)
 		sw.EXPECT().Interpolate(i)
 
-		err := provider.Import(ctx, p, hw, sw, f, ioutil.Discard)
+		err := provider.Import(ctx, p, hw, sw, f, io.Discard)
 		require.NoError(t, err)
 	})
 	t.Run("SuccessWithErrProviderResourceDoNotMatchTag", func(t *testing.T) {
 		var (
 			ctrl = gomock.NewController(t)
-			ctx  = context.Background()
+			ctx  = t.Context()
 
 			p        = mock.NewProvider(ctrl)
 			hw       = mock.NewWriter(ctrl)
@@ -224,13 +223,13 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 
-		iamUser1.EXPECT().ImportState().Return(nil, nil)
-		iamUser2.EXPECT().ImportState().Return(nil, nil)
+		iamUser1.EXPECT().ImportState(t.Context()).Return(nil, nil)
+		iamUser2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
 		iamUser2.EXPECT().InstanceState().Return(nil)
 
-		iamUser1.EXPECT().Read(f).Return(errcode.ErrProviderResourceDoNotMatchTag)
-		iamUser2.EXPECT().Read(f).Return(nil)
+		iamUser1.EXPECT().Read(t.Context(), f).Return(errcode.ErrProviderResourceDoNotMatchTag)
+		iamUser2.EXPECT().Read(t.Context(), f).Return(nil)
 
 		iamUser2.EXPECT().HCL(hw).Return(nil)
 
@@ -241,13 +240,13 @@ func TestImport(t *testing.T) {
 		sw.EXPECT().Sync().Return(nil)
 		sw.EXPECT().Interpolate(i)
 
-		err := provider.Import(ctx, p, hw, sw, f, ioutil.Discard)
+		err := provider.Import(ctx, p, hw, sw, f, io.Discard)
 		require.NoError(t, err)
 	})
 	t.Run("SuccessWithNoHCLWriter", func(t *testing.T) {
 		var (
 			ctrl = gomock.NewController(t)
-			ctx  = context.Background()
+			ctx  = t.Context()
 
 			p        = mock.NewProvider(ctrl)
 			sw       = mock.NewWriter(ctrl)
@@ -271,14 +270,14 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().ID().Return("1")
 		iamUser2.EXPECT().ID().Return("2")
 
-		iamUser1.EXPECT().ImportState().Return(nil, nil)
-		iamUser2.EXPECT().ImportState().Return(nil, nil)
+		iamUser1.EXPECT().ImportState(t.Context()).Return(nil, nil)
+		iamUser2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
 		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 
-		iamUser1.EXPECT().Read(f).Return(errcode.ErrProviderResourceDoNotMatchTag)
-		iamUser2.EXPECT().Read(f).Return(nil)
+		iamUser1.EXPECT().Read(t.Context(), f).Return(errcode.ErrProviderResourceDoNotMatchTag)
+		iamUser2.EXPECT().Read(t.Context(), f).Return(nil)
 
 		iamUser2.EXPECT().State(sw).Return(nil)
 		iamUser2.EXPECT().InstanceState().Return(nil)
@@ -286,13 +285,13 @@ func TestImport(t *testing.T) {
 		sw.EXPECT().Sync().Return(nil)
 		sw.EXPECT().Interpolate(i)
 
-		err := provider.Import(ctx, p, nil, sw, f, ioutil.Discard)
+		err := provider.Import(ctx, p, nil, sw, f, io.Discard)
 		require.NoError(t, err)
 	})
 	t.Run("SuccessWithNoTFStateWriter", func(t *testing.T) {
 		var (
 			ctrl = gomock.NewController(t)
-			ctx  = context.Background()
+			ctx  = t.Context()
 
 			p        = mock.NewProvider(ctrl)
 			hw       = mock.NewWriter(ctrl)
@@ -316,14 +315,14 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().ID().Return("1")
 		iamUser2.EXPECT().ID().Return("2")
 
-		iamUser1.EXPECT().ImportState().Return(nil, nil)
-		iamUser2.EXPECT().ImportState().Return(nil, nil)
+		iamUser1.EXPECT().ImportState(t.Context()).Return(nil, nil)
+		iamUser2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
 		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 
-		iamUser1.EXPECT().Read(f).Return(errcode.ErrProviderResourceDoNotMatchTag)
-		iamUser2.EXPECT().Read(f).Return(nil)
+		iamUser1.EXPECT().Read(t.Context(), f).Return(errcode.ErrProviderResourceDoNotMatchTag)
+		iamUser2.EXPECT().Read(t.Context(), f).Return(nil)
 
 		iamUser2.EXPECT().HCL(hw).Return(nil)
 		iamUser2.EXPECT().InstanceState().Return(nil)
@@ -331,13 +330,13 @@ func TestImport(t *testing.T) {
 		hw.EXPECT().Sync().Return(nil)
 		hw.EXPECT().Interpolate(i)
 
-		err := provider.Import(ctx, p, hw, nil, f, ioutil.Discard)
+		err := provider.Import(ctx, p, hw, nil, f, io.Discard)
 		require.NoError(t, err)
 	})
 	t.Run("ErrorWithErrProviderResourceNotRead", func(t *testing.T) {
 		var (
 			ctrl = gomock.NewController(t)
-			ctx  = context.Background()
+			ctx  = t.Context()
 
 			p        = mock.NewProvider(ctrl)
 			hw       = mock.NewWriter(ctrl)
@@ -362,11 +361,11 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().ID().Return("1")
 		iamUser2.EXPECT().ID().Return("2")
 
-		iamUser1.EXPECT().ImportState().Return(nil, nil)
-		iamUser2.EXPECT().ImportState().Return(nil, nil)
+		iamUser1.EXPECT().ImportState(t.Context()).Return(nil, nil)
+		iamUser2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
-		iamUser1.EXPECT().Read(f).Return(errcode.ErrProviderResourceNotRead)
-		iamUser2.EXPECT().Read(f).Return(nil)
+		iamUser1.EXPECT().Read(t.Context(), f).Return(errcode.ErrProviderResourceNotRead)
+		iamUser2.EXPECT().Read(t.Context(), f).Return(nil)
 
 		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
@@ -381,13 +380,13 @@ func TestImport(t *testing.T) {
 		sw.EXPECT().Sync().Return(nil)
 		sw.EXPECT().Interpolate(i)
 
-		err := provider.Import(ctx, p, hw, sw, f, ioutil.Discard)
+		err := provider.Import(ctx, p, hw, sw, f, io.Discard)
 		require.NoError(t, err)
 	})
 	t.Run("ErrorWithErrProviderResourceAutogenerated", func(t *testing.T) {
 		var (
 			ctrl = gomock.NewController(t)
-			ctx  = context.Background()
+			ctx  = t.Context()
 
 			p        = mock.NewProvider(ctrl)
 			hw       = mock.NewWriter(ctrl)
@@ -412,11 +411,11 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().ID().Return("1")
 		iamUser2.EXPECT().ID().Return("2")
 
-		iamUser1.EXPECT().ImportState().Return(nil, nil)
-		iamUser2.EXPECT().ImportState().Return(nil, nil)
+		iamUser1.EXPECT().ImportState(t.Context()).Return(nil, nil)
+		iamUser2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
-		iamUser1.EXPECT().Read(f).Return(errcode.ErrProviderResourceAutogenerated)
-		iamUser2.EXPECT().Read(f).Return(nil)
+		iamUser1.EXPECT().Read(t.Context(), f).Return(errcode.ErrProviderResourceAutogenerated)
+		iamUser2.EXPECT().Read(t.Context(), f).Return(nil)
 
 		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
@@ -431,13 +430,13 @@ func TestImport(t *testing.T) {
 		sw.EXPECT().Sync().Return(nil)
 		sw.EXPECT().Interpolate(i)
 
-		err := provider.Import(ctx, p, hw, sw, f, ioutil.Discard)
+		err := provider.Import(ctx, p, hw, sw, f, io.Discard)
 		require.NoError(t, err)
 	})
 	t.Run("ErrorWithIncorrectFilterInclude", func(t *testing.T) {
 		var (
 			ctrl = gomock.NewController(t)
-			ctx  = context.Background()
+			ctx  = t.Context()
 
 			p  = mock.NewProvider(ctrl)
 			hw = mock.NewWriter(ctrl)
@@ -453,14 +452,14 @@ func TestImport(t *testing.T) {
 		p.EXPECT().HasResourceType("aws_instance").Return(true)
 		p.EXPECT().HasResourceType("aws_potato").Return(false)
 
-		err := provider.Import(ctx, p, hw, sw, f, ioutil.Discard)
+		err := provider.Import(ctx, p, hw, sw, f, io.Discard)
 		assert.Equal(t, errcode.ErrProviderResourceNotSupported.Error(), errors.Cause(err).Error())
 	})
 
 	t.Run("ErrorWithIncorrectFilterExclude", func(t *testing.T) {
 		var (
 			ctrl = gomock.NewController(t)
-			ctx  = context.Background()
+			ctx  = t.Context()
 
 			p  = mock.NewProvider(ctrl)
 			hw = mock.NewWriter(ctrl)
@@ -477,13 +476,13 @@ func TestImport(t *testing.T) {
 		p.EXPECT().HasResourceType("aws_instance").Return(true)
 		p.EXPECT().HasResourceType("aws_potato").Return(false)
 
-		err := provider.Import(ctx, p, hw, sw, f, ioutil.Discard)
+		err := provider.Import(ctx, p, hw, sw, f, io.Discard)
 		assert.Equal(t, errcode.ErrProviderResourceNotSupported.Error(), errors.Cause(err).Error())
 	})
 	t.Run("ErrorWithNotErrProviderAPI", func(t *testing.T) {
 		var (
 			ctrl = gomock.NewController(t)
-			ctx  = context.Background()
+			ctx  = t.Context()
 
 			p  = mock.NewProvider(ctrl)
 			hw = mock.NewWriter(ctrl)
@@ -502,13 +501,13 @@ func TestImport(t *testing.T) {
 		p.EXPECT().String().Return("aws")
 		p.EXPECT().Resources(ctx, "aws_iam_user", f).Return(nil, errors.New("should stop the import"))
 
-		err := provider.Import(ctx, p, hw, sw, f, ioutil.Discard)
+		err := provider.Import(ctx, p, hw, sw, f, io.Discard)
 		assert.Contains(t, err.Error(), "stop the import")
 	})
 	t.Run("ErrorWithErrProviderAPI", func(t *testing.T) {
 		var (
 			ctrl = gomock.NewController(t)
-			ctx  = context.Background()
+			ctx  = t.Context()
 
 			p                 = mock.NewProvider(ctrl)
 			hw                = mock.NewWriter(ctrl)
@@ -531,11 +530,11 @@ func TestImport(t *testing.T) {
 		instanceResource1.EXPECT().ID().Return("1")
 		instanceResource2.EXPECT().ID().Return("2")
 
-		instanceResource1.EXPECT().ImportState().Return(nil, nil)
-		instanceResource2.EXPECT().ImportState().Return(nil, nil)
+		instanceResource1.EXPECT().ImportState(t.Context()).Return(nil, nil)
+		instanceResource2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
-		instanceResource1.EXPECT().Read(f).Return(nil)
-		instanceResource2.EXPECT().Read(f).Return(nil)
+		instanceResource1.EXPECT().Read(t.Context(), f).Return(nil)
+		instanceResource2.EXPECT().Read(t.Context(), f).Return(nil)
 
 		instanceResource1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
 		instanceResource2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
@@ -554,7 +553,7 @@ func TestImport(t *testing.T) {
 		sw.EXPECT().Sync().Return(nil)
 		sw.EXPECT().Interpolate(i)
 
-		err := provider.Import(ctx, p, hw, sw, f, ioutil.Discard)
+		err := provider.Import(ctx, p, hw, sw, f, io.Discard)
 		require.NoError(t, err)
 	})
 }

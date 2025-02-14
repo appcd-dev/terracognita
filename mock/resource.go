@@ -5,6 +5,7 @@
 package mock
 
 import (
+	context "context"
 	reflect "reflect"
 
 	filter "github.com/cycloidio/terracognita/filter"
@@ -112,18 +113,18 @@ func (mr *ResourceMockRecorder) ImpliedType() *gomock.Call {
 }
 
 // ImportState mocks base method.
-func (m *Resource) ImportState() ([]provider.Resource, error) {
+func (m *Resource) ImportState(arg0 context.Context) ([]provider.Resource, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ImportState")
+	ret := m.ctrl.Call(m, "ImportState", arg0)
 	ret0, _ := ret[0].([]provider.Resource)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // ImportState indicates an expected call of ImportState.
-func (mr *ResourceMockRecorder) ImportState() *gomock.Call {
+func (mr *ResourceMockRecorder) ImportState(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ImportState", reflect.TypeOf((*Resource)(nil).ImportState))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ImportState", reflect.TypeOf((*Resource)(nil).ImportState), arg0)
 }
 
 // InstanceInfo mocks base method.
@@ -183,17 +184,17 @@ func (mr *ResourceMockRecorder) Provider() *gomock.Call {
 }
 
 // Read mocks base method.
-func (m *Resource) Read(arg0 *filter.Filter) error {
+func (m *Resource) Read(arg0 context.Context, arg1 *filter.Filter) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Read", arg0)
+	ret := m.ctrl.Call(m, "Read", arg0, arg1)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Read indicates an expected call of Read.
-func (mr *ResourceMockRecorder) Read(arg0 interface{}) *gomock.Call {
+func (mr *ResourceMockRecorder) Read(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Read", reflect.TypeOf((*Resource)(nil).Read), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Read", reflect.TypeOf((*Resource)(nil).Read), arg0, arg1)
 }
 
 // ResourceInstanceObject mocks base method.
