@@ -319,7 +319,7 @@ func importProvider(ctx context.Context, logger kitlog.Logger, p provider.Provid
 		stateW = state.NewWriter(stateOut, options)
 	}
 
-	logger.Log("msg", "importing")
+	logger.Log("msg", "scanning")
 
 	fmt.Fprintf(logsOut, "Starting Terracognita with version %s\n", Version)
 	logger.Log("msg", "starting terracognita", "version", Version)
