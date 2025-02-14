@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"sync"
 
 	kitlog "github.com/go-kit/kit/log"
 
@@ -41,6 +42,7 @@ type Writer struct {
 	writer     io.Writer
 	opts       *writer.Options
 	provider   provider.Provider
+	lock       *sync.Mutex
 }
 
 // NewWriter rerturns an Writer initialization
@@ -52,6 +54,7 @@ func NewWriter(w io.Writer, pv provider.Provider, opts *writer.Options) *Writer 
 		writer:   w,
 		opts:     opts,
 		provider: pv,
+		lock:     &sync.Mutex{},
 	}
 
 	tfcfg := map[string]interface{}{
@@ -139,6 +142,8 @@ func (w *Writer) Write(key string, value interface{}) error {
 	} else {
 		category = ic.(string)
 	}
+	w.lock.Lock()
+	defer w.lock.Unlock()
 
 	if _, ok := w.Config[category]; !ok {
 		w.Config[category] = make(map[string]interface{})

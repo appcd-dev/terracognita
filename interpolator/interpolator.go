@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"sync"
 )
 
 // Interpolator is a helper to interpolate values into attributes, by calling Interpolate
@@ -23,6 +24,8 @@ type Interpolator struct {
 	// to the resource attribute that has it "${aws_instance.front.id}"
 	// used in case o fallback to check if any attribute has the requested value
 	values map[string]string
+
+	lock sync.Mutex
 }
 
 // New returns a new intrepolator, expects the provider prefix
@@ -31,6 +34,7 @@ func New(provider string) *Interpolator {
 		provider:  provider,
 		resources: make(map[string]map[string]map[string]string),
 		values:    make(map[string]string),
+		lock:      sync.Mutex{},
 	}
 }
 
@@ -39,6 +43,8 @@ func New(provider string) *Interpolator {
 // with the new set of 'a'
 func (i *Interpolator) AddResourceAttributes(r string, a map[string]string) {
 	sr := strings.Split(r, ".")
+	i.lock.Lock()
+	defer i.lock.Unlock()
 	// This remove the provider from the resource as the reference will never have it
 	// so from 'aws_instance' we transform to 'instance'
 	sr[0] = strings.Join(strings.Split(sr[0], "_")[1:], "_")
