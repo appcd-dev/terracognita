@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/cycloidio/terracognita/aws/reader"
 	"github.com/cycloidio/terracognita/cache"
 	"github.com/cycloidio/terracognita/errcode"
@@ -103,11 +102,12 @@ func (a *aws) Resources(ctx context.Context, t string, f *filter.Filter) ([]prov
 	if err != nil {
 		// we filter the error from AWS and return a custom error
 		// type if it's an error that we want to skip
-		if reqErr, ok := err.(awserr.Error); ok {
-			if _, ok := skippableCodes[reqErr.Code()]; ok {
-				return nil, fmt.Errorf("%w: %v", errcode.ErrProviderAPI, reqErr)
-			}
-		}
+		//TODO(sks): Re-enable this when we have the error codes
+		// if reqErr, ok := err.(awserr.Error); ok {
+		// 	if _, ok := skippableCodes[reqErr.Code()]; ok {
+		// 		return nil, fmt.Errorf("%w: %v", errcode.ErrProviderAPI, reqErr)
+		// 	}
+		// }
 		return nil, errors.Wrapf(err, "error while reading from resource %q", t)
 	}
 
