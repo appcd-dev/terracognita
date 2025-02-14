@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"strings"
 
+	ec2types "github.com/aws/aws-sdk-go-v2/service/ec2/types"
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/service/ec2"
 	"github.com/aws/aws-sdk-go/service/neptune"
 	"github.com/aws/aws-sdk-go/service/rds"
 	"github.com/chr4/pwgen"
@@ -38,10 +38,10 @@ func New(t string) (Tag, error) {
 
 // ToEC2Filter transforms the Tag to a ec2.Filter
 // to use on AWS filters
-func (t Tag) ToEC2Filter() *ec2.Filter {
-	return &ec2.Filter{
+func (t Tag) ToEC2Filter() ec2types.Filter {
+	return ec2types.Filter{
 		Name:   aws.String(fmt.Sprintf("tag:%s", t.Name)),
-		Values: []*string{aws.String(t.Value)},
+		Values: []string{t.Value},
 	}
 }
 

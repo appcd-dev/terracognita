@@ -625,7 +625,7 @@ type Reader interface {
 
 	// GetIdentityNotificationAttributes returns the SES IdentityNotificationAttributes on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetIdentityNotificationAttributes(ctx context.Context, input *ses.GetIdentityNotificationAttributesInput) (map[string]*sestypes.IdentityNotificationAttributes, error)
+	GetIdentityNotificationAttributes(ctx context.Context, input *ses.GetIdentityNotificationAttributesInput) (map[string]sestypes.IdentityNotificationAttributes, error)
 
 	// GetReceiptFilters returns the SES ReceiptFilters on the given input
 	// Returned values are commented in the interface doc comment block.
