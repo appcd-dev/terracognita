@@ -8,7 +8,6 @@ require (
 	github.com/Azure/azure-sdk-for-go v65.0.0+incompatible
 	github.com/Azure/go-autorest/autorest v0.11.27
 	github.com/adrg/xdg v0.2.3
-	github.com/aws/aws-sdk-go v1.43.34
 	github.com/aws/aws-sdk-go-v2 v1.36.1
 	github.com/aws/aws-sdk-go-v2/config v1.15.0
 	github.com/aws/aws-sdk-go-v2/credentials v1.10.0
@@ -68,7 +67,6 @@ require (
 	github.com/hashicorp/terraform-provider-azurerm v1.44.1-0.20201029183808-d721bcc1bb55
 	github.com/hashicorp/terraform-provider-google v1.20.1-0.20210510171431-a764cf3da527
 	github.com/hashicorp/terraform-provider-vsphere v1.26.1-0.20220510172607-30f37d268d79
-	github.com/jinzhu/inflection v1.0.0
 	github.com/pascaldekloe/name v1.0.1
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.1.3
@@ -101,6 +99,7 @@ require (
 	github.com/apparentlymart/go-cidr v1.1.0 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
 	github.com/apparentlymart/go-versions v1.0.1 // indirect
+	github.com/aws/aws-sdk-go v1.43.34 // indirect
 	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.6.8 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.12.0 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.32 // indirect
@@ -224,17 +223,14 @@ require (
 )
 
 // Force an specific version if not the AWS provider does not compile
-replace github.com/hashicorp/aws-sdk-go-base v0.6.0 => github.com/hashicorp/aws-sdk-go-base v0.5.0
-
-// If we  go to the 1.5.0 then github.com/hashicorp/terraform-plugin-test/ will break
-// as go-getter introduced a break from 1.4 -> 1.5
-replace github.com/hashicorp/go-getter v1.5.0 => github.com/hashicorp/go-getter v1.4.0
-
-// Fork of Azurerm that has the V2 of the SDK
-replace github.com/hashicorp/terraform-provider-azurerm => github.com/cycloidio/terraform-provider-azurerm v1.44.1-0.20230517144901-90a36c6b8ed4
-
-replace github.com/hashicorp/terraform-provider-aws => github.com/cycloidio/terraform-provider-aws v1.60.1-0.20220513132327-e2dbdf90e533
-
-replace github.com/hashicorp/terraform-provider-google => github.com/hashicorp/terraform-provider-google v1.20.1-0.20220201002249-bc5fcb3c89a5
-
-replace github.com/hashicorp/terraform => github.com/cycloidio/terraform v1.1.9-cy
+replace (
+	github.com/hashicorp/aws-sdk-go-base v0.6.0 => github.com/hashicorp/aws-sdk-go-base v0.5.0
+	// If we  go to the 1.5.0 then github.com/hashicorp/terraform-plugin-test/ will break
+	// as go-getter introduced a break from 1.4 -> 1.5
+	github.com/hashicorp/go-getter v1.5.0 => github.com/hashicorp/go-getter v1.4.0
+	github.com/hashicorp/terraform => github.com/cycloidio/terraform v1.1.9-cy
+	github.com/hashicorp/terraform-provider-aws => github.com/cycloidio/terraform-provider-aws v1.60.1-0.20220513132327-e2dbdf90e533
+	// Fork of Azurerm that has the V2 of the SDK
+	github.com/hashicorp/terraform-provider-azurerm => github.com/cycloidio/terraform-provider-azurerm v1.44.1-0.20230517144901-90a36c6b8ed4
+	github.com/hashicorp/terraform-provider-google => github.com/hashicorp/terraform-provider-google v1.20.1-0.20220201002249-bc5fcb3c89a5
+)

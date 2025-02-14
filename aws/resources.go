@@ -466,7 +466,7 @@ func albListeners(ctx context.Context, a *aws, resourceType string, filters *fil
 	return resources, nil
 }
 
-func albs(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
+func albs(ctx context.Context, a *aws, resourceType string, _ *filter.Filter) ([]provider.Resource, error) {
 	lbs, err := a.awsr.GetLoadBalancersV2(ctx, nil)
 	if err != nil {
 		return nil, err
