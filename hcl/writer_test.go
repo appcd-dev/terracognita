@@ -1,7 +1,7 @@
 package hcl_test
 
 import (
-	"io/ioutil"
+	"io"
 	"reflect"
 	"strings"
 	"testing"
@@ -364,7 +364,7 @@ resource "type" "name" {
 		err = hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mx)
+		b, err := io.ReadAll(mx)
 		require.NoError(t, err)
 
 		assert.Equal(t, strings.Join(strings.Fields(ehcl), " "), strings.Join(strings.Fields(string(b)), " "))
@@ -408,7 +408,7 @@ resource "type" "name" {
 		err = hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mx)
+		b, err := io.ReadAll(mx)
 		require.NoError(t, err)
 
 		assert.Equal(t, strings.Join(strings.Fields(ehcl), " "), strings.Join(strings.Fields(string(b)), " "))
@@ -530,7 +530,7 @@ variable "type_name_key" {
 		err = hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mx)
+		b, err := io.ReadAll(mx)
 		require.NoError(t, err)
 
 		assert.Equal(t, strings.Join(strings.Fields(ehcl), " "), strings.Join(strings.Fields(string(b)), " "))
@@ -656,7 +656,7 @@ variable "type_name_tags" {
 		err = hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mx)
+		b, err := io.ReadAll(mx)
 		require.NoError(t, err)
 
 		assert.Equal(t, strings.Join(strings.Fields(ehcl), " "), strings.Join(strings.Fields(string(b)), " "))
@@ -727,7 +727,7 @@ variable "type_name_key" {
 		err = hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mx)
+		b, err := io.ReadAll(mx)
 		require.NoError(t, err)
 
 		assert.Equal(t, strings.Join(strings.Fields(ehcl), " "), strings.Join(strings.Fields(string(b)), " "))
@@ -785,7 +785,7 @@ terraform {
 		err = hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mw)
+		b, err := io.ReadAll(mw)
 		require.NoError(t, err)
 
 		assert.Equal(t, strings.Join(strings.Fields(ehcl), " "), strings.Join(strings.Fields(string(b)), " "))
@@ -834,7 +834,7 @@ terraform {
 		err = hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mw)
+		b, err := io.ReadAll(mw)
 		require.NoError(t, err)
 
 		assert.Equal(t, strings.Join(strings.Fields(ehcl), " "), strings.Join(strings.Fields(string(b)), " "))
@@ -889,7 +889,7 @@ terraform {
 		err = hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mw)
+		b, err := io.ReadAll(mw)
 		require.NoError(t, err)
 
 		assert.Equal(t, strings.Join(strings.Fields(ehcl), " "), strings.Join(strings.Fields(string(b)), " "))
@@ -926,7 +926,7 @@ func TestHCLWriter_Interpolate(t *testing.T) {
 		err := hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mw)
+		b, err := io.ReadAll(mw)
 		require.NoError(t, err)
 
 		assert.Contains(t, string(b), "network = aType.aName.id")
@@ -960,7 +960,7 @@ func TestHCLWriter_Interpolate(t *testing.T) {
 		err := hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mw)
+		b, err := io.ReadAll(mw)
 		require.NoError(t, err)
 
 		assert.NotContains(t, string(b), "network = aType.aName.id")
@@ -994,7 +994,7 @@ func TestHCLWriter_Interpolate(t *testing.T) {
 		err := hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mw)
+		b, err := io.ReadAll(mw)
 		require.NoError(t, err)
 
 		assert.Contains(t, string(b), "network = aType.aName.id")
@@ -1028,7 +1028,7 @@ func TestHCLWriter_Interpolate(t *testing.T) {
 		err := hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mw)
+		b, err := io.ReadAll(mw)
 		require.NoError(t, err)
 
 		assert.NotContains(t, string(b), "network = aType.aName.id")
@@ -1063,7 +1063,7 @@ func TestHCLWriter_Interpolate(t *testing.T) {
 		err := hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mw)
+		b, err := io.ReadAll(mw)
 		require.NoError(t, err)
 
 		assert.Contains(t, string(b), "to-be-interpolated")
@@ -1101,7 +1101,7 @@ func TestHCLWriter_Interpolate(t *testing.T) {
 		err := hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mw)
+		b, err := io.ReadAll(mw)
 		require.NoError(t, err)
 
 		// the only way to assert that there is one interpolation is to
@@ -1138,7 +1138,7 @@ func TestHCLWriter_Interpolate(t *testing.T) {
 		err := hw.Sync()
 		require.NoError(t, err)
 
-		b, err := ioutil.ReadAll(mw)
+		b, err := io.ReadAll(mw)
 		require.NoError(t, err)
 
 		assert.Contains(t, string(b), "network = \"should-not-be-interpolated\"")

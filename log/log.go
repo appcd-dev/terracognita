@@ -2,7 +2,6 @@ package log
 
 import (
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"sync"
@@ -30,7 +29,7 @@ func Init(out io.Writer, tflogs bool) {
 
 			out := logging.LogOutput()
 			if out == nil {
-				out = ioutil.Discard
+				out = io.Discard
 			}
 			log.SetOutput(out)
 		}
@@ -43,6 +42,6 @@ func Init(out io.Writer, tflogs bool) {
 // if it has not been initialized it'll
 // initialize it with the default values
 func Get() kitlog.Logger {
-	Init(ioutil.Discard, false)
+	Init(io.Discard, false)
 	return logger
 }
