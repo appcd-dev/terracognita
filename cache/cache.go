@@ -1,6 +1,8 @@
 package cache
 
 import (
+	"sync"
+
 	"github.com/cycloidio/terracognita/errcode"
 	"github.com/cycloidio/terracognita/provider"
 )
@@ -20,27 +22,33 @@ type Cache interface {
 }
 
 type cache struct {
+	lock sync.Mutex
 	data map[string][]provider.Resource
 }
 
 // New returns a new Cache implementaion
 func New() Cache {
 	return &cache{
+		lock: sync.Mutex{},
 		data: make(map[string][]provider.Resource),
 	}
 }
 
 func (c *cache) Set(key string, rs []provider.Resource) error {
-	_, ok := c.data[key]
+	val, ok := c.data[key]
 	if ok {
-		return errcode.ErrCacheKeyAlreadyExisting
+		rs = append(val, rs...)
 	}
+	c.lock.Lock()
 	c.data[key] = rs
+	c.lock.Unlock()
 	return nil
 }
 
 func (c *cache) Get(key string) ([]provider.Resource, error) {
+	c.lock.Lock()
 	rs, ok := c.data[key]
+	c.lock.Unlock()
 	if !ok {
 		return nil, errcode.ErrCacheKeyNotFound
 	}
