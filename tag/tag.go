@@ -5,10 +5,10 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/service/ec2"
-	"github.com/aws/aws-sdk-go/service/neptune"
-	"github.com/aws/aws-sdk-go/service/rds"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	ec2types "github.com/aws/aws-sdk-go-v2/service/ec2/types"
+	neptunetypes "github.com/aws/aws-sdk-go-v2/service/neptune/types"
+	rdstypes "github.com/aws/aws-sdk-go-v2/service/rds/types"
 	"github.com/chr4/pwgen"
 	"github.com/cycloidio/terracognita/errcode"
 	"github.com/cycloidio/terracognita/util"
@@ -38,28 +38,28 @@ func New(t string) (Tag, error) {
 
 // ToEC2Filter transforms the Tag to a ec2.Filter
 // to use on AWS filters
-func (t Tag) ToEC2Filter() *ec2.Filter {
-	return &ec2.Filter{
+func (t Tag) ToEC2Filter() ec2types.Filter {
+	return ec2types.Filter{
 		Name:   aws.String(fmt.Sprintf("tag:%s", t.Name)),
-		Values: []*string{aws.String(t.Value)},
+		Values: []string{t.Value},
 	}
 }
 
 // ToRDSFilter transforms the Tag to a rds.Filter
 // to use on AWS filters
-func (t Tag) ToRDSFilter() *rds.Filter {
-	return &rds.Filter{
+func (t Tag) ToRDSFilter() *rdstypes.Filter {
+	return &rdstypes.Filter{
 		Name:   aws.String(fmt.Sprintf("tag:%s", t.Name)),
-		Values: []*string{aws.String(t.Value)},
+		Values: []string{t.Value},
 	}
 }
 
 // ToNeptuneFilter transforms the Tag to a Neptune.Filter
 // to use on AWS filters
-func (t Tag) ToNeptuneFilter() *neptune.Filter {
-	return &neptune.Filter{
+func (t Tag) ToNeptuneFilter() *neptunetypes.Filter {
+	return &neptunetypes.Filter{
 		Name:   aws.String(fmt.Sprintf("tag:%s", t.Name)),
-		Values: []*string{aws.String(t.Value)},
+		Values: []string{t.Value},
 	}
 }
 

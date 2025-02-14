@@ -3,45 +3,82 @@ package reader
 import (
 	"context"
 
-	"github.com/aws/aws-sdk-go/service/apigateway"
-	"github.com/aws/aws-sdk-go/service/athena"
-	"github.com/aws/aws-sdk-go/service/autoscaling"
-	"github.com/aws/aws-sdk-go/service/batch"
-	"github.com/aws/aws-sdk-go/service/cloudfront"
-	"github.com/aws/aws-sdk-go/service/cloudwatch"
-	"github.com/aws/aws-sdk-go/service/configservice"
-	"github.com/aws/aws-sdk-go/service/databasemigrationservice"
-	"github.com/aws/aws-sdk-go/service/dax"
-	"github.com/aws/aws-sdk-go/service/directconnect"
-	"github.com/aws/aws-sdk-go/service/directoryservice"
-	"github.com/aws/aws-sdk-go/service/dynamodb"
-	"github.com/aws/aws-sdk-go/service/ec2"
-	"github.com/aws/aws-sdk-go/service/ecs"
-	"github.com/aws/aws-sdk-go/service/efs"
-	"github.com/aws/aws-sdk-go/service/eks"
-	"github.com/aws/aws-sdk-go/service/elasticache"
-	"github.com/aws/aws-sdk-go/service/elasticbeanstalk"
-	"github.com/aws/aws-sdk-go/service/elasticsearchservice"
-	"github.com/aws/aws-sdk-go/service/elb"
-	"github.com/aws/aws-sdk-go/service/elbv2"
-	"github.com/aws/aws-sdk-go/service/emr"
-	"github.com/aws/aws-sdk-go/service/fsx"
-	"github.com/aws/aws-sdk-go/service/glue"
-	"github.com/aws/aws-sdk-go/service/iam"
-	"github.com/aws/aws-sdk-go/service/kinesis"
-	"github.com/aws/aws-sdk-go/service/lambda"
-	"github.com/aws/aws-sdk-go/service/lightsail"
-	"github.com/aws/aws-sdk-go/service/mediastore"
-	"github.com/aws/aws-sdk-go/service/mq"
-	"github.com/aws/aws-sdk-go/service/neptune"
-	"github.com/aws/aws-sdk-go/service/rds"
-	"github.com/aws/aws-sdk-go/service/redshift"
-	"github.com/aws/aws-sdk-go/service/route53"
-	"github.com/aws/aws-sdk-go/service/route53resolver"
-	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/aws/aws-sdk-go/service/ses"
-	"github.com/aws/aws-sdk-go/service/sqs"
-	"github.com/aws/aws-sdk-go/service/storagegateway"
+	"github.com/aws/aws-sdk-go-v2/service/apigateway"
+	apigatewaytypes "github.com/aws/aws-sdk-go-v2/service/apigateway/types"
+	"github.com/aws/aws-sdk-go-v2/service/athena"
+	athenatypes "github.com/aws/aws-sdk-go-v2/service/athena/types"
+	"github.com/aws/aws-sdk-go-v2/service/autoscaling"
+	autoscalingtypes "github.com/aws/aws-sdk-go-v2/service/autoscaling/types"
+	"github.com/aws/aws-sdk-go-v2/service/batch"
+	batchtypes "github.com/aws/aws-sdk-go-v2/service/batch/types"
+	"github.com/aws/aws-sdk-go-v2/service/cloudfront"
+	cloudfronttypes "github.com/aws/aws-sdk-go-v2/service/cloudfront/types"
+	"github.com/aws/aws-sdk-go-v2/service/cloudwatch"
+	cloudwatchtypes "github.com/aws/aws-sdk-go-v2/service/cloudwatch/types"
+	"github.com/aws/aws-sdk-go-v2/service/configservice"
+	configservicetypes "github.com/aws/aws-sdk-go-v2/service/configservice/types"
+	"github.com/aws/aws-sdk-go-v2/service/databasemigrationservice"
+	databasemigrationservicetypes "github.com/aws/aws-sdk-go-v2/service/databasemigrationservice/types"
+	"github.com/aws/aws-sdk-go-v2/service/dax"
+	daxtypes "github.com/aws/aws-sdk-go-v2/service/dax/types"
+	"github.com/aws/aws-sdk-go-v2/service/directconnect"
+	directconnecttypes "github.com/aws/aws-sdk-go-v2/service/directconnect/types"
+	"github.com/aws/aws-sdk-go-v2/service/directoryservice"
+	directoryservicetypes "github.com/aws/aws-sdk-go-v2/service/directoryservice/types"
+	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
+	dynamodbtypes "github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
+	"github.com/aws/aws-sdk-go-v2/service/ec2"
+	ec2types "github.com/aws/aws-sdk-go-v2/service/ec2/types"
+	"github.com/aws/aws-sdk-go-v2/service/ecs"
+	ecstypes "github.com/aws/aws-sdk-go-v2/service/ecs/types"
+	"github.com/aws/aws-sdk-go-v2/service/efs"
+	efstypes "github.com/aws/aws-sdk-go-v2/service/efs/types"
+	"github.com/aws/aws-sdk-go-v2/service/eks"
+	ekstypes "github.com/aws/aws-sdk-go-v2/service/eks/types"
+	"github.com/aws/aws-sdk-go-v2/service/elasticache"
+	elasticachetypes "github.com/aws/aws-sdk-go-v2/service/elasticache/types"
+	"github.com/aws/aws-sdk-go-v2/service/elasticbeanstalk"
+	elasticbeanstalktypes "github.com/aws/aws-sdk-go-v2/service/elasticbeanstalk/types"
+	"github.com/aws/aws-sdk-go-v2/service/elasticsearchservice"
+	elasticsearchservicetypes "github.com/aws/aws-sdk-go-v2/service/elasticsearchservice/types"
+	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancing"
+	elasticloadbalancingtypes "github.com/aws/aws-sdk-go-v2/service/elasticloadbalancing/types"
+	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2"
+	elasticloadbalancingv2types "github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2/types"
+	"github.com/aws/aws-sdk-go-v2/service/emr"
+	emrtypes "github.com/aws/aws-sdk-go-v2/service/emr/types"
+	"github.com/aws/aws-sdk-go-v2/service/fsx"
+	fsxtypes "github.com/aws/aws-sdk-go-v2/service/fsx/types"
+	"github.com/aws/aws-sdk-go-v2/service/glue"
+	gluetypes "github.com/aws/aws-sdk-go-v2/service/glue/types"
+	"github.com/aws/aws-sdk-go-v2/service/iam"
+	iamtypes "github.com/aws/aws-sdk-go-v2/service/iam/types"
+	"github.com/aws/aws-sdk-go-v2/service/kinesis"
+	"github.com/aws/aws-sdk-go-v2/service/lambda"
+	lambdatypes "github.com/aws/aws-sdk-go-v2/service/lambda/types"
+	"github.com/aws/aws-sdk-go-v2/service/lightsail"
+	lightsailtypes "github.com/aws/aws-sdk-go-v2/service/lightsail/types"
+	"github.com/aws/aws-sdk-go-v2/service/mediastore"
+	mediastoretypes "github.com/aws/aws-sdk-go-v2/service/mediastore/types"
+	"github.com/aws/aws-sdk-go-v2/service/mq"
+	mqtypes "github.com/aws/aws-sdk-go-v2/service/mq/types"
+	"github.com/aws/aws-sdk-go-v2/service/neptune"
+	neptunetypes "github.com/aws/aws-sdk-go-v2/service/neptune/types"
+	"github.com/aws/aws-sdk-go-v2/service/rds"
+	rdstypes "github.com/aws/aws-sdk-go-v2/service/rds/types"
+	"github.com/aws/aws-sdk-go-v2/service/redshift"
+	redshifttypes "github.com/aws/aws-sdk-go-v2/service/redshift/types"
+	"github.com/aws/aws-sdk-go-v2/service/route53"
+	route53types "github.com/aws/aws-sdk-go-v2/service/route53/types"
+	"github.com/aws/aws-sdk-go-v2/service/route53resolver"
+	route53resolvertypes "github.com/aws/aws-sdk-go-v2/service/route53resolver/types"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
+	s3types "github.com/aws/aws-sdk-go-v2/service/s3/types"
+	"github.com/aws/aws-sdk-go-v2/service/ses"
+	sestypes "github.com/aws/aws-sdk-go-v2/service/ses/types"
+	"github.com/aws/aws-sdk-go-v2/service/sqs"
+	"github.com/aws/aws-sdk-go-v2/service/storagegateway"
+	storagegatewaytypes "github.com/aws/aws-sdk-go-v2/service/storagegateway/types"
 )
 
 // Code generated by github.com/cycloidio/terracognita/aws/cmd; DO NOT EDIT
@@ -72,503 +109,503 @@ type Reader interface {
 
 	// GetAPIGatewayDeployments returns the Deployment Functions on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetAPIGatewayDeployments(ctx context.Context, input *apigateway.GetDeploymentsInput) ([]*apigateway.Deployment, error)
+	GetAPIGatewayDeployments(ctx context.Context, input *apigateway.GetDeploymentsInput) ([]apigatewaytypes.Deployment, error)
 
 	// GetAPIGatewayResources returns the Resource Functions on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetAPIGatewayResources(ctx context.Context, input *apigateway.GetResourcesInput) ([]*apigateway.Resource, error)
+	GetAPIGatewayResources(ctx context.Context, input *apigateway.GetResourcesInput) ([]apigatewaytypes.Resource, error)
 
 	// GetAPIGatewayRestAPIs returns the RestApi Functions on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetAPIGatewayRestAPIs(ctx context.Context, input *apigateway.GetRestApisInput) ([]*apigateway.RestApi, error)
+	GetAPIGatewayRestAPIs(ctx context.Context, input *apigateway.GetRestApisInput) ([]apigatewaytypes.RestApi, error)
 
 	// GetAPIGatewayStages returns the Stage Functions on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetAPIGatewayStages(ctx context.Context, input *apigateway.GetStagesInput) ([]*apigateway.Stage, error)
+	GetAPIGatewayStages(ctx context.Context, input *apigateway.GetStagesInput) ([]apigatewaytypes.Stage, error)
 
 	// GetAthenaDataCatalogs returns the Athena worker groups on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetAthenaWorkGroups(ctx context.Context, input *athena.ListWorkGroupsInput) ([]*athena.WorkGroupSummary, error)
+	GetAthenaWorkGroups(ctx context.Context, input *athena.ListWorkGroupsInput) ([]athenatypes.WorkGroupSummary, error)
 
 	// GetAutoScalingGroups returns all AutoScalingGroup belonging to the Account ID based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetAutoScalingGroups(ctx context.Context, input *autoscaling.DescribeAutoScalingGroupsInput) ([]*autoscaling.Group, error)
+	GetAutoScalingGroups(ctx context.Context, input *autoscaling.DescribeAutoScalingGroupsInput) ([]autoscalingtypes.AutoScalingGroup, error)
 
 	// GetLaunchConfigurations returns all LaunchConfiguration belonging to the Account ID based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetLaunchConfigurations(ctx context.Context, input *autoscaling.DescribeLaunchConfigurationsInput) ([]*autoscaling.LaunchConfiguration, error)
+	GetLaunchConfigurations(ctx context.Context, input *autoscaling.DescribeLaunchConfigurationsInput) ([]autoscalingtypes.LaunchConfiguration, error)
 
 	// GetAutoScalingPolicies returns all AutoScalingPolicies belonging to the Account ID based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetAutoScalingPolicies(ctx context.Context, input *autoscaling.DescribePoliciesInput) ([]*autoscaling.ScalingPolicy, error)
+	GetAutoScalingPolicies(ctx context.Context, input *autoscaling.DescribePoliciesInput) ([]autoscalingtypes.ScalingPolicy, error)
 
 	// GetAutoScalingScheduledActions returns all ScheduledActions based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetAutoScalingScheduledActions(ctx context.Context, input *autoscaling.DescribeScheduledActionsInput) ([]*autoscaling.ScheduledUpdateGroupAction, error)
+	GetAutoScalingScheduledActions(ctx context.Context, input *autoscaling.DescribeScheduledActionsInput) ([]autoscalingtypes.ScheduledUpdateGroupAction, error)
 
 	// GetBatchJobDefinitions returns the batch jobs on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetBatchJobDefinitions(ctx context.Context, input *batch.DescribeJobDefinitionsInput) ([]*batch.JobDefinition, error)
+	GetBatchJobDefinitions(ctx context.Context, input *batch.DescribeJobDefinitionsInput) ([]batchtypes.JobDefinition, error)
 
 	// GetCloudFrontDistributions returns all the CloudFront Distributions on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetCloudFrontDistributions(ctx context.Context, input *cloudfront.ListDistributionsInput) ([]*cloudfront.DistributionSummary, error)
+	GetCloudFrontDistributions(ctx context.Context, input *cloudfront.ListDistributionsInput) ([]cloudfronttypes.DistributionSummary, error)
 
 	// GetCloudFrontOriginAccessIdentities returns all the CloudFront Origin Access Identities on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetCloudFrontOriginAccessIdentities(ctx context.Context, input *cloudfront.ListCloudFrontOriginAccessIdentitiesInput) ([]*cloudfront.OriginAccessIdentitySummary, error)
+	GetCloudFrontOriginAccessIdentities(ctx context.Context, input *cloudfront.ListCloudFrontOriginAccessIdentitiesInput) ([]cloudfronttypes.CloudFrontOriginAccessIdentitySummary, error)
 
 	// GetCloudFrontPublicKeys returns all the CloudFront Public Keys on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetCloudFrontPublicKeys(ctx context.Context, input *cloudfront.ListPublicKeysInput) ([]*cloudfront.PublicKeySummary, error)
+	GetCloudFrontPublicKeys(ctx context.Context, input *cloudfront.ListPublicKeysInput) ([]cloudfronttypes.PublicKeySummary, error)
 
 	// GetMetricAlarms returns all cloudwatch alarms based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetMetricAlarms(ctx context.Context, input *cloudwatch.DescribeAlarmsInput) ([]*cloudwatch.MetricAlarm, error)
+	GetMetricAlarms(ctx context.Context, input *cloudwatch.DescribeAlarmsInput) ([]cloudwatchtypes.MetricAlarm, error)
 
 	// GetRecordedResourceCounts returns counts of the AWS resources which have
 	// been recorded by AWS Config.
 	// See https://docs.aws.amazon.com/config/latest/APIReference/API_GetDiscoveredResourceCounts.html
 	// for more information about what to enable in your AWS account, the list of
 	// supported resources, etc.
-	GetRecordedResourceCounts(ctx context.Context, input *configservice.GetDiscoveredResourceCountsInput) ([]*configservice.ResourceCount, error)
+	GetRecordedResourceCounts(ctx context.Context, input *configservice.GetDiscoveredResourceCountsInput) ([]configservicetypes.ResourceCount, error)
 
 	// GetDAXClusters returns the DAX clusters on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetDAXClusters(ctx context.Context, input *dax.DescribeClustersInput) ([]*dax.Cluster, error)
+	GetDAXClusters(ctx context.Context, input *dax.DescribeClustersInput) ([]daxtypes.Cluster, error)
 
 	// GetDirectConnectGateways returns the Direct Connect gateways on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetDirectConnectGateways(ctx context.Context, input *directconnect.DescribeDirectConnectGatewaysInput) ([]*directconnect.Gateway, error)
+	GetDirectConnectGateways(ctx context.Context, input *directconnect.DescribeDirectConnectGatewaysInput) ([]directconnecttypes.DirectConnectGateway, error)
 
 	// GetDirectoryServiceDirectories returns the Directory Service directorie on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetDirectoryServiceDirectories(ctx context.Context, input *directoryservice.DescribeDirectoriesInput) ([]*directoryservice.DirectoryDescription, error)
+	GetDirectoryServiceDirectories(ctx context.Context, input *directoryservice.DescribeDirectoriesInput) ([]directoryservicetypes.DirectoryDescription, error)
 
 	// GetDMSDescribeReplicationInstances returns the DMS replication instances on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetDMSDescribeReplicationInstances(ctx context.Context, input *databasemigrationservice.DescribeReplicationInstancesInput) ([]*databasemigrationservice.ReplicationInstance, error)
+	GetDMSDescribeReplicationInstances(ctx context.Context, input *databasemigrationservice.DescribeReplicationInstancesInput) ([]databasemigrationservicetypes.ReplicationInstance, error)
 
 	// GetDynamodbGlobalTables returns the dynamodb global tables on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetDynamodbGlobalTables(ctx context.Context, input *dynamodb.ListGlobalTablesInput) ([]*dynamodb.GlobalTable, error)
+	GetDynamodbGlobalTables(ctx context.Context, input *dynamodb.ListGlobalTablesInput) ([]dynamodbtypes.GlobalTable, error)
 
 	// GetDynamodbTables returns the dynamodb talbles on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetDynamodbTables(ctx context.Context, input *dynamodb.ListTablesInput) ([]*string, error)
+	GetDynamodbTables(ctx context.Context, input *dynamodb.ListTablesInput) ([]string, error)
 
 	// GetAddresses returns all EC2 Addresses based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetAddresses(ctx context.Context, input *ec2.DescribeAddressesInput) ([]*ec2.Address, error)
+	GetAddresses(ctx context.Context, input *ec2.DescribeAddressesInput) ([]ec2types.Address, error)
 
 	// GetImages returns all EC2 AMI based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetImages(ctx context.Context, input *ec2.DescribeImagesInput) ([]*ec2.Image, error)
+	GetImages(ctx context.Context, input *ec2.DescribeImagesInput) ([]ec2types.Image, error)
 
 	// GetOwnImages returns all EC2 AMI belonging to the Account ID based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetOwnImages(ctx context.Context, input *ec2.DescribeImagesInput) ([]*ec2.Image, error)
+	GetOwnImages(ctx context.Context, input *ec2.DescribeImagesInput) ([]ec2types.Image, error)
 
 	// GetInstances returns all EC2 instances based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetInstances(ctx context.Context, input *ec2.DescribeInstancesInput) ([]*ec2.Instance, error)
+	GetInstances(ctx context.Context, input *ec2.DescribeInstancesInput) ([]ec2types.Instance, error)
 
 	// GetEC2InternetGateways returns the EC2 Internet Gateways on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetEC2InternetGateways(ctx context.Context, input *ec2.DescribeInternetGatewaysInput) ([]*ec2.InternetGateway, error)
+	GetEC2InternetGateways(ctx context.Context, input *ec2.DescribeInternetGatewaysInput) ([]ec2types.InternetGateway, error)
 
 	// GetKeyPairs returns all KeyPairs based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetKeyPairs(ctx context.Context, input *ec2.DescribeKeyPairsInput) ([]*ec2.KeyPairInfo, error)
+	GetKeyPairs(ctx context.Context, input *ec2.DescribeKeyPairsInput) ([]ec2types.KeyPairInfo, error)
 
 	// GetLaunchTemplates returns all LaunchTemplate belonging to the Account ID based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetLaunchTemplates(ctx context.Context, input *ec2.DescribeLaunchTemplatesInput) ([]*ec2.LaunchTemplate, error)
+	GetLaunchTemplates(ctx context.Context, input *ec2.DescribeLaunchTemplatesInput) ([]ec2types.LaunchTemplate, error)
 
 	// GetEC2NatGateways returns the EC2 nat gateways on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetEC2NatGateways(ctx context.Context, input *ec2.DescribeNatGatewaysInput) ([]*ec2.NatGateway, error)
+	GetEC2NatGateways(ctx context.Context, input *ec2.DescribeNatGatewaysInput) ([]ec2types.NatGateway, error)
 
 	// GetSecurityGroups returns all EC2 security groups based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetSecurityGroups(ctx context.Context, input *ec2.DescribeSecurityGroupsInput) ([]*ec2.SecurityGroup, error)
+	GetSecurityGroups(ctx context.Context, input *ec2.DescribeSecurityGroupsInput) ([]ec2types.SecurityGroup, error)
 
 	// GetSnapshots returns all snapshots based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetSnapshots(ctx context.Context, input *ec2.DescribeSnapshotsInput) ([]*ec2.Snapshot, error)
+	GetSnapshots(ctx context.Context, input *ec2.DescribeSnapshotsInput) ([]ec2types.Snapshot, error)
 
 	// GetOwnSnapshots returns all snapshots belonging to the Account ID based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetOwnSnapshots(ctx context.Context, input *ec2.DescribeSnapshotsInput) ([]*ec2.Snapshot, error)
+	GetOwnSnapshots(ctx context.Context, input *ec2.DescribeSnapshotsInput) ([]ec2types.Snapshot, error)
 
 	// GetSubnets returns all EC2 subnets based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetSubnets(ctx context.Context, input *ec2.DescribeSubnetsInput) ([]*ec2.Subnet, error)
+	GetSubnets(ctx context.Context, input *ec2.DescribeSubnetsInput) ([]ec2types.Subnet, error)
 
 	// GetVolumes returns all EC2 volumes based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetVolumes(ctx context.Context, input *ec2.DescribeVolumesInput) ([]*ec2.Volume, error)
+	GetVolumes(ctx context.Context, input *ec2.DescribeVolumesInput) ([]ec2types.Volume, error)
 
 	// GetVpcEndpoints returns the ec2 VPC Endpoints on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetVpcEndpoints(ctx context.Context, input *ec2.DescribeVpcEndpointsInput) ([]*ec2.VpcEndpoint, error)
+	GetVpcEndpoints(ctx context.Context, input *ec2.DescribeVpcEndpointsInput) ([]ec2types.VpcEndpoint, error)
 
 	// GetVpcs returns all EC2 VPCs based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetVpcs(ctx context.Context, input *ec2.DescribeVpcsInput) ([]*ec2.Vpc, error)
+	GetVpcs(ctx context.Context, input *ec2.DescribeVpcsInput) ([]ec2types.Vpc, error)
 
 	// GetVpcPeeringConnections returns all VpcPeeringConnections based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetVpcPeeringConnections(ctx context.Context, input *ec2.DescribeVpcPeeringConnectionsInput) ([]*ec2.VpcPeeringConnection, error)
+	GetVpcPeeringConnections(ctx context.Context, input *ec2.DescribeVpcPeeringConnectionsInput) ([]ec2types.VpcPeeringConnection, error)
 
 	// GetVPNGateways returns the ec2 VPN Gateways on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetVPNGateways(ctx context.Context, input *ec2.DescribeVpnGatewaysInput) ([]*ec2.VpnGateway, error)
+	GetVPNGateways(ctx context.Context, input *ec2.DescribeVpnGatewaysInput) ([]ec2types.VpnGateway, error)
 
 	// GetRouteTables returns the ec2 VPN Route Tables on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetRouteTables(ctx context.Context, input *ec2.DescribeRouteTablesInput) ([]*ec2.RouteTable, error)
+	GetRouteTables(ctx context.Context, input *ec2.DescribeRouteTablesInput) ([]ec2types.RouteTable, error)
 
 	// GetTransitGateways returns the ec2 Transit Gateways on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetTransitGateways(ctx context.Context, input *ec2.DescribeTransitGatewaysInput) ([]*ec2.TransitGateway, error)
+	GetTransitGateways(ctx context.Context, input *ec2.DescribeTransitGatewaysInput) ([]ec2types.TransitGateway, error)
 
 	// GetTransitGateways returns the ec2 Transit Gateway VPC Attachments on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetTransitGatewayVpcAttachments(ctx context.Context, input *ec2.DescribeTransitGatewayVpcAttachmentsInput) ([]*ec2.TransitGatewayVpcAttachment, error)
+	GetTransitGatewayVpcAttachments(ctx context.Context, input *ec2.DescribeTransitGatewayVpcAttachmentsInput) ([]ec2types.TransitGatewayVpcAttachment, error)
 
 	// GetTransitGateways returns the ec2 Transit Gateway Route Tables on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetTransitGatewayRouteTables(ctx context.Context, input *ec2.DescribeTransitGatewayRouteTablesInput) ([]*ec2.TransitGatewayRouteTable, error)
+	GetTransitGatewayRouteTables(ctx context.Context, input *ec2.DescribeTransitGatewayRouteTablesInput) ([]ec2types.TransitGatewayRouteTable, error)
 
 	// GetTransitGateways returns the ec2 Transit Gateway Multicasts on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetTransitGatewayMulticast(ctx context.Context, input *ec2.DescribeTransitGatewayMulticastDomainsInput) ([]*ec2.TransitGatewayMulticastDomain, error)
+	GetTransitGatewayMulticast(ctx context.Context, input *ec2.DescribeTransitGatewayMulticastDomainsInput) ([]ec2types.TransitGatewayMulticastDomain, error)
 
 	// GetTransitGatewayPeeringAttachments returns the ec2 Transit Gateway Peering Attachments on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetTransitGatewayPeeringAttachments(ctx context.Context, input *ec2.DescribeTransitGatewayPeeringAttachmentsInput) ([]*ec2.TransitGatewayPeeringAttachment, error)
+	GetTransitGatewayPeeringAttachments(ctx context.Context, input *ec2.DescribeTransitGatewayPeeringAttachmentsInput) ([]ec2types.TransitGatewayPeeringAttachment, error)
 
 	// GetTransitGatewayPrefixListReference returns the ec2 Transit Gateway Prefix List References on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetTransitGatewayPrefixListReference(ctx context.Context, input *ec2.GetTransitGatewayPrefixListReferencesInput) ([]*ec2.TransitGatewayPrefixListReference, error)
+	GetTransitGatewayPrefixListReference(ctx context.Context, input *ec2.GetTransitGatewayPrefixListReferencesInput) ([]ec2types.TransitGatewayPrefixListReference, error)
 
 	// GetTransitGatewayRoutes returns the ec2 Transit Gateway Routes on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetTransitGatewayRoutes(ctx context.Context, input *ec2.SearchTransitGatewayRoutesInput) ([]*ec2.TransitGatewayRoute, error)
+	GetTransitGatewayRoutes(ctx context.Context, input *ec2.SearchTransitGatewayRoutesInput) ([]ec2types.TransitGatewayRoute, error)
 
 	// GetTransitGatewayRouteTableAssociations returns the ec2 Transit Gateway Route Table Associations on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetTransitGatewayRouteTableAssociations(ctx context.Context, input *ec2.GetTransitGatewayRouteTableAssociationsInput) ([]*ec2.TransitGatewayRouteTableAssociation, error)
+	GetTransitGatewayRouteTableAssociations(ctx context.Context, input *ec2.GetTransitGatewayRouteTableAssociationsInput) ([]ec2types.TransitGatewayRouteTableAssociation, error)
 
 	// GetTransitGatewayRouteTablePropagations returns the ec2 Transit Gateway Route Table Propagations on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetTransitGatewayRouteTablePropagations(ctx context.Context, input *ec2.GetTransitGatewayRouteTablePropagationsInput) ([]*ec2.TransitGatewayRouteTablePropagation, error)
+	GetTransitGatewayRouteTablePropagations(ctx context.Context, input *ec2.GetTransitGatewayRouteTablePropagationsInput) ([]ec2types.TransitGatewayRouteTablePropagation, error)
 
 	// GetECSClustersArns returns the ecs clusters arns on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetECSClustersArns(ctx context.Context, input *ecs.ListClustersInput) ([]*string, error)
+	GetECSClustersArns(ctx context.Context, input *ecs.ListClustersInput) ([]string, error)
 
 	// GetECSClusters returns the ecs clusters on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetECSClusters(ctx context.Context, input *ecs.DescribeClustersInput) ([]*ecs.Cluster, error)
+	GetECSClusters(ctx context.Context, input *ecs.DescribeClustersInput) ([]ecstypes.Cluster, error)
 
 	// GetECSServicesArns returns the ecs services arns on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetECSServicesArns(ctx context.Context, input *ecs.ListServicesInput) ([]*string, error)
+	GetECSServicesArns(ctx context.Context, input *ecs.ListServicesInput) ([]string, error)
 
 	// GetECSServices returns the ecs services on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetECSServices(ctx context.Context, input *ecs.DescribeServicesInput) ([]*ecs.Service, error)
+	GetECSServices(ctx context.Context, input *ecs.DescribeServicesInput) ([]ecstypes.Service, error)
 
 	// GetECSTaskDefinitionsArns returns the ecs task definitions arns on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetECSTaskDefinitionsArns(ctx context.Context, input *ecs.ListTaskDefinitionsInput) ([]*string, error)
+	GetECSTaskDefinitionsArns(ctx context.Context, input *ecs.ListTaskDefinitionsInput) ([]string, error)
 
 	// GetEFSFileSystems returns the EFS File Systems on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetEFSFileSystems(ctx context.Context, input *efs.DescribeFileSystemsInput) ([]*efs.FileSystemDescription, error)
+	GetEFSFileSystems(ctx context.Context, input *efs.DescribeFileSystemsInput) ([]efstypes.FileSystemDescription, error)
 
 	// GetEKSCluster returns the EKS Cluster on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetEKSCluster(ctx context.Context, input *eks.DescribeClusterInput) (*eks.Cluster, error)
+	GetEKSCluster(ctx context.Context, input *eks.DescribeClusterInput) (*ekstypes.Cluster, error)
 
 	// GetEKSClusters returns the EKS Clusters on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetEKSClusters(ctx context.Context, input *eks.ListClustersInput) ([]*string, error)
+	GetEKSClusters(ctx context.Context, input *eks.ListClustersInput) ([]string, error)
 
 	// GetElastiCacheClusters returns all Elasticache clusters based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetElastiCacheClusters(ctx context.Context, input *elasticache.DescribeCacheClustersInput) ([]*elasticache.CacheCluster, error)
+	GetElastiCacheClusters(ctx context.Context, input *elasticache.DescribeCacheClustersInput) ([]elasticachetypes.CacheCluster, error)
 
 	// GetElastiCacheReplicationGroups returns the EKS Replication groups on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetElastiCacheReplicationGroups(ctx context.Context, input *elasticache.DescribeReplicationGroupsInput) ([]*elasticache.ReplicationGroup, error)
+	GetElastiCacheReplicationGroups(ctx context.Context, input *elasticache.DescribeReplicationGroupsInput) ([]elasticachetypes.ReplicationGroup, error)
 
 	// GetElastiCacheTags returns a list of tags of Elasticache resources based on its ARN.
 	// Returned values are commented in the interface doc comment block.
-	GetElastiCacheTags(ctx context.Context, input *elasticache.ListTagsForResourceInput) ([]*elasticache.Tag, error)
+	GetElastiCacheTags(ctx context.Context, input *elasticache.ListTagsForResourceInput) ([]elasticachetypes.Tag, error)
 
 	// GetElasticBeanstalkApplications returns the ElasticBeanstalk Applications on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetElasticBeanstalkApplications(ctx context.Context, input *elasticbeanstalk.DescribeApplicationsInput) ([]*elasticbeanstalk.ApplicationDescription, error)
+	GetElasticBeanstalkApplications(ctx context.Context, input *elasticbeanstalk.DescribeApplicationsInput) ([]elasticbeanstalktypes.ApplicationDescription, error)
 
 	// GetElasticsearchDomainNames returns a list of domainNames of Elasticsearch resources.
 	// Returned values are commented in the interface doc comment block.
-	GetElasticsearchDomainNames(ctx context.Context, input *elasticsearchservice.ListDomainNamesInput) ([]*elasticsearchservice.DomainInfo, error)
+	GetElasticsearchDomainNames(ctx context.Context, input *elasticsearchservice.ListDomainNamesInput) ([]elasticsearchservicetypes.DomainInfo, error)
 
 	// GetElasticsearchDomains returns a list of domains of Elasticsearch resources.
 	// Returned values are commented in the interface doc comment block.
-	GetElasticsearchDomains(ctx context.Context, input *elasticsearchservice.DescribeElasticsearchDomainsInput) ([]*elasticsearchservice.ElasticsearchDomainStatus, error)
+	GetElasticsearchDomains(ctx context.Context, input *elasticsearchservice.DescribeElasticsearchDomainsInput) ([]elasticsearchservicetypes.ElasticsearchDomainStatus, error)
 
 	// GetLoadBalancerAttributes returns a list of Attributes based on the input from the different regions.
 	// Returned values are commented in the interface doc comment block.
-	GetLoadBalancerAttributes(ctx context.Context, input *elb.DescribeLoadBalancerAttributesInput) ([]*elb.AdditionalAttribute, error)
+	GetLoadBalancerAttributes(ctx context.Context, input *elasticloadbalancing.DescribeLoadBalancerAttributesInput) ([]elasticloadbalancingtypes.AdditionalAttribute, error)
 
 	// GetLoadBalancers returns a list of ELB (v1) based on the input from the different regions.
 	// Returned values are commented in the interface doc comment block.
-	GetLoadBalancers(ctx context.Context, input *elb.DescribeLoadBalancersInput) ([]*elb.LoadBalancerDescription, error)
+	GetLoadBalancers(ctx context.Context, input *elasticloadbalancing.DescribeLoadBalancersInput) ([]elasticloadbalancingtypes.LoadBalancerDescription, error)
 
 	// GetLoadBalancerPolicies returns a list of Policies based on the input from the different regions.
 	// Returned values are commented in the interface doc comment block.
-	GetLoadBalancerPolicies(ctx context.Context, input *elb.DescribeLoadBalancerPoliciesInput) ([]*elb.PolicyDescription, error)
+	GetLoadBalancerPolicies(ctx context.Context, input *elasticloadbalancing.DescribeLoadBalancerPoliciesInput) ([]elasticloadbalancingtypes.PolicyDescription, error)
 
 	// GetLoadBalancersTags returns a list of Tags based on the input from the different regions.
 	// Returned values are commented in the interface doc comment block.
-	GetLoadBalancersTags(ctx context.Context, input *elb.DescribeTagsInput) ([]*elb.TagDescription, error)
+	GetLoadBalancersTags(ctx context.Context, input *elasticloadbalancing.DescribeTagsInput) ([]elasticloadbalancingtypes.TagDescription, error)
 
 	// GetListenerCertificates returns a list of ListenerCertificates based on the input from the different regions.
 	// Returned values are commented in the interface doc comment block.
-	GetListenerCertificates(ctx context.Context, input *elbv2.DescribeListenerCertificatesInput) ([]*elbv2.Certificate, error)
+	GetListenerCertificates(ctx context.Context, input *elasticloadbalancingv2.DescribeListenerCertificatesInput) ([]elasticloadbalancingv2types.Certificate, error)
 
 	// GetLoadBalancersV2Listeners returns a list of Listeners based on the input from the different regions.
 	// Returned values are commented in the interface doc comment block.
-	GetLoadBalancersV2Listeners(ctx context.Context, input *elbv2.DescribeListenersInput) ([]*elbv2.Listener, error)
+	GetLoadBalancersV2Listeners(ctx context.Context, input *elasticloadbalancingv2.DescribeListenersInput) ([]elasticloadbalancingv2types.Listener, error)
 
 	// GetLoadBalancersV2 returns a list of ELB (v2) - also known as ALB - based on the input from the different regions.
 	// Returned values are commented in the interface doc comment block.
-	GetLoadBalancersV2(ctx context.Context, input *elbv2.DescribeLoadBalancersInput) ([]*elbv2.LoadBalancer, error)
+	GetLoadBalancersV2(ctx context.Context, input *elasticloadbalancingv2.DescribeLoadBalancersInput) ([]elasticloadbalancingv2types.LoadBalancer, error)
 
 	// GetLoadBalancersV2Tags returns a list of Tags based on the input from the different regions.
 	// Returned values are commented in the interface doc comment block.
-	GetLoadBalancersV2Tags(ctx context.Context, input *elbv2.DescribeTagsInput) ([]*elbv2.TagDescription, error)
+	GetLoadBalancersV2Tags(ctx context.Context, input *elasticloadbalancingv2.DescribeTagsInput) ([]elasticloadbalancingv2types.TagDescription, error)
 
 	// GetLoadBalancersV2TargetGroupAttributes returns a list of TargetGroupAttributes based on the input from the different regions.
 	// Returned values are commented in the interface doc comment block.
-	GetLoadBalancersV2TargetGroupAttributes(ctx context.Context, input *elbv2.DescribeTargetGroupAttributesInput) ([]*elbv2.TargetGroupAttribute, error)
+	GetLoadBalancersV2TargetGroupAttributes(ctx context.Context, input *elasticloadbalancingv2.DescribeTargetGroupAttributesInput) ([]elasticloadbalancingv2types.TargetGroupAttribute, error)
 
 	// GetLoadBalancersV2TargetGroups returns a list of TargetGroups based on the input from the different regions.
 	// Returned values are commented in the interface doc comment block.
-	GetLoadBalancersV2TargetGroups(ctx context.Context, input *elbv2.DescribeTargetGroupsInput) ([]*elbv2.TargetGroup, error)
+	GetLoadBalancersV2TargetGroups(ctx context.Context, input *elasticloadbalancingv2.DescribeTargetGroupsInput) ([]elasticloadbalancingv2types.TargetGroup, error)
 
 	// GetLoadBalancersV2TargetHealth returns a list of TargetHealth based on the input from the different regions.
 	// Returned values are commented in the interface doc comment block.
-	GetLoadBalancersV2TargetHealth(ctx context.Context, input *elbv2.DescribeTargetHealthInput) ([]*elbv2.TargetHealthDescription, error)
+	GetLoadBalancersV2TargetHealth(ctx context.Context, input *elasticloadbalancingv2.DescribeTargetHealthInput) ([]elasticloadbalancingv2types.TargetHealthDescription, error)
 
 	// GetLoadBalancersV2Rules returns a list of Rules based on the input from the different regions.
 	// Returned values are commented in the interface doc comment block.
-	GetLoadBalancersV2Rules(ctx context.Context, input *elbv2.DescribeRulesInput) ([]*elbv2.Rule, error)
+	GetLoadBalancersV2Rules(ctx context.Context, input *elasticloadbalancingv2.DescribeRulesInput) ([]elasticloadbalancingv2types.Rule, error)
 
 	// GetEMRClusters returns the EMR Clusters on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetEMRClusters(ctx context.Context, input *emr.ListClustersInput) ([]*emr.ClusterSummary, error)
+	GetEMRClusters(ctx context.Context, input *emr.ListClustersInput) ([]emrtypes.ClusterSummary, error)
 
 	// GetFSXFileSystems returns the fsx filesystems arns on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetFSXFileSystems(ctx context.Context, input *fsx.DescribeFileSystemsInput) ([]*fsx.FileSystem, error)
+	GetFSXFileSystems(ctx context.Context, input *fsx.DescribeFileSystemsInput) ([]fsxtypes.FileSystem, error)
 
 	// GetGlueDatabases returns the Glue databases on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetGlueDatabases(ctx context.Context, input *glue.GetDatabasesInput) ([]*glue.Database, error)
+	GetGlueDatabases(ctx context.Context, input *glue.GetDatabasesInput) ([]gluetypes.Database, error)
 
 	// GetGlueTables returns the Glue Tables on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetGlueTables(ctx context.Context, input *glue.GetTablesInput) ([]*glue.TableData, error)
+	GetGlueTables(ctx context.Context, input *glue.GetTablesInput) ([]gluetypes.Table, error)
 
 	// GetAccessKeys returns all the IAM AccessKeys on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetAccessKeys(ctx context.Context, input *iam.ListAccessKeysInput) ([]*iam.AccessKeyMetadata, error)
+	GetAccessKeys(ctx context.Context, input *iam.ListAccessKeysInput) ([]iamtypes.AccessKeyMetadata, error)
 
 	// GetAccountAliases returns all the IAM AccountAliases on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetAccountAliases(ctx context.Context, input *iam.ListAccountAliasesInput) ([]*string, error)
+	GetAccountAliases(ctx context.Context, input *iam.ListAccountAliasesInput) ([]string, error)
 
 	// GetAccountPasswordPolicy returns the IAM AccountPasswordPolicy on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetAccountPasswordPolicy(ctx context.Context, input *iam.GetAccountPasswordPolicyInput) (*iam.PasswordPolicy, error)
+	GetAccountPasswordPolicy(ctx context.Context, input *iam.GetAccountPasswordPolicyInput) (*iamtypes.PasswordPolicy, error)
 
 	// GetAttachedGroupPolicies returns the IAM AttachedGroupPolicies on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetAttachedGroupPolicies(ctx context.Context, input *iam.ListAttachedGroupPoliciesInput) ([]*iam.AttachedPolicy, error)
+	GetAttachedGroupPolicies(ctx context.Context, input *iam.ListAttachedGroupPoliciesInput) ([]iamtypes.AttachedPolicy, error)
 
 	// GetAttachedRolePolicies returns the IAM AttachedRolePolicies on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetAttachedRolePolicies(ctx context.Context, input *iam.ListAttachedRolePoliciesInput) ([]*iam.AttachedPolicy, error)
+	GetAttachedRolePolicies(ctx context.Context, input *iam.ListAttachedRolePoliciesInput) ([]iamtypes.AttachedPolicy, error)
 
 	// GetAttachedUserPolicies returns the IAM AttachedUserPolicies on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetAttachedUserPolicies(ctx context.Context, input *iam.ListAttachedUserPoliciesInput) ([]*iam.AttachedPolicy, error)
+	GetAttachedUserPolicies(ctx context.Context, input *iam.ListAttachedUserPoliciesInput) ([]iamtypes.AttachedPolicy, error)
 
 	// GetGroupUsers returns a list of IAM users that are in the specified IAM group
 	// Returned values are commented in the interface doc comment block.
-	GetGroupUsers(ctx context.Context, input *iam.GetGroupInput) ([]*iam.User, error)
+	GetGroupUsers(ctx context.Context, input *iam.GetGroupInput) ([]iamtypes.User, error)
 
 	// GetGroupPolicies returns the IAM GroupPolicies on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetGroupPolicies(ctx context.Context, input *iam.ListGroupPoliciesInput) ([]*string, error)
+	GetGroupPolicies(ctx context.Context, input *iam.ListGroupPoliciesInput) ([]string, error)
 
 	// GetGroups returns the IAM Groups on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetGroups(ctx context.Context, input *iam.ListGroupsInput) ([]*iam.Group, error)
+	GetGroups(ctx context.Context, input *iam.ListGroupsInput) ([]iamtypes.Group, error)
 
 	// GetGroupsForUser returns the IAM GroupsForUser on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetGroupsForUser(ctx context.Context, input *iam.ListGroupsForUserInput) ([]*iam.Group, error)
+	GetGroupsForUser(ctx context.Context, input *iam.ListGroupsForUserInput) ([]iamtypes.Group, error)
 
 	// GetIstanceProfiles returns the IAM InstanceProfiles on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetInstanceProfiles(ctx context.Context, input *iam.ListInstanceProfilesInput) ([]*iam.InstanceProfile, error)
+	GetInstanceProfiles(ctx context.Context, input *iam.ListInstanceProfilesInput) ([]iamtypes.InstanceProfile, error)
 
 	// GetOpenIDConnectProviders returns the IAM OpenIDConnectProviders on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetOpenIDConnectProviders(ctx context.Context, input *iam.ListOpenIDConnectProvidersInput) ([]*iam.OpenIDConnectProviderListEntry, error)
+	GetOpenIDConnectProviders(ctx context.Context, input *iam.ListOpenIDConnectProvidersInput) ([]iamtypes.OpenIDConnectProviderListEntry, error)
 
 	// GetPolicies returns the IAM Policies on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetPolicies(ctx context.Context, input *iam.ListPoliciesInput) ([]*iam.Policy, error)
+	GetPolicies(ctx context.Context, input *iam.ListPoliciesInput) ([]iamtypes.Policy, error)
 
 	// GetRolePolicies returns the IAM RolePolicies on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetRolePolicies(ctx context.Context, input *iam.ListRolePoliciesInput) ([]*string, error)
+	GetRolePolicies(ctx context.Context, input *iam.ListRolePoliciesInput) ([]string, error)
 
 	// GetRoles returns the IAM Roles on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetRoles(ctx context.Context, input *iam.ListRolesInput) ([]*iam.Role, error)
+	GetRoles(ctx context.Context, input *iam.ListRolesInput) ([]iamtypes.Role, error)
 
 	// GetSAMLProviders returns the IAM SAMLProviders on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetSAMLProviders(ctx context.Context, input *iam.ListSAMLProvidersInput) ([]*iam.SAMLProviderListEntry, error)
+	GetSAMLProviders(ctx context.Context, input *iam.ListSAMLProvidersInput) ([]iamtypes.SAMLProviderListEntry, error)
 
 	// GetServerCertificates returns the IAM ServerCertificates on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetServerCertificates(ctx context.Context, input *iam.ListServerCertificatesInput) ([]*iam.ServerCertificateMetadata, error)
+	GetServerCertificates(ctx context.Context, input *iam.ListServerCertificatesInput) ([]iamtypes.ServerCertificateMetadata, error)
 
 	// GetSSHPublicKeys returns the IAM SSHPublicKeys on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetSSHPublicKeys(ctx context.Context, input *iam.ListSSHPublicKeysInput) ([]*iam.SSHPublicKeyMetadata, error)
+	GetSSHPublicKeys(ctx context.Context, input *iam.ListSSHPublicKeysInput) ([]iamtypes.SSHPublicKeyMetadata, error)
 
 	// GetUserPolicies returns the IAM UserPolicies on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetUserPolicies(ctx context.Context, input *iam.ListUserPoliciesInput) ([]*string, error)
+	GetUserPolicies(ctx context.Context, input *iam.ListUserPoliciesInput) ([]string, error)
 
 	// GetUsers returns the IAM Users on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetUsers(ctx context.Context, input *iam.ListUsersInput) ([]*iam.User, error)
+	GetUsers(ctx context.Context, input *iam.ListUsersInput) ([]iamtypes.User, error)
 
 	// GetKinesisStreams returns the Kinesis Streams on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetKinesisStreams(ctx context.Context, input *kinesis.ListStreamsInput) ([]*string, error)
+	GetKinesisStreams(ctx context.Context, input *kinesis.ListStreamsInput) ([]string, error)
 
 	// GetLambdaFunctions returns the lambda Functions on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetLambdaFunctions(ctx context.Context, input *lambda.ListFunctionsInput) ([]*lambda.FunctionConfiguration, error)
+	GetLambdaFunctions(ctx context.Context, input *lambda.ListFunctionsInput) ([]lambdatypes.FunctionConfiguration, error)
 
 	// GetLightsailInstances returns the Lightsail Instances on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetLightsailInstances(ctx context.Context, input *lightsail.GetInstancesInput) ([]*lightsail.Instance, error)
+	GetLightsailInstances(ctx context.Context, input *lightsail.GetInstancesInput) ([]lightsailtypes.Instance, error)
 
 	// GetMediastoreContainers returns the Mediastore Containers on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetMediastoreContainers(ctx context.Context, input *mediastore.ListContainersInput) ([]*mediastore.Container, error)
+	GetMediastoreContainers(ctx context.Context, input *mediastore.ListContainersInput) ([]mediastoretypes.Container, error)
 
 	// GetMQBrokers returns the MQ Brokers on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetMQBrokers(ctx context.Context, input *mq.ListBrokersInput) ([]*mq.BrokerSummary, error)
+	GetMQBrokers(ctx context.Context, input *mq.ListBrokersInput) ([]mqtypes.BrokerSummary, error)
 
 	// GetNeptuneDBClusters returns the Neptune DBClusters on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetNeptuneDBClusters(ctx context.Context, input *neptune.DescribeDBClustersInput) ([]*neptune.DBCluster, error)
+	GetNeptuneDBClusters(ctx context.Context, input *neptune.DescribeDBClustersInput) ([]neptunetypes.DBCluster, error)
 
 	// GetRDSDBClusters returns the RDS DB Clusters on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetRDSDBClusters(ctx context.Context, input *rds.DescribeDBClustersInput) ([]*rds.DBCluster, error)
+	GetRDSDBClusters(ctx context.Context, input *rds.DescribeDBClustersInput) ([]rdstypes.DBCluster, error)
 
 	// GetDBInstances returns all DB instances based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetDBInstances(ctx context.Context, input *rds.DescribeDBInstancesInput) ([]*rds.DBInstance, error)
+	GetDBInstances(ctx context.Context, input *rds.DescribeDBInstancesInput) ([]rdstypes.DBInstance, error)
 
 	// GetDBParameterGroups returns all DB parameterGroups based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetDBParameterGroups(ctx context.Context, input *rds.DescribeDBParameterGroupsInput) ([]*rds.DBParameterGroup, error)
+	GetDBParameterGroups(ctx context.Context, input *rds.DescribeDBParameterGroupsInput) ([]rdstypes.DBParameterGroup, error)
 
 	// GetDBSubnetGroups returns all DB DBSubnetGroups based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetDBSubnetGroups(ctx context.Context, input *rds.DescribeDBSubnetGroupsInput) ([]*rds.DBSubnetGroup, error)
+	GetDBSubnetGroups(ctx context.Context, input *rds.DescribeDBSubnetGroupsInput) ([]rdstypes.DBSubnetGroup, error)
 
 	// GetRDSGlobalClusters returns the RDS Global Clusters on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetRDSGlobalClusters(ctx context.Context, input *rds.DescribeGlobalClustersInput) ([]*rds.GlobalCluster, error)
+	GetRDSGlobalClusters(ctx context.Context, input *rds.DescribeGlobalClustersInput) ([]rdstypes.GlobalCluster, error)
 
 	// GetDBInstancesTags returns a list of tags from an ARN, extra filters for tags can also be provided.
 	// Returned values are commented in the interface doc comment block.
-	GetDBInstancesTags(ctx context.Context, input *rds.ListTagsForResourceInput) ([]*rds.Tag, error)
+	GetDBInstancesTags(ctx context.Context, input *rds.ListTagsForResourceInput) ([]rdstypes.Tag, error)
 
 	// GetRedshiftClusters returns the Redshift Clusters on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetRedshiftClusters(ctx context.Context, input *redshift.DescribeClustersInput) ([]*redshift.Cluster, error)
+	GetRedshiftClusters(ctx context.Context, input *redshift.DescribeClustersInput) ([]redshifttypes.Cluster, error)
 
 	// GetQueryLoggingConfigs returns the Route53 QueryLoggingConfigs on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetQueryLoggingConfigs(ctx context.Context, input *route53.ListQueryLoggingConfigsInput) ([]*route53.QueryLoggingConfig, error)
+	GetQueryLoggingConfigs(ctx context.Context, input *route53.ListQueryLoggingConfigsInput) ([]route53types.QueryLoggingConfig, error)
 
 	// GetHealthChecks returns the Route53 HealthChecks on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetHealthChecks(ctx context.Context, input *route53.ListHealthChecksInput) ([]*route53.HealthCheck, error)
+	GetHealthChecks(ctx context.Context, input *route53.ListHealthChecksInput) ([]route53types.HealthCheck, error)
 
 	// GetHostedZones returns the Route53 HostedZones on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetHostedZones(ctx context.Context, input *route53.ListHostedZonesInput) ([]*route53.HostedZone, error)
+	GetHostedZones(ctx context.Context, input *route53.ListHostedZonesInput) ([]route53types.HostedZone, error)
 
 	// GetResourceRecordSets returns the Route53 ResourceRecordSets on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetResourceRecordSets(ctx context.Context, input *route53.ListResourceRecordSetsInput) ([]*route53.ResourceRecordSet, error)
+	GetResourceRecordSets(ctx context.Context, input *route53.ListResourceRecordSetsInput) ([]route53types.ResourceRecordSet, error)
 
 	// GetReusableDelegationSets returns the Route53 ReusableDelegationSets on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetReusableDelegationSets(ctx context.Context, input *route53.ListReusableDelegationSetsInput) ([]*route53.DelegationSet, error)
+	GetReusableDelegationSets(ctx context.Context, input *route53.ListReusableDelegationSetsInput) ([]route53types.DelegationSet, error)
 
 	// GetVPCAssociationAuthorizations returns the Route53 VPCAssociationAuthorizations on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetVPCAssociationAuthorizations(ctx context.Context, input *route53.ListVPCAssociationAuthorizationsInput) ([]*route53.VPC, error)
+	GetVPCAssociationAuthorizations(ctx context.Context, input *route53.ListVPCAssociationAuthorizationsInput) ([]route53types.VPC, error)
 
 	// GetResolverEndpoints returns the Route53Resolver ResolverEndpoints on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetResolverEndpoints(ctx context.Context, input *route53resolver.ListResolverEndpointsInput) ([]*route53resolver.ResolverEndpoint, error)
+	GetResolverEndpoints(ctx context.Context, input *route53resolver.ListResolverEndpointsInput) ([]route53resolvertypes.ResolverEndpoint, error)
 
 	// GetResolverRuleAssociations returns the Route53Resolver ResolverRuleAssociations on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetResolverRuleAssociations(ctx context.Context, input *route53resolver.ListResolverRuleAssociationsInput) ([]*route53resolver.ResolverRuleAssociation, error)
+	GetResolverRuleAssociations(ctx context.Context, input *route53resolver.ListResolverRuleAssociationsInput) ([]route53resolvertypes.ResolverRuleAssociation, error)
 
 	// GetResolverRules returns the Route53Resolver ResolverRules on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetResolverRules(ctx context.Context, input *route53resolver.ListResolverRulesInput) ([]*route53resolver.ResolverRule, error)
+	GetResolverRules(ctx context.Context, input *route53resolver.ListResolverRulesInput) ([]route53resolvertypes.ResolverRule, error)
 
 	// ListBuckets returns all S3 buckets based on the input given and specifically
 	// filtering by Location as ListBuckets does not do it by itself
 	// Returned values are commented in the interface doc comment block.
-	ListBuckets(ctx context.Context, input *s3.ListBucketsInput) ([]*s3.Bucket, error)
+	ListBuckets(ctx context.Context, input *s3.ListBucketsInput) ([]s3types.Bucket, error)
 
 	// GetBucketTags returns tags associated with S3 buckets based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetBucketTags(ctx context.Context, input *s3.GetBucketTaggingInput) ([]*s3.Tag, error)
+	GetBucketTags(ctx context.Context, input *s3.GetBucketTaggingInput) ([]s3types.Tag, error)
 
 	// ListObjects returns a list of all S3 objects in a bucket based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	ListObjects(ctx context.Context, input *s3.ListObjectsInput) ([]*s3.Object, error)
+	ListObjects(ctx context.Context, input *s3.ListObjectsInput) ([]s3types.Object, error)
 
 	// GetObjectsTags returns tags associated with S3 objects based on the input given.
 	// Returned values are commented in the interface doc comment block.
-	GetObjectsTags(ctx context.Context, input *s3.GetObjectTaggingInput) ([]*s3.Tag, error)
+	GetObjectsTags(ctx context.Context, input *s3.GetObjectTaggingInput) ([]s3types.Tag, error)
 
 	// GetActiveReceiptRuleSet returns the SES ActiveReceiptRuleSet on the given input
 	// Returned values are commented in the interface doc comment block.
@@ -576,47 +613,47 @@ type Reader interface {
 
 	// GetActiveReceiptRulesSet returns the SES ActiveReceiptRuleSet on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetActiveReceiptRulesSet(ctx context.Context, input *ses.DescribeActiveReceiptRuleSetInput) ([]*ses.ReceiptRule, error)
+	GetActiveReceiptRulesSet(ctx context.Context, input *ses.DescribeActiveReceiptRuleSetInput) ([]sestypes.ReceiptRule, error)
 
 	// GetConfigurationSets returns the SES ConfigurationSets on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetConfigurationSets(ctx context.Context, input *ses.ListConfigurationSetsInput) ([]*ses.ConfigurationSet, error)
+	GetConfigurationSets(ctx context.Context, input *ses.ListConfigurationSetsInput) ([]sestypes.ConfigurationSet, error)
 
 	// GetIdentities returns the SES Identities on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetIdentities(ctx context.Context, input *ses.ListIdentitiesInput) ([]*string, error)
+	GetIdentities(ctx context.Context, input *ses.ListIdentitiesInput) ([]string, error)
 
 	// GetIdentityNotificationAttributes returns the SES IdentityNotificationAttributes on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetIdentityNotificationAttributes(ctx context.Context, input *ses.GetIdentityNotificationAttributesInput) (map[string]*ses.IdentityNotificationAttributes, error)
+	GetIdentityNotificationAttributes(ctx context.Context, input *ses.GetIdentityNotificationAttributesInput) (map[string]sestypes.IdentityNotificationAttributes, error)
 
 	// GetReceiptFilters returns the SES ReceiptFilters on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetReceiptFilters(ctx context.Context, input *ses.ListReceiptFiltersInput) ([]*ses.ReceiptFilter, error)
+	GetReceiptFilters(ctx context.Context, input *ses.ListReceiptFiltersInput) ([]sestypes.ReceiptFilter, error)
 
 	// GetTemplates returns the SES Templates on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetTemplates(ctx context.Context, input *ses.ListTemplatesInput) ([]*ses.TemplateMetadata, error)
+	GetTemplates(ctx context.Context, input *ses.ListTemplatesInput) ([]sestypes.TemplateMetadata, error)
 
 	// GetSQSQueues returns the SQS Queues on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetSQSQueues(ctx context.Context, input *sqs.ListQueuesInput) ([]*string, error)
+	GetSQSQueues(ctx context.Context, input *sqs.ListQueuesInput) ([]string, error)
 
 	// GetStorageGatewayGateways returns the StorageGateway Gateways on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetStorageGatewayGateways(ctx context.Context, input *storagegateway.ListGatewaysInput) ([]*storagegateway.GatewayInfo, error)
+	GetStorageGatewayGateways(ctx context.Context, input *storagegateway.ListGatewaysInput) ([]storagegatewaytypes.GatewayInfo, error)
 }
 
-func (c *connector) GetAPIGatewayDeployments(ctx context.Context, input *apigateway.GetDeploymentsInput) ([]*apigateway.Deployment, error) {
+func (c *connector) GetAPIGatewayDeployments(ctx context.Context, input *apigateway.GetDeploymentsInput) ([]apigatewaytypes.Deployment, error) {
 	if c.svc.apigateway == nil {
-		c.svc.apigateway = apigateway.New(c.svc.session)
+		c.svc.apigateway = apigateway.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*apigateway.Deployment, 0)
+	opt := make([]apigatewaytypes.Deployment, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.apigateway.GetDeploymentsWithContext(ctx, input)
+		o, err := c.svc.apigateway.GetDeployments(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -638,16 +675,16 @@ func (c *connector) GetAPIGatewayDeployments(ctx context.Context, input *apigate
 	return opt, nil
 }
 
-func (c *connector) GetAPIGatewayResources(ctx context.Context, input *apigateway.GetResourcesInput) ([]*apigateway.Resource, error) {
+func (c *connector) GetAPIGatewayResources(ctx context.Context, input *apigateway.GetResourcesInput) ([]apigatewaytypes.Resource, error) {
 	if c.svc.apigateway == nil {
-		c.svc.apigateway = apigateway.New(c.svc.session)
+		c.svc.apigateway = apigateway.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*apigateway.Resource, 0)
+	opt := make([]apigatewaytypes.Resource, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.apigateway.GetResourcesWithContext(ctx, input)
+		o, err := c.svc.apigateway.GetResources(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -669,16 +706,16 @@ func (c *connector) GetAPIGatewayResources(ctx context.Context, input *apigatewa
 	return opt, nil
 }
 
-func (c *connector) GetAPIGatewayRestAPIs(ctx context.Context, input *apigateway.GetRestApisInput) ([]*apigateway.RestApi, error) {
+func (c *connector) GetAPIGatewayRestAPIs(ctx context.Context, input *apigateway.GetRestApisInput) ([]apigatewaytypes.RestApi, error) {
 	if c.svc.apigateway == nil {
-		c.svc.apigateway = apigateway.New(c.svc.session)
+		c.svc.apigateway = apigateway.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*apigateway.RestApi, 0)
+	opt := make([]apigatewaytypes.RestApi, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.apigateway.GetRestApisWithContext(ctx, input)
+		o, err := c.svc.apigateway.GetRestApis(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -700,16 +737,16 @@ func (c *connector) GetAPIGatewayRestAPIs(ctx context.Context, input *apigateway
 	return opt, nil
 }
 
-func (c *connector) GetAPIGatewayStages(ctx context.Context, input *apigateway.GetStagesInput) ([]*apigateway.Stage, error) {
+func (c *connector) GetAPIGatewayStages(ctx context.Context, input *apigateway.GetStagesInput) ([]apigatewaytypes.Stage, error) {
 	if c.svc.apigateway == nil {
-		c.svc.apigateway = apigateway.New(c.svc.session)
+		c.svc.apigateway = apigateway.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*apigateway.Stage, 0)
+	opt := make([]apigatewaytypes.Stage, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.apigateway.GetStagesWithContext(ctx, input)
+		o, err := c.svc.apigateway.GetStages(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -727,16 +764,16 @@ func (c *connector) GetAPIGatewayStages(ctx context.Context, input *apigateway.G
 	return opt, nil
 }
 
-func (c *connector) GetAthenaWorkGroups(ctx context.Context, input *athena.ListWorkGroupsInput) ([]*athena.WorkGroupSummary, error) {
+func (c *connector) GetAthenaWorkGroups(ctx context.Context, input *athena.ListWorkGroupsInput) ([]athenatypes.WorkGroupSummary, error) {
 	if c.svc.athena == nil {
-		c.svc.athena = athena.New(c.svc.session)
+		c.svc.athena = athena.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*athena.WorkGroupSummary, 0)
+	opt := make([]athenatypes.WorkGroupSummary, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.athena.ListWorkGroupsWithContext(ctx, input)
+		o, err := c.svc.athena.ListWorkGroups(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -758,16 +795,16 @@ func (c *connector) GetAthenaWorkGroups(ctx context.Context, input *athena.ListW
 	return opt, nil
 }
 
-func (c *connector) GetAutoScalingGroups(ctx context.Context, input *autoscaling.DescribeAutoScalingGroupsInput) ([]*autoscaling.Group, error) {
+func (c *connector) GetAutoScalingGroups(ctx context.Context, input *autoscaling.DescribeAutoScalingGroupsInput) ([]autoscalingtypes.AutoScalingGroup, error) {
 	if c.svc.autoscaling == nil {
-		c.svc.autoscaling = autoscaling.New(c.svc.session)
+		c.svc.autoscaling = autoscaling.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*autoscaling.Group, 0)
+	opt := make([]autoscalingtypes.AutoScalingGroup, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.autoscaling.DescribeAutoScalingGroupsWithContext(ctx, input)
+		o, err := c.svc.autoscaling.DescribeAutoScalingGroups(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -789,16 +826,16 @@ func (c *connector) GetAutoScalingGroups(ctx context.Context, input *autoscaling
 	return opt, nil
 }
 
-func (c *connector) GetLaunchConfigurations(ctx context.Context, input *autoscaling.DescribeLaunchConfigurationsInput) ([]*autoscaling.LaunchConfiguration, error) {
+func (c *connector) GetLaunchConfigurations(ctx context.Context, input *autoscaling.DescribeLaunchConfigurationsInput) ([]autoscalingtypes.LaunchConfiguration, error) {
 	if c.svc.autoscaling == nil {
-		c.svc.autoscaling = autoscaling.New(c.svc.session)
+		c.svc.autoscaling = autoscaling.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*autoscaling.LaunchConfiguration, 0)
+	opt := make([]autoscalingtypes.LaunchConfiguration, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.autoscaling.DescribeLaunchConfigurationsWithContext(ctx, input)
+		o, err := c.svc.autoscaling.DescribeLaunchConfigurations(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -820,16 +857,16 @@ func (c *connector) GetLaunchConfigurations(ctx context.Context, input *autoscal
 	return opt, nil
 }
 
-func (c *connector) GetAutoScalingPolicies(ctx context.Context, input *autoscaling.DescribePoliciesInput) ([]*autoscaling.ScalingPolicy, error) {
+func (c *connector) GetAutoScalingPolicies(ctx context.Context, input *autoscaling.DescribePoliciesInput) ([]autoscalingtypes.ScalingPolicy, error) {
 	if c.svc.autoscaling == nil {
-		c.svc.autoscaling = autoscaling.New(c.svc.session)
+		c.svc.autoscaling = autoscaling.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*autoscaling.ScalingPolicy, 0)
+	opt := make([]autoscalingtypes.ScalingPolicy, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.autoscaling.DescribePoliciesWithContext(ctx, input)
+		o, err := c.svc.autoscaling.DescribePolicies(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -851,16 +888,16 @@ func (c *connector) GetAutoScalingPolicies(ctx context.Context, input *autoscali
 	return opt, nil
 }
 
-func (c *connector) GetAutoScalingScheduledActions(ctx context.Context, input *autoscaling.DescribeScheduledActionsInput) ([]*autoscaling.ScheduledUpdateGroupAction, error) {
+func (c *connector) GetAutoScalingScheduledActions(ctx context.Context, input *autoscaling.DescribeScheduledActionsInput) ([]autoscalingtypes.ScheduledUpdateGroupAction, error) {
 	if c.svc.autoscaling == nil {
-		c.svc.autoscaling = autoscaling.New(c.svc.session)
+		c.svc.autoscaling = autoscaling.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*autoscaling.ScheduledUpdateGroupAction, 0)
+	opt := make([]autoscalingtypes.ScheduledUpdateGroupAction, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.autoscaling.DescribeScheduledActionsWithContext(ctx, input)
+		o, err := c.svc.autoscaling.DescribeScheduledActions(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -882,16 +919,16 @@ func (c *connector) GetAutoScalingScheduledActions(ctx context.Context, input *a
 	return opt, nil
 }
 
-func (c *connector) GetBatchJobDefinitions(ctx context.Context, input *batch.DescribeJobDefinitionsInput) ([]*batch.JobDefinition, error) {
+func (c *connector) GetBatchJobDefinitions(ctx context.Context, input *batch.DescribeJobDefinitionsInput) ([]batchtypes.JobDefinition, error) {
 	if c.svc.batch == nil {
-		c.svc.batch = batch.New(c.svc.session)
+		c.svc.batch = batch.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*batch.JobDefinition, 0)
+	opt := make([]batchtypes.JobDefinition, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.batch.DescribeJobDefinitionsWithContext(ctx, input)
+		o, err := c.svc.batch.DescribeJobDefinitions(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -913,16 +950,16 @@ func (c *connector) GetBatchJobDefinitions(ctx context.Context, input *batch.Des
 	return opt, nil
 }
 
-func (c *connector) GetCloudFrontDistributions(ctx context.Context, input *cloudfront.ListDistributionsInput) ([]*cloudfront.DistributionSummary, error) {
+func (c *connector) GetCloudFrontDistributions(ctx context.Context, input *cloudfront.ListDistributionsInput) ([]cloudfronttypes.DistributionSummary, error) {
 	if c.svc.cloudfront == nil {
-		c.svc.cloudfront = cloudfront.New(c.svc.session)
+		c.svc.cloudfront = cloudfront.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*cloudfront.DistributionSummary, 0)
+	opt := make([]cloudfronttypes.DistributionSummary, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.cloudfront.ListDistributionsWithContext(ctx, input)
+		o, err := c.svc.cloudfront.ListDistributions(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -944,16 +981,16 @@ func (c *connector) GetCloudFrontDistributions(ctx context.Context, input *cloud
 	return opt, nil
 }
 
-func (c *connector) GetCloudFrontOriginAccessIdentities(ctx context.Context, input *cloudfront.ListCloudFrontOriginAccessIdentitiesInput) ([]*cloudfront.OriginAccessIdentitySummary, error) {
+func (c *connector) GetCloudFrontOriginAccessIdentities(ctx context.Context, input *cloudfront.ListCloudFrontOriginAccessIdentitiesInput) ([]cloudfronttypes.CloudFrontOriginAccessIdentitySummary, error) {
 	if c.svc.cloudfront == nil {
-		c.svc.cloudfront = cloudfront.New(c.svc.session)
+		c.svc.cloudfront = cloudfront.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*cloudfront.OriginAccessIdentitySummary, 0)
+	opt := make([]cloudfronttypes.CloudFrontOriginAccessIdentitySummary, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.cloudfront.ListCloudFrontOriginAccessIdentitiesWithContext(ctx, input)
+		o, err := c.svc.cloudfront.ListCloudFrontOriginAccessIdentities(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -975,16 +1012,16 @@ func (c *connector) GetCloudFrontOriginAccessIdentities(ctx context.Context, inp
 	return opt, nil
 }
 
-func (c *connector) GetCloudFrontPublicKeys(ctx context.Context, input *cloudfront.ListPublicKeysInput) ([]*cloudfront.PublicKeySummary, error) {
+func (c *connector) GetCloudFrontPublicKeys(ctx context.Context, input *cloudfront.ListPublicKeysInput) ([]cloudfronttypes.PublicKeySummary, error) {
 	if c.svc.cloudfront == nil {
-		c.svc.cloudfront = cloudfront.New(c.svc.session)
+		c.svc.cloudfront = cloudfront.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*cloudfront.PublicKeySummary, 0)
+	opt := make([]cloudfronttypes.PublicKeySummary, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.cloudfront.ListPublicKeysWithContext(ctx, input)
+		o, err := c.svc.cloudfront.ListPublicKeys(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1006,16 +1043,16 @@ func (c *connector) GetCloudFrontPublicKeys(ctx context.Context, input *cloudfro
 	return opt, nil
 }
 
-func (c *connector) GetMetricAlarms(ctx context.Context, input *cloudwatch.DescribeAlarmsInput) ([]*cloudwatch.MetricAlarm, error) {
+func (c *connector) GetMetricAlarms(ctx context.Context, input *cloudwatch.DescribeAlarmsInput) ([]cloudwatchtypes.MetricAlarm, error) {
 	if c.svc.cloudwatch == nil {
-		c.svc.cloudwatch = cloudwatch.New(c.svc.session)
+		c.svc.cloudwatch = cloudwatch.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*cloudwatch.MetricAlarm, 0)
+	opt := make([]cloudwatchtypes.MetricAlarm, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.cloudwatch.DescribeAlarmsWithContext(ctx, input)
+		o, err := c.svc.cloudwatch.DescribeAlarms(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1037,16 +1074,16 @@ func (c *connector) GetMetricAlarms(ctx context.Context, input *cloudwatch.Descr
 	return opt, nil
 }
 
-func (c *connector) GetRecordedResourceCounts(ctx context.Context, input *configservice.GetDiscoveredResourceCountsInput) ([]*configservice.ResourceCount, error) {
+func (c *connector) GetRecordedResourceCounts(ctx context.Context, input *configservice.GetDiscoveredResourceCountsInput) ([]configservicetypes.ResourceCount, error) {
 	if c.svc.configservice == nil {
-		c.svc.configservice = configservice.New(c.svc.session)
+		c.svc.configservice = configservice.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*configservice.ResourceCount, 0)
+	opt := make([]configservicetypes.ResourceCount, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.configservice.GetDiscoveredResourceCountsWithContext(ctx, input)
+		o, err := c.svc.configservice.GetDiscoveredResourceCounts(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1068,16 +1105,16 @@ func (c *connector) GetRecordedResourceCounts(ctx context.Context, input *config
 	return opt, nil
 }
 
-func (c *connector) GetDAXClusters(ctx context.Context, input *dax.DescribeClustersInput) ([]*dax.Cluster, error) {
+func (c *connector) GetDAXClusters(ctx context.Context, input *dax.DescribeClustersInput) ([]daxtypes.Cluster, error) {
 	if c.svc.dax == nil {
-		c.svc.dax = dax.New(c.svc.session)
+		c.svc.dax = dax.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*dax.Cluster, 0)
+	opt := make([]daxtypes.Cluster, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.dax.DescribeClustersWithContext(ctx, input)
+		o, err := c.svc.dax.DescribeClusters(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1099,16 +1136,16 @@ func (c *connector) GetDAXClusters(ctx context.Context, input *dax.DescribeClust
 	return opt, nil
 }
 
-func (c *connector) GetDirectConnectGateways(ctx context.Context, input *directconnect.DescribeDirectConnectGatewaysInput) ([]*directconnect.Gateway, error) {
+func (c *connector) GetDirectConnectGateways(ctx context.Context, input *directconnect.DescribeDirectConnectGatewaysInput) ([]directconnecttypes.DirectConnectGateway, error) {
 	if c.svc.directconnect == nil {
-		c.svc.directconnect = directconnect.New(c.svc.session)
+		c.svc.directconnect = directconnect.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*directconnect.Gateway, 0)
+	opt := make([]directconnecttypes.DirectConnectGateway, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.directconnect.DescribeDirectConnectGatewaysWithContext(ctx, input)
+		o, err := c.svc.directconnect.DescribeDirectConnectGateways(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1130,16 +1167,16 @@ func (c *connector) GetDirectConnectGateways(ctx context.Context, input *directc
 	return opt, nil
 }
 
-func (c *connector) GetDirectoryServiceDirectories(ctx context.Context, input *directoryservice.DescribeDirectoriesInput) ([]*directoryservice.DirectoryDescription, error) {
+func (c *connector) GetDirectoryServiceDirectories(ctx context.Context, input *directoryservice.DescribeDirectoriesInput) ([]directoryservicetypes.DirectoryDescription, error) {
 	if c.svc.directoryservice == nil {
-		c.svc.directoryservice = directoryservice.New(c.svc.session)
+		c.svc.directoryservice = directoryservice.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*directoryservice.DirectoryDescription, 0)
+	opt := make([]directoryservicetypes.DirectoryDescription, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.directoryservice.DescribeDirectoriesWithContext(ctx, input)
+		o, err := c.svc.directoryservice.DescribeDirectories(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1161,16 +1198,16 @@ func (c *connector) GetDirectoryServiceDirectories(ctx context.Context, input *d
 	return opt, nil
 }
 
-func (c *connector) GetDMSDescribeReplicationInstances(ctx context.Context, input *databasemigrationservice.DescribeReplicationInstancesInput) ([]*databasemigrationservice.ReplicationInstance, error) {
+func (c *connector) GetDMSDescribeReplicationInstances(ctx context.Context, input *databasemigrationservice.DescribeReplicationInstancesInput) ([]databasemigrationservicetypes.ReplicationInstance, error) {
 	if c.svc.databasemigrationservice == nil {
-		c.svc.databasemigrationservice = databasemigrationservice.New(c.svc.session)
+		c.svc.databasemigrationservice = databasemigrationservice.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*databasemigrationservice.ReplicationInstance, 0)
+	opt := make([]databasemigrationservicetypes.ReplicationInstance, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.databasemigrationservice.DescribeReplicationInstancesWithContext(ctx, input)
+		o, err := c.svc.databasemigrationservice.DescribeReplicationInstances(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1192,16 +1229,16 @@ func (c *connector) GetDMSDescribeReplicationInstances(ctx context.Context, inpu
 	return opt, nil
 }
 
-func (c *connector) GetDynamodbGlobalTables(ctx context.Context, input *dynamodb.ListGlobalTablesInput) ([]*dynamodb.GlobalTable, error) {
+func (c *connector) GetDynamodbGlobalTables(ctx context.Context, input *dynamodb.ListGlobalTablesInput) ([]dynamodbtypes.GlobalTable, error) {
 	if c.svc.dynamodb == nil {
-		c.svc.dynamodb = dynamodb.New(c.svc.session)
+		c.svc.dynamodb = dynamodb.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*dynamodb.GlobalTable, 0)
+	opt := make([]dynamodbtypes.GlobalTable, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.dynamodb.ListGlobalTablesWithContext(ctx, input)
+		o, err := c.svc.dynamodb.ListGlobalTables(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1223,16 +1260,16 @@ func (c *connector) GetDynamodbGlobalTables(ctx context.Context, input *dynamodb
 	return opt, nil
 }
 
-func (c *connector) GetDynamodbTables(ctx context.Context, input *dynamodb.ListTablesInput) ([]*string, error) {
+func (c *connector) GetDynamodbTables(ctx context.Context, input *dynamodb.ListTablesInput) ([]string, error) {
 	if c.svc.dynamodb == nil {
-		c.svc.dynamodb = dynamodb.New(c.svc.session)
+		c.svc.dynamodb = dynamodb.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*string, 0)
+	opt := make([]string, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.dynamodb.ListTablesWithContext(ctx, input)
+		o, err := c.svc.dynamodb.ListTables(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1254,16 +1291,16 @@ func (c *connector) GetDynamodbTables(ctx context.Context, input *dynamodb.ListT
 	return opt, nil
 }
 
-func (c *connector) GetAddresses(ctx context.Context, input *ec2.DescribeAddressesInput) ([]*ec2.Address, error) {
+func (c *connector) GetAddresses(ctx context.Context, input *ec2.DescribeAddressesInput) ([]ec2types.Address, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.Address, 0)
+	opt := make([]ec2types.Address, 0)
 
-	hasNextToken := true
+hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeAddressesWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeAddresses(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1281,16 +1318,16 @@ func (c *connector) GetAddresses(ctx context.Context, input *ec2.DescribeAddress
 	return opt, nil
 }
 
-func (c *connector) GetImages(ctx context.Context, input *ec2.DescribeImagesInput) ([]*ec2.Image, error) {
+func (c *connector) GetImages(ctx context.Context, input *ec2.DescribeImagesInput) ([]ec2types.Image, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.Image, 0)
+	opt := make([]ec2types.Image, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeImagesWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeImages(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1308,21 +1345,21 @@ func (c *connector) GetImages(ctx context.Context, input *ec2.DescribeImagesInpu
 	return opt, nil
 }
 
-func (c *connector) GetOwnImages(ctx context.Context, input *ec2.DescribeImagesInput) ([]*ec2.Image, error) {
+func (c *connector) GetOwnImages(ctx context.Context, input *ec2.DescribeImagesInput) ([]ec2types.Image, error) {
 
 	if input == nil {
 		input = &ec2.DescribeImagesInput{}
 	}
 	input.Owners = append(input.Owners, c.accountID)
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.Image, 0)
+	opt := make([]ec2types.Image, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeImagesWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeImages(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1340,16 +1377,16 @@ func (c *connector) GetOwnImages(ctx context.Context, input *ec2.DescribeImagesI
 	return opt, nil
 }
 
-func (c *connector) GetInstances(ctx context.Context, input *ec2.DescribeInstancesInput) ([]*ec2.Instance, error) {
+func (c *connector) GetInstances(ctx context.Context, input *ec2.DescribeInstancesInput) ([]ec2types.Instance, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.Instance, 0)
+	opt := make([]ec2types.Instance, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeInstancesWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeInstances(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1373,16 +1410,16 @@ func (c *connector) GetInstances(ctx context.Context, input *ec2.DescribeInstanc
 	return opt, nil
 }
 
-func (c *connector) GetEC2InternetGateways(ctx context.Context, input *ec2.DescribeInternetGatewaysInput) ([]*ec2.InternetGateway, error) {
+func (c *connector) GetEC2InternetGateways(ctx context.Context, input *ec2.DescribeInternetGatewaysInput) ([]ec2types.InternetGateway, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.InternetGateway, 0)
+	opt := make([]ec2types.InternetGateway, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeInternetGatewaysWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeInternetGateways(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1404,16 +1441,16 @@ func (c *connector) GetEC2InternetGateways(ctx context.Context, input *ec2.Descr
 	return opt, nil
 }
 
-func (c *connector) GetKeyPairs(ctx context.Context, input *ec2.DescribeKeyPairsInput) ([]*ec2.KeyPairInfo, error) {
+func (c *connector) GetKeyPairs(ctx context.Context, input *ec2.DescribeKeyPairsInput) ([]ec2types.KeyPairInfo, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.KeyPairInfo, 0)
+	opt := make([]ec2types.KeyPairInfo, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeKeyPairsWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeKeyPairs(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1431,16 +1468,16 @@ func (c *connector) GetKeyPairs(ctx context.Context, input *ec2.DescribeKeyPairs
 	return opt, nil
 }
 
-func (c *connector) GetLaunchTemplates(ctx context.Context, input *ec2.DescribeLaunchTemplatesInput) ([]*ec2.LaunchTemplate, error) {
+func (c *connector) GetLaunchTemplates(ctx context.Context, input *ec2.DescribeLaunchTemplatesInput) ([]ec2types.LaunchTemplate, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.LaunchTemplate, 0)
+	opt := make([]ec2types.LaunchTemplate, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeLaunchTemplatesWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeLaunchTemplates(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1462,16 +1499,16 @@ func (c *connector) GetLaunchTemplates(ctx context.Context, input *ec2.DescribeL
 	return opt, nil
 }
 
-func (c *connector) GetEC2NatGateways(ctx context.Context, input *ec2.DescribeNatGatewaysInput) ([]*ec2.NatGateway, error) {
+func (c *connector) GetEC2NatGateways(ctx context.Context, input *ec2.DescribeNatGatewaysInput) ([]ec2types.NatGateway, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.NatGateway, 0)
+	opt := make([]ec2types.NatGateway, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeNatGatewaysWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeNatGateways(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1493,16 +1530,16 @@ func (c *connector) GetEC2NatGateways(ctx context.Context, input *ec2.DescribeNa
 	return opt, nil
 }
 
-func (c *connector) GetSecurityGroups(ctx context.Context, input *ec2.DescribeSecurityGroupsInput) ([]*ec2.SecurityGroup, error) {
+func (c *connector) GetSecurityGroups(ctx context.Context, input *ec2.DescribeSecurityGroupsInput) ([]ec2types.SecurityGroup, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.SecurityGroup, 0)
+	opt := make([]ec2types.SecurityGroup, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeSecurityGroupsWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeSecurityGroups(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1524,16 +1561,16 @@ func (c *connector) GetSecurityGroups(ctx context.Context, input *ec2.DescribeSe
 	return opt, nil
 }
 
-func (c *connector) GetSnapshots(ctx context.Context, input *ec2.DescribeSnapshotsInput) ([]*ec2.Snapshot, error) {
+func (c *connector) GetSnapshots(ctx context.Context, input *ec2.DescribeSnapshotsInput) ([]ec2types.Snapshot, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.Snapshot, 0)
+	opt := make([]ec2types.Snapshot, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeSnapshotsWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeSnapshots(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1555,21 +1592,21 @@ func (c *connector) GetSnapshots(ctx context.Context, input *ec2.DescribeSnapsho
 	return opt, nil
 }
 
-func (c *connector) GetOwnSnapshots(ctx context.Context, input *ec2.DescribeSnapshotsInput) ([]*ec2.Snapshot, error) {
+func (c *connector) GetOwnSnapshots(ctx context.Context, input *ec2.DescribeSnapshotsInput) ([]ec2types.Snapshot, error) {
 
 	if input == nil {
 		input = &ec2.DescribeSnapshotsInput{}
 	}
 	input.OwnerIds = append(input.OwnerIds, c.accountID)
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.Snapshot, 0)
+	opt := make([]ec2types.Snapshot, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeSnapshotsWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeSnapshots(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1591,16 +1628,16 @@ func (c *connector) GetOwnSnapshots(ctx context.Context, input *ec2.DescribeSnap
 	return opt, nil
 }
 
-func (c *connector) GetSubnets(ctx context.Context, input *ec2.DescribeSubnetsInput) ([]*ec2.Subnet, error) {
+func (c *connector) GetSubnets(ctx context.Context, input *ec2.DescribeSubnetsInput) ([]ec2types.Subnet, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.Subnet, 0)
+	opt := make([]ec2types.Subnet, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeSubnetsWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeSubnets(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1622,16 +1659,16 @@ func (c *connector) GetSubnets(ctx context.Context, input *ec2.DescribeSubnetsIn
 	return opt, nil
 }
 
-func (c *connector) GetVolumes(ctx context.Context, input *ec2.DescribeVolumesInput) ([]*ec2.Volume, error) {
+func (c *connector) GetVolumes(ctx context.Context, input *ec2.DescribeVolumesInput) ([]ec2types.Volume, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.Volume, 0)
+	opt := make([]ec2types.Volume, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeVolumesWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeVolumes(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1653,16 +1690,16 @@ func (c *connector) GetVolumes(ctx context.Context, input *ec2.DescribeVolumesIn
 	return opt, nil
 }
 
-func (c *connector) GetVpcEndpoints(ctx context.Context, input *ec2.DescribeVpcEndpointsInput) ([]*ec2.VpcEndpoint, error) {
+func (c *connector) GetVpcEndpoints(ctx context.Context, input *ec2.DescribeVpcEndpointsInput) ([]ec2types.VpcEndpoint, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.VpcEndpoint, 0)
+	opt := make([]ec2types.VpcEndpoint, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeVpcEndpointsWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeVpcEndpoints(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1684,16 +1721,16 @@ func (c *connector) GetVpcEndpoints(ctx context.Context, input *ec2.DescribeVpcE
 	return opt, nil
 }
 
-func (c *connector) GetVpcs(ctx context.Context, input *ec2.DescribeVpcsInput) ([]*ec2.Vpc, error) {
+func (c *connector) GetVpcs(ctx context.Context, input *ec2.DescribeVpcsInput) ([]ec2types.Vpc, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.Vpc, 0)
+	opt := make([]ec2types.Vpc, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeVpcsWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeVpcs(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1715,16 +1752,16 @@ func (c *connector) GetVpcs(ctx context.Context, input *ec2.DescribeVpcsInput) (
 	return opt, nil
 }
 
-func (c *connector) GetVpcPeeringConnections(ctx context.Context, input *ec2.DescribeVpcPeeringConnectionsInput) ([]*ec2.VpcPeeringConnection, error) {
+func (c *connector) GetVpcPeeringConnections(ctx context.Context, input *ec2.DescribeVpcPeeringConnectionsInput) ([]ec2types.VpcPeeringConnection, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.VpcPeeringConnection, 0)
+	opt := make([]ec2types.VpcPeeringConnection, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeVpcPeeringConnectionsWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeVpcPeeringConnections(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1746,16 +1783,16 @@ func (c *connector) GetVpcPeeringConnections(ctx context.Context, input *ec2.Des
 	return opt, nil
 }
 
-func (c *connector) GetVPNGateways(ctx context.Context, input *ec2.DescribeVpnGatewaysInput) ([]*ec2.VpnGateway, error) {
+func (c *connector) GetVPNGateways(ctx context.Context, input *ec2.DescribeVpnGatewaysInput) ([]ec2types.VpnGateway, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.VpnGateway, 0)
+	opt := make([]ec2types.VpnGateway, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeVpnGatewaysWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeVpnGateways(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1773,16 +1810,16 @@ func (c *connector) GetVPNGateways(ctx context.Context, input *ec2.DescribeVpnGa
 	return opt, nil
 }
 
-func (c *connector) GetRouteTables(ctx context.Context, input *ec2.DescribeRouteTablesInput) ([]*ec2.RouteTable, error) {
+func (c *connector) GetRouteTables(ctx context.Context, input *ec2.DescribeRouteTablesInput) ([]ec2types.RouteTable, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.RouteTable, 0)
+	opt := make([]ec2types.RouteTable, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeRouteTablesWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeRouteTables(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1800,16 +1837,16 @@ func (c *connector) GetRouteTables(ctx context.Context, input *ec2.DescribeRoute
 	return opt, nil
 }
 
-func (c *connector) GetTransitGateways(ctx context.Context, input *ec2.DescribeTransitGatewaysInput) ([]*ec2.TransitGateway, error) {
+func (c *connector) GetTransitGateways(ctx context.Context, input *ec2.DescribeTransitGatewaysInput) ([]ec2types.TransitGateway, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.TransitGateway, 0)
+	opt := make([]ec2types.TransitGateway, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeTransitGatewaysWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeTransitGateways(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1831,16 +1868,16 @@ func (c *connector) GetTransitGateways(ctx context.Context, input *ec2.DescribeT
 	return opt, nil
 }
 
-func (c *connector) GetTransitGatewayVpcAttachments(ctx context.Context, input *ec2.DescribeTransitGatewayVpcAttachmentsInput) ([]*ec2.TransitGatewayVpcAttachment, error) {
+func (c *connector) GetTransitGatewayVpcAttachments(ctx context.Context, input *ec2.DescribeTransitGatewayVpcAttachmentsInput) ([]ec2types.TransitGatewayVpcAttachment, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.TransitGatewayVpcAttachment, 0)
+	opt := make([]ec2types.TransitGatewayVpcAttachment, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeTransitGatewayVpcAttachmentsWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeTransitGatewayVpcAttachments(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1862,16 +1899,16 @@ func (c *connector) GetTransitGatewayVpcAttachments(ctx context.Context, input *
 	return opt, nil
 }
 
-func (c *connector) GetTransitGatewayRouteTables(ctx context.Context, input *ec2.DescribeTransitGatewayRouteTablesInput) ([]*ec2.TransitGatewayRouteTable, error) {
+func (c *connector) GetTransitGatewayRouteTables(ctx context.Context, input *ec2.DescribeTransitGatewayRouteTablesInput) ([]ec2types.TransitGatewayRouteTable, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.TransitGatewayRouteTable, 0)
+	opt := make([]ec2types.TransitGatewayRouteTable, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeTransitGatewayRouteTablesWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeTransitGatewayRouteTables(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1893,16 +1930,16 @@ func (c *connector) GetTransitGatewayRouteTables(ctx context.Context, input *ec2
 	return opt, nil
 }
 
-func (c *connector) GetTransitGatewayMulticast(ctx context.Context, input *ec2.DescribeTransitGatewayMulticastDomainsInput) ([]*ec2.TransitGatewayMulticastDomain, error) {
+func (c *connector) GetTransitGatewayMulticast(ctx context.Context, input *ec2.DescribeTransitGatewayMulticastDomainsInput) ([]ec2types.TransitGatewayMulticastDomain, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.TransitGatewayMulticastDomain, 0)
+	opt := make([]ec2types.TransitGatewayMulticastDomain, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeTransitGatewayMulticastDomainsWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeTransitGatewayMulticastDomains(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1924,16 +1961,16 @@ func (c *connector) GetTransitGatewayMulticast(ctx context.Context, input *ec2.D
 	return opt, nil
 }
 
-func (c *connector) GetTransitGatewayPeeringAttachments(ctx context.Context, input *ec2.DescribeTransitGatewayPeeringAttachmentsInput) ([]*ec2.TransitGatewayPeeringAttachment, error) {
+func (c *connector) GetTransitGatewayPeeringAttachments(ctx context.Context, input *ec2.DescribeTransitGatewayPeeringAttachmentsInput) ([]ec2types.TransitGatewayPeeringAttachment, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.TransitGatewayPeeringAttachment, 0)
+	opt := make([]ec2types.TransitGatewayPeeringAttachment, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.DescribeTransitGatewayPeeringAttachmentsWithContext(ctx, input)
+		o, err := c.svc.ec2.DescribeTransitGatewayPeeringAttachments(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1955,16 +1992,16 @@ func (c *connector) GetTransitGatewayPeeringAttachments(ctx context.Context, inp
 	return opt, nil
 }
 
-func (c *connector) GetTransitGatewayPrefixListReference(ctx context.Context, input *ec2.GetTransitGatewayPrefixListReferencesInput) ([]*ec2.TransitGatewayPrefixListReference, error) {
+func (c *connector) GetTransitGatewayPrefixListReference(ctx context.Context, input *ec2.GetTransitGatewayPrefixListReferencesInput) ([]ec2types.TransitGatewayPrefixListReference, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.TransitGatewayPrefixListReference, 0)
+	opt := make([]ec2types.TransitGatewayPrefixListReference, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.GetTransitGatewayPrefixListReferencesWithContext(ctx, input)
+		o, err := c.svc.ec2.GetTransitGatewayPrefixListReferences(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -1986,16 +2023,16 @@ func (c *connector) GetTransitGatewayPrefixListReference(ctx context.Context, in
 	return opt, nil
 }
 
-func (c *connector) GetTransitGatewayRoutes(ctx context.Context, input *ec2.SearchTransitGatewayRoutesInput) ([]*ec2.TransitGatewayRoute, error) {
+func (c *connector) GetTransitGatewayRoutes(ctx context.Context, input *ec2.SearchTransitGatewayRoutesInput) ([]ec2types.TransitGatewayRoute, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.TransitGatewayRoute, 0)
+	opt := make([]ec2types.TransitGatewayRoute, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.SearchTransitGatewayRoutesWithContext(ctx, input)
+		o, err := c.svc.ec2.SearchTransitGatewayRoutes(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2013,16 +2050,16 @@ func (c *connector) GetTransitGatewayRoutes(ctx context.Context, input *ec2.Sear
 	return opt, nil
 }
 
-func (c *connector) GetTransitGatewayRouteTableAssociations(ctx context.Context, input *ec2.GetTransitGatewayRouteTableAssociationsInput) ([]*ec2.TransitGatewayRouteTableAssociation, error) {
+func (c *connector) GetTransitGatewayRouteTableAssociations(ctx context.Context, input *ec2.GetTransitGatewayRouteTableAssociationsInput) ([]ec2types.TransitGatewayRouteTableAssociation, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.TransitGatewayRouteTableAssociation, 0)
+	opt := make([]ec2types.TransitGatewayRouteTableAssociation, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.GetTransitGatewayRouteTableAssociationsWithContext(ctx, input)
+		o, err := c.svc.ec2.GetTransitGatewayRouteTableAssociations(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2044,16 +2081,16 @@ func (c *connector) GetTransitGatewayRouteTableAssociations(ctx context.Context,
 	return opt, nil
 }
 
-func (c *connector) GetTransitGatewayRouteTablePropagations(ctx context.Context, input *ec2.GetTransitGatewayRouteTablePropagationsInput) ([]*ec2.TransitGatewayRouteTablePropagation, error) {
+func (c *connector) GetTransitGatewayRouteTablePropagations(ctx context.Context, input *ec2.GetTransitGatewayRouteTablePropagationsInput) ([]ec2types.TransitGatewayRouteTablePropagation, error) {
 	if c.svc.ec2 == nil {
-		c.svc.ec2 = ec2.New(c.svc.session)
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ec2.TransitGatewayRouteTablePropagation, 0)
+	opt := make([]ec2types.TransitGatewayRouteTablePropagation, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ec2.GetTransitGatewayRouteTablePropagationsWithContext(ctx, input)
+		o, err := c.svc.ec2.GetTransitGatewayRouteTablePropagations(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2075,16 +2112,16 @@ func (c *connector) GetTransitGatewayRouteTablePropagations(ctx context.Context,
 	return opt, nil
 }
 
-func (c *connector) GetECSClustersArns(ctx context.Context, input *ecs.ListClustersInput) ([]*string, error) {
+func (c *connector) GetECSClustersArns(ctx context.Context, input *ecs.ListClustersInput) ([]string, error) {
 	if c.svc.ecs == nil {
-		c.svc.ecs = ecs.New(c.svc.session)
+		c.svc.ecs = ecs.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*string, 0)
+	opt := make([]string, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ecs.ListClustersWithContext(ctx, input)
+		o, err := c.svc.ecs.ListClusters(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2106,16 +2143,16 @@ func (c *connector) GetECSClustersArns(ctx context.Context, input *ecs.ListClust
 	return opt, nil
 }
 
-func (c *connector) GetECSClusters(ctx context.Context, input *ecs.DescribeClustersInput) ([]*ecs.Cluster, error) {
+func (c *connector) GetECSClusters(ctx context.Context, input *ecs.DescribeClustersInput) ([]ecstypes.Cluster, error) {
 	if c.svc.ecs == nil {
-		c.svc.ecs = ecs.New(c.svc.session)
+		c.svc.ecs = ecs.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ecs.Cluster, 0)
+	opt := make([]ecstypes.Cluster, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ecs.DescribeClustersWithContext(ctx, input)
+		o, err := c.svc.ecs.DescribeClusters(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2133,16 +2170,16 @@ func (c *connector) GetECSClusters(ctx context.Context, input *ecs.DescribeClust
 	return opt, nil
 }
 
-func (c *connector) GetECSServicesArns(ctx context.Context, input *ecs.ListServicesInput) ([]*string, error) {
+func (c *connector) GetECSServicesArns(ctx context.Context, input *ecs.ListServicesInput) ([]string, error) {
 	if c.svc.ecs == nil {
-		c.svc.ecs = ecs.New(c.svc.session)
+		c.svc.ecs = ecs.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*string, 0)
+	opt := make([]string, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ecs.ListServicesWithContext(ctx, input)
+		o, err := c.svc.ecs.ListServices(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2164,16 +2201,16 @@ func (c *connector) GetECSServicesArns(ctx context.Context, input *ecs.ListServi
 	return opt, nil
 }
 
-func (c *connector) GetECSServices(ctx context.Context, input *ecs.DescribeServicesInput) ([]*ecs.Service, error) {
+func (c *connector) GetECSServices(ctx context.Context, input *ecs.DescribeServicesInput) ([]ecstypes.Service, error) {
 	if c.svc.ecs == nil {
-		c.svc.ecs = ecs.New(c.svc.session)
+		c.svc.ecs = ecs.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ecs.Service, 0)
+	opt := make([]ecstypes.Service, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ecs.DescribeServicesWithContext(ctx, input)
+		o, err := c.svc.ecs.DescribeServices(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2191,16 +2228,16 @@ func (c *connector) GetECSServices(ctx context.Context, input *ecs.DescribeServi
 	return opt, nil
 }
 
-func (c *connector) GetECSTaskDefinitionsArns(ctx context.Context, input *ecs.ListTaskDefinitionsInput) ([]*string, error) {
+func (c *connector) GetECSTaskDefinitionsArns(ctx context.Context, input *ecs.ListTaskDefinitionsInput) ([]string, error) {
 	if c.svc.ecs == nil {
-		c.svc.ecs = ecs.New(c.svc.session)
+		c.svc.ecs = ecs.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*string, 0)
+	opt := make([]string, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ecs.ListTaskDefinitionsWithContext(ctx, input)
+		o, err := c.svc.ecs.ListTaskDefinitions(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2222,16 +2259,16 @@ func (c *connector) GetECSTaskDefinitionsArns(ctx context.Context, input *ecs.Li
 	return opt, nil
 }
 
-func (c *connector) GetEFSFileSystems(ctx context.Context, input *efs.DescribeFileSystemsInput) ([]*efs.FileSystemDescription, error) {
+func (c *connector) GetEFSFileSystems(ctx context.Context, input *efs.DescribeFileSystemsInput) ([]efstypes.FileSystemDescription, error) {
 	if c.svc.efs == nil {
-		c.svc.efs = efs.New(c.svc.session)
+		c.svc.efs = efs.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*efs.FileSystemDescription, 0)
+	opt := make([]efstypes.FileSystemDescription, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.efs.DescribeFileSystemsWithContext(ctx, input)
+		o, err := c.svc.efs.DescribeFileSystems(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2253,16 +2290,16 @@ func (c *connector) GetEFSFileSystems(ctx context.Context, input *efs.DescribeFi
 	return opt, nil
 }
 
-func (c *connector) GetEKSCluster(ctx context.Context, input *eks.DescribeClusterInput) (*eks.Cluster, error) {
+func (c *connector) GetEKSCluster(ctx context.Context, input *eks.DescribeClusterInput) (*ekstypes.Cluster, error) {
 	if c.svc.eks == nil {
-		c.svc.eks = eks.New(c.svc.session)
+		c.svc.eks = eks.NewFromConfig(c.svc.config)
 	}
 
-	var opt *eks.Cluster
+	var opt *ekstypes.Cluster
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.eks.DescribeClusterWithContext(ctx, input)
+		o, err := c.svc.eks.DescribeCluster(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2280,16 +2317,16 @@ func (c *connector) GetEKSCluster(ctx context.Context, input *eks.DescribeCluste
 	return opt, nil
 }
 
-func (c *connector) GetEKSClusters(ctx context.Context, input *eks.ListClustersInput) ([]*string, error) {
+func (c *connector) GetEKSClusters(ctx context.Context, input *eks.ListClustersInput) ([]string, error) {
 	if c.svc.eks == nil {
-		c.svc.eks = eks.New(c.svc.session)
+		c.svc.eks = eks.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*string, 0)
+	opt := make([]string, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.eks.ListClustersWithContext(ctx, input)
+		o, err := c.svc.eks.ListClusters(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2311,16 +2348,16 @@ func (c *connector) GetEKSClusters(ctx context.Context, input *eks.ListClustersI
 	return opt, nil
 }
 
-func (c *connector) GetElastiCacheClusters(ctx context.Context, input *elasticache.DescribeCacheClustersInput) ([]*elasticache.CacheCluster, error) {
+func (c *connector) GetElastiCacheClusters(ctx context.Context, input *elasticache.DescribeCacheClustersInput) ([]elasticachetypes.CacheCluster, error) {
 	if c.svc.elasticache == nil {
-		c.svc.elasticache = elasticache.New(c.svc.session)
+		c.svc.elasticache = elasticache.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elasticache.CacheCluster, 0)
+	opt := make([]elasticachetypes.CacheCluster, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elasticache.DescribeCacheClustersWithContext(ctx, input)
+		o, err := c.svc.elasticache.DescribeCacheClusters(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2342,16 +2379,16 @@ func (c *connector) GetElastiCacheClusters(ctx context.Context, input *elasticac
 	return opt, nil
 }
 
-func (c *connector) GetElastiCacheReplicationGroups(ctx context.Context, input *elasticache.DescribeReplicationGroupsInput) ([]*elasticache.ReplicationGroup, error) {
+func (c *connector) GetElastiCacheReplicationGroups(ctx context.Context, input *elasticache.DescribeReplicationGroupsInput) ([]elasticachetypes.ReplicationGroup, error) {
 	if c.svc.elasticache == nil {
-		c.svc.elasticache = elasticache.New(c.svc.session)
+		c.svc.elasticache = elasticache.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elasticache.ReplicationGroup, 0)
+	opt := make([]elasticachetypes.ReplicationGroup, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elasticache.DescribeReplicationGroupsWithContext(ctx, input)
+		o, err := c.svc.elasticache.DescribeReplicationGroups(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2373,16 +2410,16 @@ func (c *connector) GetElastiCacheReplicationGroups(ctx context.Context, input *
 	return opt, nil
 }
 
-func (c *connector) GetElastiCacheTags(ctx context.Context, input *elasticache.ListTagsForResourceInput) ([]*elasticache.Tag, error) {
+func (c *connector) GetElastiCacheTags(ctx context.Context, input *elasticache.ListTagsForResourceInput) ([]elasticachetypes.Tag, error) {
 	if c.svc.elasticache == nil {
-		c.svc.elasticache = elasticache.New(c.svc.session)
+		c.svc.elasticache = elasticache.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elasticache.Tag, 0)
+	opt := make([]elasticachetypes.Tag, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elasticache.ListTagsForResourceWithContext(ctx, input)
+		o, err := c.svc.elasticache.ListTagsForResource(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2400,16 +2437,16 @@ func (c *connector) GetElastiCacheTags(ctx context.Context, input *elasticache.L
 	return opt, nil
 }
 
-func (c *connector) GetElasticBeanstalkApplications(ctx context.Context, input *elasticbeanstalk.DescribeApplicationsInput) ([]*elasticbeanstalk.ApplicationDescription, error) {
+func (c *connector) GetElasticBeanstalkApplications(ctx context.Context, input *elasticbeanstalk.DescribeApplicationsInput) ([]elasticbeanstalktypes.ApplicationDescription, error) {
 	if c.svc.elasticbeanstalk == nil {
-		c.svc.elasticbeanstalk = elasticbeanstalk.New(c.svc.session)
+		c.svc.elasticbeanstalk = elasticbeanstalk.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elasticbeanstalk.ApplicationDescription, 0)
+	opt := make([]elasticbeanstalktypes.ApplicationDescription, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elasticbeanstalk.DescribeApplicationsWithContext(ctx, input)
+		o, err := c.svc.elasticbeanstalk.DescribeApplications(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2427,16 +2464,16 @@ func (c *connector) GetElasticBeanstalkApplications(ctx context.Context, input *
 	return opt, nil
 }
 
-func (c *connector) GetElasticsearchDomainNames(ctx context.Context, input *elasticsearchservice.ListDomainNamesInput) ([]*elasticsearchservice.DomainInfo, error) {
+func (c *connector) GetElasticsearchDomainNames(ctx context.Context, input *elasticsearchservice.ListDomainNamesInput) ([]elasticsearchservicetypes.DomainInfo, error) {
 	if c.svc.elasticsearchservice == nil {
-		c.svc.elasticsearchservice = elasticsearchservice.New(c.svc.session)
+		c.svc.elasticsearchservice = elasticsearchservice.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elasticsearchservice.DomainInfo, 0)
+	opt := make([]elasticsearchservicetypes.DomainInfo, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elasticsearchservice.ListDomainNamesWithContext(ctx, input)
+		o, err := c.svc.elasticsearchservice.ListDomainNames(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2454,16 +2491,16 @@ func (c *connector) GetElasticsearchDomainNames(ctx context.Context, input *elas
 	return opt, nil
 }
 
-func (c *connector) GetElasticsearchDomains(ctx context.Context, input *elasticsearchservice.DescribeElasticsearchDomainsInput) ([]*elasticsearchservice.ElasticsearchDomainStatus, error) {
+func (c *connector) GetElasticsearchDomains(ctx context.Context, input *elasticsearchservice.DescribeElasticsearchDomainsInput) ([]elasticsearchservicetypes.ElasticsearchDomainStatus, error) {
 	if c.svc.elasticsearchservice == nil {
-		c.svc.elasticsearchservice = elasticsearchservice.New(c.svc.session)
+		c.svc.elasticsearchservice = elasticsearchservice.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elasticsearchservice.ElasticsearchDomainStatus, 0)
+	opt := make([]elasticsearchservicetypes.ElasticsearchDomainStatus, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elasticsearchservice.DescribeElasticsearchDomainsWithContext(ctx, input)
+		o, err := c.svc.elasticsearchservice.DescribeElasticsearchDomains(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2481,16 +2518,16 @@ func (c *connector) GetElasticsearchDomains(ctx context.Context, input *elastics
 	return opt, nil
 }
 
-func (c *connector) GetLoadBalancerAttributes(ctx context.Context, input *elb.DescribeLoadBalancerAttributesInput) ([]*elb.AdditionalAttribute, error) {
+func (c *connector) GetLoadBalancerAttributes(ctx context.Context, input *elasticloadbalancing.DescribeLoadBalancerAttributesInput) ([]elasticloadbalancingtypes.AdditionalAttribute, error) {
 	if c.svc.elb == nil {
-		c.svc.elb = elb.New(c.svc.session)
+		c.svc.elb = elasticloadbalancing.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elb.AdditionalAttribute, 0)
+	opt := make([]elasticloadbalancingtypes.AdditionalAttribute, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elb.DescribeLoadBalancerAttributesWithContext(ctx, input)
+		o, err := c.svc.elb.DescribeLoadBalancerAttributes(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2508,16 +2545,16 @@ func (c *connector) GetLoadBalancerAttributes(ctx context.Context, input *elb.De
 	return opt, nil
 }
 
-func (c *connector) GetLoadBalancers(ctx context.Context, input *elb.DescribeLoadBalancersInput) ([]*elb.LoadBalancerDescription, error) {
+func (c *connector) GetLoadBalancers(ctx context.Context, input *elasticloadbalancing.DescribeLoadBalancersInput) ([]elasticloadbalancingtypes.LoadBalancerDescription, error) {
 	if c.svc.elb == nil {
-		c.svc.elb = elb.New(c.svc.session)
+		c.svc.elb = elasticloadbalancing.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elb.LoadBalancerDescription, 0)
+	opt := make([]elasticloadbalancingtypes.LoadBalancerDescription, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elb.DescribeLoadBalancersWithContext(ctx, input)
+		o, err := c.svc.elb.DescribeLoadBalancers(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2527,7 +2564,7 @@ func (c *connector) GetLoadBalancers(ctx context.Context, input *elb.DescribeLoa
 		}
 
 		if input == nil {
-			input = &elb.DescribeLoadBalancersInput{}
+			input = &elasticloadbalancing.DescribeLoadBalancersInput{}
 		}
 		input.Marker = o.NextMarker
 		hasNextToken = o.NextMarker != nil
@@ -2539,16 +2576,16 @@ func (c *connector) GetLoadBalancers(ctx context.Context, input *elb.DescribeLoa
 	return opt, nil
 }
 
-func (c *connector) GetLoadBalancerPolicies(ctx context.Context, input *elb.DescribeLoadBalancerPoliciesInput) ([]*elb.PolicyDescription, error) {
+func (c *connector) GetLoadBalancerPolicies(ctx context.Context, input *elasticloadbalancing.DescribeLoadBalancerPoliciesInput) ([]elasticloadbalancingtypes.PolicyDescription, error) {
 	if c.svc.elb == nil {
-		c.svc.elb = elb.New(c.svc.session)
+		c.svc.elb = elasticloadbalancing.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elb.PolicyDescription, 0)
+	opt := make([]elasticloadbalancingtypes.PolicyDescription, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elb.DescribeLoadBalancerPoliciesWithContext(ctx, input)
+		o, err := c.svc.elb.DescribeLoadBalancerPolicies(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2566,16 +2603,16 @@ func (c *connector) GetLoadBalancerPolicies(ctx context.Context, input *elb.Desc
 	return opt, nil
 }
 
-func (c *connector) GetLoadBalancersTags(ctx context.Context, input *elb.DescribeTagsInput) ([]*elb.TagDescription, error) {
+func (c *connector) GetLoadBalancersTags(ctx context.Context, input *elasticloadbalancing.DescribeTagsInput) ([]elasticloadbalancingtypes.TagDescription, error) {
 	if c.svc.elb == nil {
-		c.svc.elb = elb.New(c.svc.session)
+		c.svc.elb = elasticloadbalancing.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elb.TagDescription, 0)
+	opt := make([]elasticloadbalancingtypes.TagDescription, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elb.DescribeTagsWithContext(ctx, input)
+		o, err := c.svc.elb.DescribeTags(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2593,16 +2630,16 @@ func (c *connector) GetLoadBalancersTags(ctx context.Context, input *elb.Describ
 	return opt, nil
 }
 
-func (c *connector) GetListenerCertificates(ctx context.Context, input *elbv2.DescribeListenerCertificatesInput) ([]*elbv2.Certificate, error) {
+func (c *connector) GetListenerCertificates(ctx context.Context, input *elasticloadbalancingv2.DescribeListenerCertificatesInput) ([]elasticloadbalancingv2types.Certificate, error) {
 	if c.svc.elbv2 == nil {
-		c.svc.elbv2 = elbv2.New(c.svc.session)
+		c.svc.elbv2 = elasticloadbalancingv2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elbv2.Certificate, 0)
+	opt := make([]elasticloadbalancingv2types.Certificate, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elbv2.DescribeListenerCertificatesWithContext(ctx, input)
+		o, err := c.svc.elbv2.DescribeListenerCertificates(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2612,7 +2649,7 @@ func (c *connector) GetListenerCertificates(ctx context.Context, input *elbv2.De
 		}
 
 		if input == nil {
-			input = &elbv2.DescribeListenerCertificatesInput{}
+			input = &elasticloadbalancingv2.DescribeListenerCertificatesInput{}
 		}
 		input.Marker = o.NextMarker
 		hasNextToken = o.NextMarker != nil
@@ -2624,16 +2661,16 @@ func (c *connector) GetListenerCertificates(ctx context.Context, input *elbv2.De
 	return opt, nil
 }
 
-func (c *connector) GetLoadBalancersV2Listeners(ctx context.Context, input *elbv2.DescribeListenersInput) ([]*elbv2.Listener, error) {
+func (c *connector) GetLoadBalancersV2Listeners(ctx context.Context, input *elasticloadbalancingv2.DescribeListenersInput) ([]elasticloadbalancingv2types.Listener, error) {
 	if c.svc.elbv2 == nil {
-		c.svc.elbv2 = elbv2.New(c.svc.session)
+		c.svc.elbv2 = elasticloadbalancingv2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elbv2.Listener, 0)
+	opt := make([]elasticloadbalancingv2types.Listener, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elbv2.DescribeListenersWithContext(ctx, input)
+		o, err := c.svc.elbv2.DescribeListeners(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2643,7 +2680,7 @@ func (c *connector) GetLoadBalancersV2Listeners(ctx context.Context, input *elbv
 		}
 
 		if input == nil {
-			input = &elbv2.DescribeListenersInput{}
+			input = &elasticloadbalancingv2.DescribeListenersInput{}
 		}
 		input.Marker = o.NextMarker
 		hasNextToken = o.NextMarker != nil
@@ -2655,16 +2692,16 @@ func (c *connector) GetLoadBalancersV2Listeners(ctx context.Context, input *elbv
 	return opt, nil
 }
 
-func (c *connector) GetLoadBalancersV2(ctx context.Context, input *elbv2.DescribeLoadBalancersInput) ([]*elbv2.LoadBalancer, error) {
+func (c *connector) GetLoadBalancersV2(ctx context.Context, input *elasticloadbalancingv2.DescribeLoadBalancersInput) ([]elasticloadbalancingv2types.LoadBalancer, error) {
 	if c.svc.elbv2 == nil {
-		c.svc.elbv2 = elbv2.New(c.svc.session)
+		c.svc.elbv2 = elasticloadbalancingv2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elbv2.LoadBalancer, 0)
+	opt := make([]elasticloadbalancingv2types.LoadBalancer, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elbv2.DescribeLoadBalancersWithContext(ctx, input)
+		o, err := c.svc.elbv2.DescribeLoadBalancers(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2674,7 +2711,7 @@ func (c *connector) GetLoadBalancersV2(ctx context.Context, input *elbv2.Describ
 		}
 
 		if input == nil {
-			input = &elbv2.DescribeLoadBalancersInput{}
+			input = &elasticloadbalancingv2.DescribeLoadBalancersInput{}
 		}
 		input.Marker = o.NextMarker
 		hasNextToken = o.NextMarker != nil
@@ -2686,16 +2723,16 @@ func (c *connector) GetLoadBalancersV2(ctx context.Context, input *elbv2.Describ
 	return opt, nil
 }
 
-func (c *connector) GetLoadBalancersV2Tags(ctx context.Context, input *elbv2.DescribeTagsInput) ([]*elbv2.TagDescription, error) {
+func (c *connector) GetLoadBalancersV2Tags(ctx context.Context, input *elasticloadbalancingv2.DescribeTagsInput) ([]elasticloadbalancingv2types.TagDescription, error) {
 	if c.svc.elbv2 == nil {
-		c.svc.elbv2 = elbv2.New(c.svc.session)
+		c.svc.elbv2 = elasticloadbalancingv2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elbv2.TagDescription, 0)
+	opt := make([]elasticloadbalancingv2types.TagDescription, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elbv2.DescribeTagsWithContext(ctx, input)
+		o, err := c.svc.elbv2.DescribeTags(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2713,16 +2750,16 @@ func (c *connector) GetLoadBalancersV2Tags(ctx context.Context, input *elbv2.Des
 	return opt, nil
 }
 
-func (c *connector) GetLoadBalancersV2TargetGroupAttributes(ctx context.Context, input *elbv2.DescribeTargetGroupAttributesInput) ([]*elbv2.TargetGroupAttribute, error) {
+func (c *connector) GetLoadBalancersV2TargetGroupAttributes(ctx context.Context, input *elasticloadbalancingv2.DescribeTargetGroupAttributesInput) ([]elasticloadbalancingv2types.TargetGroupAttribute, error) {
 	if c.svc.elbv2 == nil {
-		c.svc.elbv2 = elbv2.New(c.svc.session)
+		c.svc.elbv2 = elasticloadbalancingv2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elbv2.TargetGroupAttribute, 0)
+	opt := make([]elasticloadbalancingv2types.TargetGroupAttribute, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elbv2.DescribeTargetGroupAttributesWithContext(ctx, input)
+		o, err := c.svc.elbv2.DescribeTargetGroupAttributes(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2740,16 +2777,16 @@ func (c *connector) GetLoadBalancersV2TargetGroupAttributes(ctx context.Context,
 	return opt, nil
 }
 
-func (c *connector) GetLoadBalancersV2TargetGroups(ctx context.Context, input *elbv2.DescribeTargetGroupsInput) ([]*elbv2.TargetGroup, error) {
+func (c *connector) GetLoadBalancersV2TargetGroups(ctx context.Context, input *elasticloadbalancingv2.DescribeTargetGroupsInput) ([]elasticloadbalancingv2types.TargetGroup, error) {
 	if c.svc.elbv2 == nil {
-		c.svc.elbv2 = elbv2.New(c.svc.session)
+		c.svc.elbv2 = elasticloadbalancingv2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elbv2.TargetGroup, 0)
+	opt := make([]elasticloadbalancingv2types.TargetGroup, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elbv2.DescribeTargetGroupsWithContext(ctx, input)
+		o, err := c.svc.elbv2.DescribeTargetGroups(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2759,7 +2796,7 @@ func (c *connector) GetLoadBalancersV2TargetGroups(ctx context.Context, input *e
 		}
 
 		if input == nil {
-			input = &elbv2.DescribeTargetGroupsInput{}
+			input = &elasticloadbalancingv2.DescribeTargetGroupsInput{}
 		}
 		input.Marker = o.NextMarker
 		hasNextToken = o.NextMarker != nil
@@ -2771,16 +2808,16 @@ func (c *connector) GetLoadBalancersV2TargetGroups(ctx context.Context, input *e
 	return opt, nil
 }
 
-func (c *connector) GetLoadBalancersV2TargetHealth(ctx context.Context, input *elbv2.DescribeTargetHealthInput) ([]*elbv2.TargetHealthDescription, error) {
+func (c *connector) GetLoadBalancersV2TargetHealth(ctx context.Context, input *elasticloadbalancingv2.DescribeTargetHealthInput) ([]elasticloadbalancingv2types.TargetHealthDescription, error) {
 	if c.svc.elbv2 == nil {
-		c.svc.elbv2 = elbv2.New(c.svc.session)
+		c.svc.elbv2 = elasticloadbalancingv2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elbv2.TargetHealthDescription, 0)
+	opt := make([]elasticloadbalancingv2types.TargetHealthDescription, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elbv2.DescribeTargetHealthWithContext(ctx, input)
+		o, err := c.svc.elbv2.DescribeTargetHealth(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2798,16 +2835,16 @@ func (c *connector) GetLoadBalancersV2TargetHealth(ctx context.Context, input *e
 	return opt, nil
 }
 
-func (c *connector) GetLoadBalancersV2Rules(ctx context.Context, input *elbv2.DescribeRulesInput) ([]*elbv2.Rule, error) {
+func (c *connector) GetLoadBalancersV2Rules(ctx context.Context, input *elasticloadbalancingv2.DescribeRulesInput) ([]elasticloadbalancingv2types.Rule, error) {
 	if c.svc.elbv2 == nil {
-		c.svc.elbv2 = elbv2.New(c.svc.session)
+		c.svc.elbv2 = elasticloadbalancingv2.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*elbv2.Rule, 0)
+	opt := make([]elasticloadbalancingv2types.Rule, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.elbv2.DescribeRulesWithContext(ctx, input)
+		o, err := c.svc.elbv2.DescribeRules(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2817,7 +2854,7 @@ func (c *connector) GetLoadBalancersV2Rules(ctx context.Context, input *elbv2.De
 		}
 
 		if input == nil {
-			input = &elbv2.DescribeRulesInput{}
+			input = &elasticloadbalancingv2.DescribeRulesInput{}
 		}
 		input.Marker = o.NextMarker
 		hasNextToken = o.NextMarker != nil
@@ -2829,16 +2866,16 @@ func (c *connector) GetLoadBalancersV2Rules(ctx context.Context, input *elbv2.De
 	return opt, nil
 }
 
-func (c *connector) GetEMRClusters(ctx context.Context, input *emr.ListClustersInput) ([]*emr.ClusterSummary, error) {
+func (c *connector) GetEMRClusters(ctx context.Context, input *emr.ListClustersInput) ([]emrtypes.ClusterSummary, error) {
 	if c.svc.emr == nil {
-		c.svc.emr = emr.New(c.svc.session)
+		c.svc.emr = emr.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*emr.ClusterSummary, 0)
+	opt := make([]emrtypes.ClusterSummary, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.emr.ListClustersWithContext(ctx, input)
+		o, err := c.svc.emr.ListClusters(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2860,16 +2897,16 @@ func (c *connector) GetEMRClusters(ctx context.Context, input *emr.ListClustersI
 	return opt, nil
 }
 
-func (c *connector) GetFSXFileSystems(ctx context.Context, input *fsx.DescribeFileSystemsInput) ([]*fsx.FileSystem, error) {
+func (c *connector) GetFSXFileSystems(ctx context.Context, input *fsx.DescribeFileSystemsInput) ([]fsxtypes.FileSystem, error) {
 	if c.svc.fsx == nil {
-		c.svc.fsx = fsx.New(c.svc.session)
+		c.svc.fsx = fsx.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*fsx.FileSystem, 0)
+	opt := make([]fsxtypes.FileSystem, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.fsx.DescribeFileSystemsWithContext(ctx, input)
+		o, err := c.svc.fsx.DescribeFileSystems(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2891,16 +2928,16 @@ func (c *connector) GetFSXFileSystems(ctx context.Context, input *fsx.DescribeFi
 	return opt, nil
 }
 
-func (c *connector) GetGlueDatabases(ctx context.Context, input *glue.GetDatabasesInput) ([]*glue.Database, error) {
+func (c *connector) GetGlueDatabases(ctx context.Context, input *glue.GetDatabasesInput) ([]gluetypes.Database, error) {
 	if c.svc.glue == nil {
-		c.svc.glue = glue.New(c.svc.session)
+		c.svc.glue = glue.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*glue.Database, 0)
+	opt := make([]gluetypes.Database, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.glue.GetDatabasesWithContext(ctx, input)
+		o, err := c.svc.glue.GetDatabases(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2922,16 +2959,16 @@ func (c *connector) GetGlueDatabases(ctx context.Context, input *glue.GetDatabas
 	return opt, nil
 }
 
-func (c *connector) GetGlueTables(ctx context.Context, input *glue.GetTablesInput) ([]*glue.TableData, error) {
+func (c *connector) GetGlueTables(ctx context.Context, input *glue.GetTablesInput) ([]gluetypes.Table, error) {
 	if c.svc.glue == nil {
-		c.svc.glue = glue.New(c.svc.session)
+		c.svc.glue = glue.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*glue.TableData, 0)
+	opt := make([]gluetypes.Table, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.glue.GetTablesWithContext(ctx, input)
+		o, err := c.svc.glue.GetTables(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2953,16 +2990,16 @@ func (c *connector) GetGlueTables(ctx context.Context, input *glue.GetTablesInpu
 	return opt, nil
 }
 
-func (c *connector) GetAccessKeys(ctx context.Context, input *iam.ListAccessKeysInput) ([]*iam.AccessKeyMetadata, error) {
+func (c *connector) GetAccessKeys(ctx context.Context, input *iam.ListAccessKeysInput) ([]iamtypes.AccessKeyMetadata, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.AccessKeyMetadata, 0)
+	opt := make([]iamtypes.AccessKeyMetadata, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListAccessKeysWithContext(ctx, input)
+		o, err := c.svc.iam.ListAccessKeys(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -2984,16 +3021,16 @@ func (c *connector) GetAccessKeys(ctx context.Context, input *iam.ListAccessKeys
 	return opt, nil
 }
 
-func (c *connector) GetAccountAliases(ctx context.Context, input *iam.ListAccountAliasesInput) ([]*string, error) {
+func (c *connector) GetAccountAliases(ctx context.Context, input *iam.ListAccountAliasesInput) ([]string, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*string, 0)
+	opt := make([]string, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListAccountAliasesWithContext(ctx, input)
+		o, err := c.svc.iam.ListAccountAliases(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3015,16 +3052,16 @@ func (c *connector) GetAccountAliases(ctx context.Context, input *iam.ListAccoun
 	return opt, nil
 }
 
-func (c *connector) GetAccountPasswordPolicy(ctx context.Context, input *iam.GetAccountPasswordPolicyInput) (*iam.PasswordPolicy, error) {
+func (c *connector) GetAccountPasswordPolicy(ctx context.Context, input *iam.GetAccountPasswordPolicyInput) (*iamtypes.PasswordPolicy, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	var opt *iam.PasswordPolicy
+	var opt *iamtypes.PasswordPolicy
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.GetAccountPasswordPolicyWithContext(ctx, input)
+		o, err := c.svc.iam.GetAccountPasswordPolicy(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3042,16 +3079,16 @@ func (c *connector) GetAccountPasswordPolicy(ctx context.Context, input *iam.Get
 	return opt, nil
 }
 
-func (c *connector) GetAttachedGroupPolicies(ctx context.Context, input *iam.ListAttachedGroupPoliciesInput) ([]*iam.AttachedPolicy, error) {
+func (c *connector) GetAttachedGroupPolicies(ctx context.Context, input *iam.ListAttachedGroupPoliciesInput) ([]iamtypes.AttachedPolicy, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.AttachedPolicy, 0)
+	opt := make([]iamtypes.AttachedPolicy, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListAttachedGroupPoliciesWithContext(ctx, input)
+		o, err := c.svc.iam.ListAttachedGroupPolicies(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3073,16 +3110,16 @@ func (c *connector) GetAttachedGroupPolicies(ctx context.Context, input *iam.Lis
 	return opt, nil
 }
 
-func (c *connector) GetAttachedRolePolicies(ctx context.Context, input *iam.ListAttachedRolePoliciesInput) ([]*iam.AttachedPolicy, error) {
+func (c *connector) GetAttachedRolePolicies(ctx context.Context, input *iam.ListAttachedRolePoliciesInput) ([]iamtypes.AttachedPolicy, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.AttachedPolicy, 0)
+	opt := make([]iamtypes.AttachedPolicy, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListAttachedRolePoliciesWithContext(ctx, input)
+		o, err := c.svc.iam.ListAttachedRolePolicies(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3104,16 +3141,16 @@ func (c *connector) GetAttachedRolePolicies(ctx context.Context, input *iam.List
 	return opt, nil
 }
 
-func (c *connector) GetAttachedUserPolicies(ctx context.Context, input *iam.ListAttachedUserPoliciesInput) ([]*iam.AttachedPolicy, error) {
+func (c *connector) GetAttachedUserPolicies(ctx context.Context, input *iam.ListAttachedUserPoliciesInput) ([]iamtypes.AttachedPolicy, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.AttachedPolicy, 0)
+	opt := make([]iamtypes.AttachedPolicy, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListAttachedUserPoliciesWithContext(ctx, input)
+		o, err := c.svc.iam.ListAttachedUserPolicies(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3135,16 +3172,16 @@ func (c *connector) GetAttachedUserPolicies(ctx context.Context, input *iam.List
 	return opt, nil
 }
 
-func (c *connector) GetGroupUsers(ctx context.Context, input *iam.GetGroupInput) ([]*iam.User, error) {
+func (c *connector) GetGroupUsers(ctx context.Context, input *iam.GetGroupInput) ([]iamtypes.User, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.User, 0)
+	opt := make([]iamtypes.User, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.GetGroupWithContext(ctx, input)
+		o, err := c.svc.iam.GetGroup(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3166,16 +3203,16 @@ func (c *connector) GetGroupUsers(ctx context.Context, input *iam.GetGroupInput)
 	return opt, nil
 }
 
-func (c *connector) GetGroupPolicies(ctx context.Context, input *iam.ListGroupPoliciesInput) ([]*string, error) {
+func (c *connector) GetGroupPolicies(ctx context.Context, input *iam.ListGroupPoliciesInput) ([]string, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*string, 0)
+	opt := make([]string, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListGroupPoliciesWithContext(ctx, input)
+		o, err := c.svc.iam.ListGroupPolicies(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3197,16 +3234,16 @@ func (c *connector) GetGroupPolicies(ctx context.Context, input *iam.ListGroupPo
 	return opt, nil
 }
 
-func (c *connector) GetGroups(ctx context.Context, input *iam.ListGroupsInput) ([]*iam.Group, error) {
+func (c *connector) GetGroups(ctx context.Context, input *iam.ListGroupsInput) ([]iamtypes.Group, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.Group, 0)
+	opt := make([]iamtypes.Group, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListGroupsWithContext(ctx, input)
+		o, err := c.svc.iam.ListGroups(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3228,16 +3265,16 @@ func (c *connector) GetGroups(ctx context.Context, input *iam.ListGroupsInput) (
 	return opt, nil
 }
 
-func (c *connector) GetGroupsForUser(ctx context.Context, input *iam.ListGroupsForUserInput) ([]*iam.Group, error) {
+func (c *connector) GetGroupsForUser(ctx context.Context, input *iam.ListGroupsForUserInput) ([]iamtypes.Group, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.Group, 0)
+	opt := make([]iamtypes.Group, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListGroupsForUserWithContext(ctx, input)
+		o, err := c.svc.iam.ListGroupsForUser(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3259,16 +3296,16 @@ func (c *connector) GetGroupsForUser(ctx context.Context, input *iam.ListGroupsF
 	return opt, nil
 }
 
-func (c *connector) GetInstanceProfiles(ctx context.Context, input *iam.ListInstanceProfilesInput) ([]*iam.InstanceProfile, error) {
+func (c *connector) GetInstanceProfiles(ctx context.Context, input *iam.ListInstanceProfilesInput) ([]iamtypes.InstanceProfile, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.InstanceProfile, 0)
+	opt := make([]iamtypes.InstanceProfile, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListInstanceProfilesWithContext(ctx, input)
+		o, err := c.svc.iam.ListInstanceProfiles(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3290,16 +3327,16 @@ func (c *connector) GetInstanceProfiles(ctx context.Context, input *iam.ListInst
 	return opt, nil
 }
 
-func (c *connector) GetOpenIDConnectProviders(ctx context.Context, input *iam.ListOpenIDConnectProvidersInput) ([]*iam.OpenIDConnectProviderListEntry, error) {
+func (c *connector) GetOpenIDConnectProviders(ctx context.Context, input *iam.ListOpenIDConnectProvidersInput) ([]iamtypes.OpenIDConnectProviderListEntry, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.OpenIDConnectProviderListEntry, 0)
+	opt := make([]iamtypes.OpenIDConnectProviderListEntry, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListOpenIDConnectProvidersWithContext(ctx, input)
+		o, err := c.svc.iam.ListOpenIDConnectProviders(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3317,16 +3354,16 @@ func (c *connector) GetOpenIDConnectProviders(ctx context.Context, input *iam.Li
 	return opt, nil
 }
 
-func (c *connector) GetPolicies(ctx context.Context, input *iam.ListPoliciesInput) ([]*iam.Policy, error) {
+func (c *connector) GetPolicies(ctx context.Context, input *iam.ListPoliciesInput) ([]iamtypes.Policy, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.Policy, 0)
+	opt := make([]iamtypes.Policy, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListPoliciesWithContext(ctx, input)
+		o, err := c.svc.iam.ListPolicies(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3348,16 +3385,16 @@ func (c *connector) GetPolicies(ctx context.Context, input *iam.ListPoliciesInpu
 	return opt, nil
 }
 
-func (c *connector) GetRolePolicies(ctx context.Context, input *iam.ListRolePoliciesInput) ([]*string, error) {
+func (c *connector) GetRolePolicies(ctx context.Context, input *iam.ListRolePoliciesInput) ([]string, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*string, 0)
+	opt := make([]string, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListRolePoliciesWithContext(ctx, input)
+		o, err := c.svc.iam.ListRolePolicies(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3379,16 +3416,16 @@ func (c *connector) GetRolePolicies(ctx context.Context, input *iam.ListRolePoli
 	return opt, nil
 }
 
-func (c *connector) GetRoles(ctx context.Context, input *iam.ListRolesInput) ([]*iam.Role, error) {
+func (c *connector) GetRoles(ctx context.Context, input *iam.ListRolesInput) ([]iamtypes.Role, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.Role, 0)
+	opt := make([]iamtypes.Role, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListRolesWithContext(ctx, input)
+		o, err := c.svc.iam.ListRoles(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3410,16 +3447,16 @@ func (c *connector) GetRoles(ctx context.Context, input *iam.ListRolesInput) ([]
 	return opt, nil
 }
 
-func (c *connector) GetSAMLProviders(ctx context.Context, input *iam.ListSAMLProvidersInput) ([]*iam.SAMLProviderListEntry, error) {
+func (c *connector) GetSAMLProviders(ctx context.Context, input *iam.ListSAMLProvidersInput) ([]iamtypes.SAMLProviderListEntry, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.SAMLProviderListEntry, 0)
+	opt := make([]iamtypes.SAMLProviderListEntry, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListSAMLProvidersWithContext(ctx, input)
+		o, err := c.svc.iam.ListSAMLProviders(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3437,16 +3474,16 @@ func (c *connector) GetSAMLProviders(ctx context.Context, input *iam.ListSAMLPro
 	return opt, nil
 }
 
-func (c *connector) GetServerCertificates(ctx context.Context, input *iam.ListServerCertificatesInput) ([]*iam.ServerCertificateMetadata, error) {
+func (c *connector) GetServerCertificates(ctx context.Context, input *iam.ListServerCertificatesInput) ([]iamtypes.ServerCertificateMetadata, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.ServerCertificateMetadata, 0)
+	opt := make([]iamtypes.ServerCertificateMetadata, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListServerCertificatesWithContext(ctx, input)
+		o, err := c.svc.iam.ListServerCertificates(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3468,16 +3505,16 @@ func (c *connector) GetServerCertificates(ctx context.Context, input *iam.ListSe
 	return opt, nil
 }
 
-func (c *connector) GetSSHPublicKeys(ctx context.Context, input *iam.ListSSHPublicKeysInput) ([]*iam.SSHPublicKeyMetadata, error) {
+func (c *connector) GetSSHPublicKeys(ctx context.Context, input *iam.ListSSHPublicKeysInput) ([]iamtypes.SSHPublicKeyMetadata, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.SSHPublicKeyMetadata, 0)
+	opt := make([]iamtypes.SSHPublicKeyMetadata, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListSSHPublicKeysWithContext(ctx, input)
+		o, err := c.svc.iam.ListSSHPublicKeys(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3499,16 +3536,16 @@ func (c *connector) GetSSHPublicKeys(ctx context.Context, input *iam.ListSSHPubl
 	return opt, nil
 }
 
-func (c *connector) GetUserPolicies(ctx context.Context, input *iam.ListUserPoliciesInput) ([]*string, error) {
+func (c *connector) GetUserPolicies(ctx context.Context, input *iam.ListUserPoliciesInput) ([]string, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*string, 0)
+	opt := make([]string, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListUserPoliciesWithContext(ctx, input)
+		o, err := c.svc.iam.ListUserPolicies(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3530,16 +3567,16 @@ func (c *connector) GetUserPolicies(ctx context.Context, input *iam.ListUserPoli
 	return opt, nil
 }
 
-func (c *connector) GetUsers(ctx context.Context, input *iam.ListUsersInput) ([]*iam.User, error) {
+func (c *connector) GetUsers(ctx context.Context, input *iam.ListUsersInput) ([]iamtypes.User, error) {
 	if c.svc.iam == nil {
-		c.svc.iam = iam.New(c.svc.session)
+		c.svc.iam = iam.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*iam.User, 0)
+	opt := make([]iamtypes.User, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.iam.ListUsersWithContext(ctx, input)
+		o, err := c.svc.iam.ListUsers(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3561,16 +3598,16 @@ func (c *connector) GetUsers(ctx context.Context, input *iam.ListUsersInput) ([]
 	return opt, nil
 }
 
-func (c *connector) GetKinesisStreams(ctx context.Context, input *kinesis.ListStreamsInput) ([]*string, error) {
+func (c *connector) GetKinesisStreams(ctx context.Context, input *kinesis.ListStreamsInput) ([]string, error) {
 	if c.svc.kinesis == nil {
-		c.svc.kinesis = kinesis.New(c.svc.session)
+		c.svc.kinesis = kinesis.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*string, 0)
+	opt := make([]string, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.kinesis.ListStreamsWithContext(ctx, input)
+		o, err := c.svc.kinesis.ListStreams(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3588,16 +3625,16 @@ func (c *connector) GetKinesisStreams(ctx context.Context, input *kinesis.ListSt
 	return opt, nil
 }
 
-func (c *connector) GetLambdaFunctions(ctx context.Context, input *lambda.ListFunctionsInput) ([]*lambda.FunctionConfiguration, error) {
+func (c *connector) GetLambdaFunctions(ctx context.Context, input *lambda.ListFunctionsInput) ([]lambdatypes.FunctionConfiguration, error) {
 	if c.svc.lambda == nil {
-		c.svc.lambda = lambda.New(c.svc.session)
+		c.svc.lambda = lambda.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*lambda.FunctionConfiguration, 0)
+	opt := make([]lambdatypes.FunctionConfiguration, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.lambda.ListFunctionsWithContext(ctx, input)
+		o, err := c.svc.lambda.ListFunctions(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3619,16 +3656,16 @@ func (c *connector) GetLambdaFunctions(ctx context.Context, input *lambda.ListFu
 	return opt, nil
 }
 
-func (c *connector) GetLightsailInstances(ctx context.Context, input *lightsail.GetInstancesInput) ([]*lightsail.Instance, error) {
+func (c *connector) GetLightsailInstances(ctx context.Context, input *lightsail.GetInstancesInput) ([]lightsailtypes.Instance, error) {
 	if c.svc.lightsail == nil {
-		c.svc.lightsail = lightsail.New(c.svc.session)
+		c.svc.lightsail = lightsail.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*lightsail.Instance, 0)
+	opt := make([]lightsailtypes.Instance, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.lightsail.GetInstancesWithContext(ctx, input)
+		o, err := c.svc.lightsail.GetInstances(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3650,16 +3687,16 @@ func (c *connector) GetLightsailInstances(ctx context.Context, input *lightsail.
 	return opt, nil
 }
 
-func (c *connector) GetMediastoreContainers(ctx context.Context, input *mediastore.ListContainersInput) ([]*mediastore.Container, error) {
+func (c *connector) GetMediastoreContainers(ctx context.Context, input *mediastore.ListContainersInput) ([]mediastoretypes.Container, error) {
 	if c.svc.mediastore == nil {
-		c.svc.mediastore = mediastore.New(c.svc.session)
+		c.svc.mediastore = mediastore.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*mediastore.Container, 0)
+	opt := make([]mediastoretypes.Container, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.mediastore.ListContainersWithContext(ctx, input)
+		o, err := c.svc.mediastore.ListContainers(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3681,16 +3718,16 @@ func (c *connector) GetMediastoreContainers(ctx context.Context, input *mediasto
 	return opt, nil
 }
 
-func (c *connector) GetMQBrokers(ctx context.Context, input *mq.ListBrokersInput) ([]*mq.BrokerSummary, error) {
+func (c *connector) GetMQBrokers(ctx context.Context, input *mq.ListBrokersInput) ([]mqtypes.BrokerSummary, error) {
 	if c.svc.mq == nil {
-		c.svc.mq = mq.New(c.svc.session)
+		c.svc.mq = mq.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*mq.BrokerSummary, 0)
+	opt := make([]mqtypes.BrokerSummary, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.mq.ListBrokersWithContext(ctx, input)
+		o, err := c.svc.mq.ListBrokers(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3712,16 +3749,16 @@ func (c *connector) GetMQBrokers(ctx context.Context, input *mq.ListBrokersInput
 	return opt, nil
 }
 
-func (c *connector) GetNeptuneDBClusters(ctx context.Context, input *neptune.DescribeDBClustersInput) ([]*neptune.DBCluster, error) {
+func (c *connector) GetNeptuneDBClusters(ctx context.Context, input *neptune.DescribeDBClustersInput) ([]neptunetypes.DBCluster, error) {
 	if c.svc.neptune == nil {
-		c.svc.neptune = neptune.New(c.svc.session)
+		c.svc.neptune = neptune.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*neptune.DBCluster, 0)
+	opt := make([]neptunetypes.DBCluster, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.neptune.DescribeDBClustersWithContext(ctx, input)
+		o, err := c.svc.neptune.DescribeDBClusters(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3743,16 +3780,16 @@ func (c *connector) GetNeptuneDBClusters(ctx context.Context, input *neptune.Des
 	return opt, nil
 }
 
-func (c *connector) GetRDSDBClusters(ctx context.Context, input *rds.DescribeDBClustersInput) ([]*rds.DBCluster, error) {
+func (c *connector) GetRDSDBClusters(ctx context.Context, input *rds.DescribeDBClustersInput) ([]rdstypes.DBCluster, error) {
 	if c.svc.rds == nil {
-		c.svc.rds = rds.New(c.svc.session)
+		c.svc.rds = rds.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*rds.DBCluster, 0)
+	opt := make([]rdstypes.DBCluster, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.rds.DescribeDBClustersWithContext(ctx, input)
+		o, err := c.svc.rds.DescribeDBClusters(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3774,16 +3811,16 @@ func (c *connector) GetRDSDBClusters(ctx context.Context, input *rds.DescribeDBC
 	return opt, nil
 }
 
-func (c *connector) GetDBInstances(ctx context.Context, input *rds.DescribeDBInstancesInput) ([]*rds.DBInstance, error) {
+func (c *connector) GetDBInstances(ctx context.Context, input *rds.DescribeDBInstancesInput) ([]rdstypes.DBInstance, error) {
 	if c.svc.rds == nil {
-		c.svc.rds = rds.New(c.svc.session)
+		c.svc.rds = rds.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*rds.DBInstance, 0)
+	opt := make([]rdstypes.DBInstance, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.rds.DescribeDBInstancesWithContext(ctx, input)
+		o, err := c.svc.rds.DescribeDBInstances(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3805,16 +3842,16 @@ func (c *connector) GetDBInstances(ctx context.Context, input *rds.DescribeDBIns
 	return opt, nil
 }
 
-func (c *connector) GetDBParameterGroups(ctx context.Context, input *rds.DescribeDBParameterGroupsInput) ([]*rds.DBParameterGroup, error) {
+func (c *connector) GetDBParameterGroups(ctx context.Context, input *rds.DescribeDBParameterGroupsInput) ([]rdstypes.DBParameterGroup, error) {
 	if c.svc.rds == nil {
-		c.svc.rds = rds.New(c.svc.session)
+		c.svc.rds = rds.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*rds.DBParameterGroup, 0)
+	opt := make([]rdstypes.DBParameterGroup, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.rds.DescribeDBParameterGroupsWithContext(ctx, input)
+		o, err := c.svc.rds.DescribeDBParameterGroups(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3836,16 +3873,16 @@ func (c *connector) GetDBParameterGroups(ctx context.Context, input *rds.Describ
 	return opt, nil
 }
 
-func (c *connector) GetDBSubnetGroups(ctx context.Context, input *rds.DescribeDBSubnetGroupsInput) ([]*rds.DBSubnetGroup, error) {
+func (c *connector) GetDBSubnetGroups(ctx context.Context, input *rds.DescribeDBSubnetGroupsInput) ([]rdstypes.DBSubnetGroup, error) {
 	if c.svc.rds == nil {
-		c.svc.rds = rds.New(c.svc.session)
+		c.svc.rds = rds.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*rds.DBSubnetGroup, 0)
+	opt := make([]rdstypes.DBSubnetGroup, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.rds.DescribeDBSubnetGroupsWithContext(ctx, input)
+		o, err := c.svc.rds.DescribeDBSubnetGroups(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3867,16 +3904,16 @@ func (c *connector) GetDBSubnetGroups(ctx context.Context, input *rds.DescribeDB
 	return opt, nil
 }
 
-func (c *connector) GetRDSGlobalClusters(ctx context.Context, input *rds.DescribeGlobalClustersInput) ([]*rds.GlobalCluster, error) {
+func (c *connector) GetRDSGlobalClusters(ctx context.Context, input *rds.DescribeGlobalClustersInput) ([]rdstypes.GlobalCluster, error) {
 	if c.svc.rds == nil {
-		c.svc.rds = rds.New(c.svc.session)
+		c.svc.rds = rds.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*rds.GlobalCluster, 0)
+	opt := make([]rdstypes.GlobalCluster, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.rds.DescribeGlobalClustersWithContext(ctx, input)
+		o, err := c.svc.rds.DescribeGlobalClusters(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3898,16 +3935,16 @@ func (c *connector) GetRDSGlobalClusters(ctx context.Context, input *rds.Describ
 	return opt, nil
 }
 
-func (c *connector) GetDBInstancesTags(ctx context.Context, input *rds.ListTagsForResourceInput) ([]*rds.Tag, error) {
+func (c *connector) GetDBInstancesTags(ctx context.Context, input *rds.ListTagsForResourceInput) ([]rdstypes.Tag, error) {
 	if c.svc.rds == nil {
-		c.svc.rds = rds.New(c.svc.session)
+		c.svc.rds = rds.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*rds.Tag, 0)
+	opt := make([]rdstypes.Tag, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.rds.ListTagsForResourceWithContext(ctx, input)
+		o, err := c.svc.rds.ListTagsForResource(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3925,16 +3962,16 @@ func (c *connector) GetDBInstancesTags(ctx context.Context, input *rds.ListTagsF
 	return opt, nil
 }
 
-func (c *connector) GetRedshiftClusters(ctx context.Context, input *redshift.DescribeClustersInput) ([]*redshift.Cluster, error) {
+func (c *connector) GetRedshiftClusters(ctx context.Context, input *redshift.DescribeClustersInput) ([]redshifttypes.Cluster, error) {
 	if c.svc.redshift == nil {
-		c.svc.redshift = redshift.New(c.svc.session)
+		c.svc.redshift = redshift.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*redshift.Cluster, 0)
+	opt := make([]redshifttypes.Cluster, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.redshift.DescribeClustersWithContext(ctx, input)
+		o, err := c.svc.redshift.DescribeClusters(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3956,16 +3993,16 @@ func (c *connector) GetRedshiftClusters(ctx context.Context, input *redshift.Des
 	return opt, nil
 }
 
-func (c *connector) GetQueryLoggingConfigs(ctx context.Context, input *route53.ListQueryLoggingConfigsInput) ([]*route53.QueryLoggingConfig, error) {
+func (c *connector) GetQueryLoggingConfigs(ctx context.Context, input *route53.ListQueryLoggingConfigsInput) ([]route53types.QueryLoggingConfig, error) {
 	if c.svc.route53 == nil {
-		c.svc.route53 = route53.New(c.svc.session)
+		c.svc.route53 = route53.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*route53.QueryLoggingConfig, 0)
+	opt := make([]route53types.QueryLoggingConfig, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.route53.ListQueryLoggingConfigsWithContext(ctx, input)
+		o, err := c.svc.route53.ListQueryLoggingConfigs(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -3987,16 +4024,16 @@ func (c *connector) GetQueryLoggingConfigs(ctx context.Context, input *route53.L
 	return opt, nil
 }
 
-func (c *connector) GetHealthChecks(ctx context.Context, input *route53.ListHealthChecksInput) ([]*route53.HealthCheck, error) {
+func (c *connector) GetHealthChecks(ctx context.Context, input *route53.ListHealthChecksInput) ([]route53types.HealthCheck, error) {
 	if c.svc.route53 == nil {
-		c.svc.route53 = route53.New(c.svc.session)
+		c.svc.route53 = route53.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*route53.HealthCheck, 0)
+	opt := make([]route53types.HealthCheck, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.route53.ListHealthChecksWithContext(ctx, input)
+		o, err := c.svc.route53.ListHealthChecks(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4018,16 +4055,16 @@ func (c *connector) GetHealthChecks(ctx context.Context, input *route53.ListHeal
 	return opt, nil
 }
 
-func (c *connector) GetHostedZones(ctx context.Context, input *route53.ListHostedZonesInput) ([]*route53.HostedZone, error) {
+func (c *connector) GetHostedZones(ctx context.Context, input *route53.ListHostedZonesInput) ([]route53types.HostedZone, error) {
 	if c.svc.route53 == nil {
-		c.svc.route53 = route53.New(c.svc.session)
+		c.svc.route53 = route53.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*route53.HostedZone, 0)
+	opt := make([]route53types.HostedZone, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.route53.ListHostedZonesWithContext(ctx, input)
+		o, err := c.svc.route53.ListHostedZones(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4049,16 +4086,16 @@ func (c *connector) GetHostedZones(ctx context.Context, input *route53.ListHoste
 	return opt, nil
 }
 
-func (c *connector) GetResourceRecordSets(ctx context.Context, input *route53.ListResourceRecordSetsInput) ([]*route53.ResourceRecordSet, error) {
+func (c *connector) GetResourceRecordSets(ctx context.Context, input *route53.ListResourceRecordSetsInput) ([]route53types.ResourceRecordSet, error) {
 	if c.svc.route53 == nil {
-		c.svc.route53 = route53.New(c.svc.session)
+		c.svc.route53 = route53.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*route53.ResourceRecordSet, 0)
+	opt := make([]route53types.ResourceRecordSet, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.route53.ListResourceRecordSetsWithContext(ctx, input)
+		o, err := c.svc.route53.ListResourceRecordSets(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4080,16 +4117,16 @@ func (c *connector) GetResourceRecordSets(ctx context.Context, input *route53.Li
 	return opt, nil
 }
 
-func (c *connector) GetReusableDelegationSets(ctx context.Context, input *route53.ListReusableDelegationSetsInput) ([]*route53.DelegationSet, error) {
+func (c *connector) GetReusableDelegationSets(ctx context.Context, input *route53.ListReusableDelegationSetsInput) ([]route53types.DelegationSet, error) {
 	if c.svc.route53 == nil {
-		c.svc.route53 = route53.New(c.svc.session)
+		c.svc.route53 = route53.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*route53.DelegationSet, 0)
+	opt := make([]route53types.DelegationSet, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.route53.ListReusableDelegationSetsWithContext(ctx, input)
+		o, err := c.svc.route53.ListReusableDelegationSets(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4111,16 +4148,16 @@ func (c *connector) GetReusableDelegationSets(ctx context.Context, input *route5
 	return opt, nil
 }
 
-func (c *connector) GetVPCAssociationAuthorizations(ctx context.Context, input *route53.ListVPCAssociationAuthorizationsInput) ([]*route53.VPC, error) {
+func (c *connector) GetVPCAssociationAuthorizations(ctx context.Context, input *route53.ListVPCAssociationAuthorizationsInput) ([]route53types.VPC, error) {
 	if c.svc.route53 == nil {
-		c.svc.route53 = route53.New(c.svc.session)
+		c.svc.route53 = route53.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*route53.VPC, 0)
+	opt := make([]route53types.VPC, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.route53.ListVPCAssociationAuthorizationsWithContext(ctx, input)
+		o, err := c.svc.route53.ListVPCAssociationAuthorizations(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4142,16 +4179,16 @@ func (c *connector) GetVPCAssociationAuthorizations(ctx context.Context, input *
 	return opt, nil
 }
 
-func (c *connector) GetResolverEndpoints(ctx context.Context, input *route53resolver.ListResolverEndpointsInput) ([]*route53resolver.ResolverEndpoint, error) {
+func (c *connector) GetResolverEndpoints(ctx context.Context, input *route53resolver.ListResolverEndpointsInput) ([]route53resolvertypes.ResolverEndpoint, error) {
 	if c.svc.route53resolver == nil {
-		c.svc.route53resolver = route53resolver.New(c.svc.session)
+		c.svc.route53resolver = route53resolver.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*route53resolver.ResolverEndpoint, 0)
+	opt := make([]route53resolvertypes.ResolverEndpoint, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.route53resolver.ListResolverEndpointsWithContext(ctx, input)
+		o, err := c.svc.route53resolver.ListResolverEndpoints(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4173,16 +4210,16 @@ func (c *connector) GetResolverEndpoints(ctx context.Context, input *route53reso
 	return opt, nil
 }
 
-func (c *connector) GetResolverRuleAssociations(ctx context.Context, input *route53resolver.ListResolverRuleAssociationsInput) ([]*route53resolver.ResolverRuleAssociation, error) {
+func (c *connector) GetResolverRuleAssociations(ctx context.Context, input *route53resolver.ListResolverRuleAssociationsInput) ([]route53resolvertypes.ResolverRuleAssociation, error) {
 	if c.svc.route53resolver == nil {
-		c.svc.route53resolver = route53resolver.New(c.svc.session)
+		c.svc.route53resolver = route53resolver.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*route53resolver.ResolverRuleAssociation, 0)
+	opt := make([]route53resolvertypes.ResolverRuleAssociation, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.route53resolver.ListResolverRuleAssociationsWithContext(ctx, input)
+		o, err := c.svc.route53resolver.ListResolverRuleAssociations(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4204,16 +4241,16 @@ func (c *connector) GetResolverRuleAssociations(ctx context.Context, input *rout
 	return opt, nil
 }
 
-func (c *connector) GetResolverRules(ctx context.Context, input *route53resolver.ListResolverRulesInput) ([]*route53resolver.ResolverRule, error) {
+func (c *connector) GetResolverRules(ctx context.Context, input *route53resolver.ListResolverRulesInput) ([]route53resolvertypes.ResolverRule, error) {
 	if c.svc.route53resolver == nil {
-		c.svc.route53resolver = route53resolver.New(c.svc.session)
+		c.svc.route53resolver = route53resolver.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*route53resolver.ResolverRule, 0)
+	opt := make([]route53resolvertypes.ResolverRule, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.route53resolver.ListResolverRulesWithContext(ctx, input)
+		o, err := c.svc.route53resolver.ListResolverRules(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4235,16 +4272,16 @@ func (c *connector) GetResolverRules(ctx context.Context, input *route53resolver
 	return opt, nil
 }
 
-func (c *connector) GetBucketTags(ctx context.Context, input *s3.GetBucketTaggingInput) ([]*s3.Tag, error) {
+func (c *connector) GetBucketTags(ctx context.Context, input *s3.GetBucketTaggingInput) ([]s3types.Tag, error) {
 	if c.svc.s3 == nil {
-		c.svc.s3 = s3.New(c.svc.session)
+		c.svc.s3 = s3.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*s3.Tag, 0)
+	opt := make([]s3types.Tag, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.s3.GetBucketTaggingWithContext(ctx, input)
+		o, err := c.svc.s3.GetBucketTagging(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4262,16 +4299,16 @@ func (c *connector) GetBucketTags(ctx context.Context, input *s3.GetBucketTaggin
 	return opt, nil
 }
 
-func (c *connector) ListObjects(ctx context.Context, input *s3.ListObjectsInput) ([]*s3.Object, error) {
+func (c *connector) ListObjects(ctx context.Context, input *s3.ListObjectsInput) ([]s3types.Object, error) {
 	if c.svc.s3 == nil {
-		c.svc.s3 = s3.New(c.svc.session)
+		c.svc.s3 = s3.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*s3.Object, 0)
+	opt := make([]s3types.Object, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.s3.ListObjectsWithContext(ctx, input)
+		o, err := c.svc.s3.ListObjects(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4293,16 +4330,16 @@ func (c *connector) ListObjects(ctx context.Context, input *s3.ListObjectsInput)
 	return opt, nil
 }
 
-func (c *connector) GetObjectsTags(ctx context.Context, input *s3.GetObjectTaggingInput) ([]*s3.Tag, error) {
+func (c *connector) GetObjectsTags(ctx context.Context, input *s3.GetObjectTaggingInput) ([]s3types.Tag, error) {
 	if c.svc.s3 == nil {
-		c.svc.s3 = s3.New(c.svc.session)
+		c.svc.s3 = s3.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*s3.Tag, 0)
+	opt := make([]s3types.Tag, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.s3.GetObjectTaggingWithContext(ctx, input)
+		o, err := c.svc.s3.GetObjectTagging(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4322,14 +4359,14 @@ func (c *connector) GetObjectsTags(ctx context.Context, input *s3.GetObjectTaggi
 
 func (c *connector) GetActiveReceiptRuleSet(ctx context.Context, input *ses.DescribeActiveReceiptRuleSetInput) (*string, error) {
 	if c.svc.ses == nil {
-		c.svc.ses = ses.New(c.svc.session)
+		c.svc.ses = ses.NewFromConfig(c.svc.config)
 	}
 
 	var opt *string
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ses.DescribeActiveReceiptRuleSetWithContext(ctx, input)
+		o, err := c.svc.ses.DescribeActiveReceiptRuleSet(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4347,16 +4384,16 @@ func (c *connector) GetActiveReceiptRuleSet(ctx context.Context, input *ses.Desc
 	return opt, nil
 }
 
-func (c *connector) GetActiveReceiptRulesSet(ctx context.Context, input *ses.DescribeActiveReceiptRuleSetInput) ([]*ses.ReceiptRule, error) {
+func (c *connector) GetActiveReceiptRulesSet(ctx context.Context, input *ses.DescribeActiveReceiptRuleSetInput) ([]sestypes.ReceiptRule, error) {
 	if c.svc.ses == nil {
-		c.svc.ses = ses.New(c.svc.session)
+		c.svc.ses = ses.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ses.ReceiptRule, 0)
+	opt := make([]sestypes.ReceiptRule, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ses.DescribeActiveReceiptRuleSetWithContext(ctx, input)
+		o, err := c.svc.ses.DescribeActiveReceiptRuleSet(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4374,16 +4411,16 @@ func (c *connector) GetActiveReceiptRulesSet(ctx context.Context, input *ses.Des
 	return opt, nil
 }
 
-func (c *connector) GetConfigurationSets(ctx context.Context, input *ses.ListConfigurationSetsInput) ([]*ses.ConfigurationSet, error) {
+func (c *connector) GetConfigurationSets(ctx context.Context, input *ses.ListConfigurationSetsInput) ([]sestypes.ConfigurationSet, error) {
 	if c.svc.ses == nil {
-		c.svc.ses = ses.New(c.svc.session)
+		c.svc.ses = ses.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ses.ConfigurationSet, 0)
+	opt := make([]sestypes.ConfigurationSet, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ses.ListConfigurationSetsWithContext(ctx, input)
+		o, err := c.svc.ses.ListConfigurationSets(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4405,16 +4442,16 @@ func (c *connector) GetConfigurationSets(ctx context.Context, input *ses.ListCon
 	return opt, nil
 }
 
-func (c *connector) GetIdentities(ctx context.Context, input *ses.ListIdentitiesInput) ([]*string, error) {
+func (c *connector) GetIdentities(ctx context.Context, input *ses.ListIdentitiesInput) ([]string, error) {
 	if c.svc.ses == nil {
-		c.svc.ses = ses.New(c.svc.session)
+		c.svc.ses = ses.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*string, 0)
+	opt := make([]string, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ses.ListIdentitiesWithContext(ctx, input)
+		o, err := c.svc.ses.ListIdentities(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4436,16 +4473,16 @@ func (c *connector) GetIdentities(ctx context.Context, input *ses.ListIdentities
 	return opt, nil
 }
 
-func (c *connector) GetIdentityNotificationAttributes(ctx context.Context, input *ses.GetIdentityNotificationAttributesInput) (map[string]*ses.IdentityNotificationAttributes, error) {
+func (c *connector) GetIdentityNotificationAttributes(ctx context.Context, input *ses.GetIdentityNotificationAttributesInput) (map[string]sestypes.IdentityNotificationAttributes, error) {
 	if c.svc.ses == nil {
-		c.svc.ses = ses.New(c.svc.session)
+		c.svc.ses = ses.NewFromConfig(c.svc.config)
 	}
 
-	opt := make(map[string]*ses.IdentityNotificationAttributes, 0)
+	opt := make(map[string]sestypes.IdentityNotificationAttributes, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ses.GetIdentityNotificationAttributesWithContext(ctx, input)
+		o, err := c.svc.ses.GetIdentityNotificationAttributes(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4463,16 +4500,16 @@ func (c *connector) GetIdentityNotificationAttributes(ctx context.Context, input
 	return opt, nil
 }
 
-func (c *connector) GetReceiptFilters(ctx context.Context, input *ses.ListReceiptFiltersInput) ([]*ses.ReceiptFilter, error) {
+func (c *connector) GetReceiptFilters(ctx context.Context, input *ses.ListReceiptFiltersInput) ([]sestypes.ReceiptFilter, error) {
 	if c.svc.ses == nil {
-		c.svc.ses = ses.New(c.svc.session)
+		c.svc.ses = ses.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ses.ReceiptFilter, 0)
+	opt := make([]sestypes.ReceiptFilter, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ses.ListReceiptFiltersWithContext(ctx, input)
+		o, err := c.svc.ses.ListReceiptFilters(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4490,16 +4527,16 @@ func (c *connector) GetReceiptFilters(ctx context.Context, input *ses.ListReceip
 	return opt, nil
 }
 
-func (c *connector) GetTemplates(ctx context.Context, input *ses.ListTemplatesInput) ([]*ses.TemplateMetadata, error) {
+func (c *connector) GetTemplates(ctx context.Context, input *ses.ListTemplatesInput) ([]sestypes.TemplateMetadata, error) {
 	if c.svc.ses == nil {
-		c.svc.ses = ses.New(c.svc.session)
+		c.svc.ses = ses.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*ses.TemplateMetadata, 0)
+	opt := make([]sestypes.TemplateMetadata, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.ses.ListTemplatesWithContext(ctx, input)
+		o, err := c.svc.ses.ListTemplates(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4521,16 +4558,16 @@ func (c *connector) GetTemplates(ctx context.Context, input *ses.ListTemplatesIn
 	return opt, nil
 }
 
-func (c *connector) GetSQSQueues(ctx context.Context, input *sqs.ListQueuesInput) ([]*string, error) {
+func (c *connector) GetSQSQueues(ctx context.Context, input *sqs.ListQueuesInput) ([]string, error) {
 	if c.svc.sqs == nil {
-		c.svc.sqs = sqs.New(c.svc.session)
+		c.svc.sqs = sqs.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*string, 0)
+	opt := make([]string, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.sqs.ListQueuesWithContext(ctx, input)
+		o, err := c.svc.sqs.ListQueues(ctx, input)
 		if err != nil {
 			return nil, err
 		}
@@ -4552,16 +4589,16 @@ func (c *connector) GetSQSQueues(ctx context.Context, input *sqs.ListQueuesInput
 	return opt, nil
 }
 
-func (c *connector) GetStorageGatewayGateways(ctx context.Context, input *storagegateway.ListGatewaysInput) ([]*storagegateway.GatewayInfo, error) {
+func (c *connector) GetStorageGatewayGateways(ctx context.Context, input *storagegateway.ListGatewaysInput) ([]storagegatewaytypes.GatewayInfo, error) {
 	if c.svc.storagegateway == nil {
-		c.svc.storagegateway = storagegateway.New(c.svc.session)
+		c.svc.storagegateway = storagegateway.NewFromConfig(c.svc.config)
 	}
 
-	opt := make([]*storagegateway.GatewayInfo, 0)
+	opt := make([]storagegatewaytypes.GatewayInfo, 0)
 
 	hasNextToken := true
 	for hasNextToken {
-		o, err := c.svc.storagegateway.ListGatewaysWithContext(ctx, input)
+		o, err := c.svc.storagegateway.ListGateways(ctx, input)
 		if err != nil {
 			return nil, err
 		}

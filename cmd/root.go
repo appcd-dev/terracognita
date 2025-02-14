@@ -82,7 +82,7 @@ func requiredStringFlags(names ...string) error {
 	return nil
 }
 
-func preRunEOutput(cmd *cobra.Command, args []string) error {
+func preRunEOutput(_ *cobra.Command, args []string) error {
 	// Initializes/Validates the HCL and TFSTATE flags
 	if module := viper.GetString("module"); module != "" {
 

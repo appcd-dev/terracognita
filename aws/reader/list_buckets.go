@@ -5,36 +5,36 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
+	s3types "github.com/aws/aws-sdk-go-v2/service/s3/types"
 )
 
-func (c *connector) ListBuckets(ctx context.Context, input *s3.ListBucketsInput) ([]*s3.Bucket, error) {
+func (c *connector) ListBuckets(ctx context.Context, input *s3.ListBucketsInput) ([]s3types.Bucket, error) {
 	var errs []error
 	var ropt = &s3.ListBucketsOutput{}
 
 	if c.svc.s3 == nil {
-		c.svc.s3 = s3.New(c.svc.session)
+		c.svc.s3 = s3.NewFromConfig(c.svc.config)
 	}
 
-	opt, err := c.svc.s3.ListBucketsWithContext(ctx, input)
+	opt, err := c.svc.s3.ListBuckets(ctx, input)
 	if err != nil {
 		return nil, err
 	}
 
 	newOpt := &s3.ListBucketsOutput{
 		Owner:   opt.Owner,
-		Buckets: make([]*s3.Bucket, 0),
+		Buckets: make([]s3types.Bucket, 0),
 	}
 	for _, bucket := range opt.Buckets {
 		inputLocation := &s3.GetBucketLocationInput{
 			Bucket: bucket.Name,
 		}
-		result, err := c.svc.s3.GetBucketLocation(inputLocation)
+		result, err := c.svc.s3.GetBucketLocation(ctx, inputLocation)
 		if err != nil {
 			errs = append(errs, err)
 		}
-		if s3.NormalizeBucketLocation(aws.StringValue(result.LocationConstraint)) == c.svc.region {
+		if string(result.LocationConstraint) == c.svc.region {
 			newOpt.Buckets = append(newOpt.Buckets, bucket)
 		}
 	}

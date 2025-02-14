@@ -5,52 +5,49 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/apigateway/apigatewayiface"
-	"github.com/aws/aws-sdk-go/service/athena/athenaiface"
-	"github.com/aws/aws-sdk-go/service/autoscaling/autoscalingiface"
-	"github.com/aws/aws-sdk-go/service/batch/batchiface"
-	"github.com/aws/aws-sdk-go/service/cloudfront/cloudfrontiface"
-	"github.com/aws/aws-sdk-go/service/cloudwatch/cloudwatchiface"
-	"github.com/aws/aws-sdk-go/service/configservice/configserviceiface"
-	"github.com/aws/aws-sdk-go/service/databasemigrationservice/databasemigrationserviceiface"
-	"github.com/aws/aws-sdk-go/service/dax/daxiface"
-	"github.com/aws/aws-sdk-go/service/directconnect/directconnectiface"
-	"github.com/aws/aws-sdk-go/service/directoryservice/directoryserviceiface"
-	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbiface"
-	"github.com/aws/aws-sdk-go/service/ec2"
-	"github.com/aws/aws-sdk-go/service/ec2/ec2iface"
-	"github.com/aws/aws-sdk-go/service/ecs/ecsiface"
-	"github.com/aws/aws-sdk-go/service/efs/efsiface"
-	"github.com/aws/aws-sdk-go/service/eks/eksiface"
-	"github.com/aws/aws-sdk-go/service/elasticache/elasticacheiface"
-	"github.com/aws/aws-sdk-go/service/elasticbeanstalk/elasticbeanstalkiface"
-	"github.com/aws/aws-sdk-go/service/elasticsearchservice/elasticsearchserviceiface"
-	"github.com/aws/aws-sdk-go/service/elb/elbiface"
-	"github.com/aws/aws-sdk-go/service/elbv2/elbv2iface"
-	"github.com/aws/aws-sdk-go/service/emr/emriface"
-	"github.com/aws/aws-sdk-go/service/fsx/fsxiface"
-	"github.com/aws/aws-sdk-go/service/glue/glueiface"
-	"github.com/aws/aws-sdk-go/service/iam/iamiface"
-	"github.com/aws/aws-sdk-go/service/kinesis/kinesisiface"
-	"github.com/aws/aws-sdk-go/service/lambda/lambdaiface"
-	"github.com/aws/aws-sdk-go/service/lightsail/lightsailiface"
-	"github.com/aws/aws-sdk-go/service/mediastore/mediastoreiface"
-	"github.com/aws/aws-sdk-go/service/mq/mqiface"
-	"github.com/aws/aws-sdk-go/service/neptune/neptuneiface"
-	"github.com/aws/aws-sdk-go/service/rds/rdsiface"
-	"github.com/aws/aws-sdk-go/service/redshift/redshiftiface"
-	"github.com/aws/aws-sdk-go/service/route53/route53iface"
-	"github.com/aws/aws-sdk-go/service/route53resolver/route53resolveriface"
-	"github.com/aws/aws-sdk-go/service/s3/s3iface"
-	"github.com/aws/aws-sdk-go/service/s3/s3manager/s3manageriface"
-	"github.com/aws/aws-sdk-go/service/ses/sesiface"
-	"github.com/aws/aws-sdk-go/service/sqs/sqsiface"
-	"github.com/aws/aws-sdk-go/service/storagegateway/storagegatewayiface"
-	"github.com/aws/aws-sdk-go/service/sts"
-	"github.com/aws/aws-sdk-go/service/sts/stsiface"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/credentials"
+	"github.com/aws/aws-sdk-go-v2/service/apigateway"
+	"github.com/aws/aws-sdk-go-v2/service/athena"
+	"github.com/aws/aws-sdk-go-v2/service/autoscaling"
+	"github.com/aws/aws-sdk-go-v2/service/batch"
+	"github.com/aws/aws-sdk-go-v2/service/cloudfront"
+	"github.com/aws/aws-sdk-go-v2/service/cloudwatch"
+	"github.com/aws/aws-sdk-go-v2/service/configservice"
+	"github.com/aws/aws-sdk-go-v2/service/databasemigrationservice"
+	"github.com/aws/aws-sdk-go-v2/service/dax"
+	"github.com/aws/aws-sdk-go-v2/service/directconnect"
+	"github.com/aws/aws-sdk-go-v2/service/directoryservice"
+	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
+	"github.com/aws/aws-sdk-go-v2/service/ec2"
+	"github.com/aws/aws-sdk-go-v2/service/ecs"
+	"github.com/aws/aws-sdk-go-v2/service/efs"
+	"github.com/aws/aws-sdk-go-v2/service/eks"
+	"github.com/aws/aws-sdk-go-v2/service/elasticache"
+	"github.com/aws/aws-sdk-go-v2/service/elasticbeanstalk"
+	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancing"
+	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2"
+	"github.com/aws/aws-sdk-go-v2/service/elasticsearchservice"
+	"github.com/aws/aws-sdk-go-v2/service/emr"
+	"github.com/aws/aws-sdk-go-v2/service/fsx"
+	"github.com/aws/aws-sdk-go-v2/service/glue"
+	"github.com/aws/aws-sdk-go-v2/service/iam"
+	"github.com/aws/aws-sdk-go-v2/service/kinesis"
+	"github.com/aws/aws-sdk-go-v2/service/lambda"
+	"github.com/aws/aws-sdk-go-v2/service/lightsail"
+	"github.com/aws/aws-sdk-go-v2/service/mediastore"
+	"github.com/aws/aws-sdk-go-v2/service/mq"
+	"github.com/aws/aws-sdk-go-v2/service/neptune"
+	"github.com/aws/aws-sdk-go-v2/service/rds"
+	"github.com/aws/aws-sdk-go-v2/service/redshift"
+	"github.com/aws/aws-sdk-go-v2/service/route53"
+	"github.com/aws/aws-sdk-go-v2/service/route53resolver"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"github.com/aws/aws-sdk-go-v2/service/ses"
+	"github.com/aws/aws-sdk-go-v2/service/sqs"
+	"github.com/aws/aws-sdk-go-v2/service/storagegateway"
+	"github.com/aws/aws-sdk-go-v2/service/sts"
 )
 
 //go:generate go run ../cmd/ -output reader.go
@@ -97,12 +94,12 @@ func New(ctx context.Context, accessKey, secretKey, region, sessionToken string,
 type connector struct {
 	region    string
 	svc       *serviceConnector
-	creds     *credentials.Credentials
-	accountID *string
+	creds     aws.CredentialsProvider
+	accountID string
 }
 
 func (c *connector) GetAccountID() string {
-	return *c.accountID
+	return c.accountID
 }
 
 func (c *connector) GetRegion() string {
@@ -110,48 +107,47 @@ func (c *connector) GetRegion() string {
 }
 
 type serviceConnector struct {
-	apigateway               apigatewayiface.APIGatewayAPI
-	athena                   athenaiface.AthenaAPI
-	autoscaling              autoscalingiface.AutoScalingAPI
-	batch                    batchiface.BatchAPI
-	cloudfront               cloudfrontiface.CloudFrontAPI
-	cloudwatch               cloudwatchiface.CloudWatchAPI
-	configservice            configserviceiface.ConfigServiceAPI
-	databasemigrationservice databasemigrationserviceiface.DatabaseMigrationServiceAPI
-	dax                      daxiface.DAXAPI
-	directconnect            directconnectiface.DirectConnectAPI
-	directoryservice         directoryserviceiface.DirectoryServiceAPI
-	dynamodb                 dynamodbiface.DynamoDBAPI
-	ec2                      ec2iface.EC2API
-	ecs                      ecsiface.ECSAPI
-	efs                      efsiface.EFSAPI
-	eks                      eksiface.EKSAPI
-	elasticache              elasticacheiface.ElastiCacheAPI
-	elasticbeanstalk         elasticbeanstalkiface.ElasticBeanstalkAPI
-	elasticsearchservice     elasticsearchserviceiface.ElasticsearchServiceAPI
-	elb                      elbiface.ELBAPI
-	elbv2                    elbv2iface.ELBV2API
-	emr                      emriface.EMRAPI
-	fsx                      fsxiface.FSxAPI
-	glue                     glueiface.GlueAPI
-	iam                      iamiface.IAMAPI
-	kinesis                  kinesisiface.KinesisAPI
-	lambda                   lambdaiface.LambdaAPI
-	lightsail                lightsailiface.LightsailAPI
-	mediastore               mediastoreiface.MediaStoreAPI
-	mq                       mqiface.MQAPI
-	neptune                  neptuneiface.NeptuneAPI
-	rds                      rdsiface.RDSAPI
-	redshift                 redshiftiface.RedshiftAPI
+	config                   aws.Config
+	apigateway               *apigateway.Client
+	athena                   *athena.Client
+	autoscaling              *autoscaling.Client
+	batch                    *batch.Client
+	cloudfront               *cloudfront.Client
+	cloudwatch               *cloudwatch.Client
+	configservice            *configservice.Client
+	databasemigrationservice *databasemigrationservice.Client
+	dax                      *dax.Client
+	directconnect            *directconnect.Client
+	directoryservice         *directoryservice.Client
+	dynamodb                 *dynamodb.Client
+	ec2                      *ec2.Client
+	ecs                      *ecs.Client
+	efs                      *efs.Client
+	eks                      *eks.Client
+	elasticache              *elasticache.Client
+	elasticbeanstalk         *elasticbeanstalk.Client
+	elasticsearchservice     *elasticsearchservice.Client
+	elb                      *elasticloadbalancing.Client
+	elbv2                    *elasticloadbalancingv2.Client
+	emr                      *emr.Client
+	fsx                      *fsx.Client
+	glue                     *glue.Client
+	iam                      *iam.Client
+	kinesis                  *kinesis.Client
+	lambda                   *lambda.Client
+	lightsail                *lightsail.Client
+	mediastore               *mediastore.Client
+	mq                       *mq.Client
+	neptune                  *neptune.Client
+	rds                      *rds.Client
+	redshift                 *redshift.Client
 	region                   string
-	route53resolver          route53resolveriface.Route53ResolverAPI
-	route53                  route53iface.Route53API
-	s3downloader             s3manageriface.DownloaderAPI
-	s3                       s3iface.S3API
-	ses                      sesiface.SESAPI
-	session                  *session.Session
-	sqs                      sqsiface.SQSAPI
-	storagegateway           storagegatewayiface.StorageGatewayAPI
+	route53resolver          *route53resolver.Client
+	route53                  *route53.Client
+	s3                       *s3.Client
+	ses                      *ses.Client
+	sqs                      *sqs.Client
+	storagegateway           *storagegateway.Client
 }
 
 /* The default region is only used to (1) get the list of region and
@@ -168,37 +164,30 @@ const defaultRegion string = "eu-west-1"
 // a Security Token Service client.
 // The only AWS error code that this function return is
 // * EmptyStaticCreds
-func configureAWS(accessKey, secretKey, region, token string) (*credentials.Credentials, ec2iface.EC2API, stsiface.STSAPI, error) {
+func configureAWS(accessKey, secretKey, region, token string) (aws.CredentialsProvider, *ec2.Client, *sts.Client, error) {
 	if region == "" {
 		region = defaultRegion
 	}
 
-	creds := credentials.NewStaticCredentials(accessKey, secretKey, token)
-	_, err := creds.Get()
+	creds := aws.NewCredentialsCache(credentials.NewStaticCredentialsProvider(accessKey, secretKey, token))
+	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(region), config.WithCredentialsProvider(creds))
 	if err != nil {
 		return nil, nil, nil, err
 	}
-	sess := session.Must(
-		session.NewSession(&aws.Config{
-			Region:      aws.String(region),
-			DisableSSL:  aws.Bool(false),
-			MaxRetries:  aws.Int(3),
-			Credentials: creds,
-		}),
-	)
-	return creds, ec2.New(sess), sts.New(sess), nil
+
+	return creds, ec2.NewFromConfig(cfg), sts.NewFromConfig(cfg), nil
 }
 
 // setAccountID retrieves the caller ID from the Security Token Service and set
 // it in the connector.
 // An AWS error can be returned with one of the common error codes.
 // See https://docs.aws.amazon.com/STS/latest/APIReference/CommonErrors.html
-func (c *connector) setAccountID(ctx context.Context, sts stsiface.STSAPI) error {
-	resp, err := sts.GetCallerIdentityWithContext(ctx, nil)
+func (c *connector) setAccountID(ctx context.Context, sts *sts.Client) error {
+	resp, err := sts.GetCallerIdentity(ctx, nil)
 	if err != nil {
 		return err
 	}
-	c.accountID = resp.Account
+	c.accountID = *resp.Account
 	return nil
 }
 
@@ -207,12 +196,12 @@ func (c *connector) setAccountID(ctx context.Context, sts stsiface.STSAPI) error
 // A AWS error can be returned with one of the common error codes or a standard
 // go error if enabledRegions is empty or if 0 AWS regions has been matched.
 // See https://docs.aws.amazon.com/AWSEC2/latest/APIReference/errors-overview.html#CommonErrors
-func (c *connector) setRegion(ctx context.Context, ec2 ec2iface.EC2API, region string) error {
+func (c *connector) setRegion(ctx context.Context, ec2 *ec2.Client, region string) error {
 	if region == "" {
 		return errors.New("at least one region name is required")
 	}
 
-	regions, err := ec2.DescribeRegionsWithContext(ctx, nil)
+	regions, err := ec2.DescribeRegions(ctx, nil)
 	if err != nil {
 		return err
 	}
@@ -236,17 +225,55 @@ func (c *connector) setService(config *aws.Config) {
 		config.Credentials = c.creds
 	} else {
 		config = &aws.Config{
-			DisableSSL:  aws.Bool(false),
-			MaxRetries:  aws.Int(3),
+			Region:      c.region,
 			Credentials: c.creds,
 		}
 	}
 
-	config.Region = aws.String(c.region)
-	sess := session.Must(session.NewSession(config))
+	cfg := *config
+
 	svc := &serviceConnector{
-		region:  c.region,
-		session: sess,
+		config:                   cfg,
+		region:                   c.region,
+		apigateway:               apigateway.NewFromConfig(cfg),
+		athena:                   athena.NewFromConfig(cfg),
+		autoscaling:              autoscaling.NewFromConfig(cfg),
+		batch:                    batch.NewFromConfig(cfg),
+		cloudfront:               cloudfront.NewFromConfig(cfg),
+		cloudwatch:               cloudwatch.NewFromConfig(cfg),
+		configservice:            configservice.NewFromConfig(cfg),
+		databasemigrationservice: databasemigrationservice.NewFromConfig(cfg),
+		dax:                      dax.NewFromConfig(cfg),
+		directconnect:            directconnect.NewFromConfig(cfg),
+		directoryservice:         directoryservice.NewFromConfig(cfg),
+		dynamodb:                 dynamodb.NewFromConfig(cfg),
+		ec2:                      ec2.NewFromConfig(cfg),
+		ecs:                      ecs.NewFromConfig(cfg),
+		efs:                      efs.NewFromConfig(cfg),
+		eks:                      eks.NewFromConfig(cfg),
+		elasticache:              elasticache.NewFromConfig(cfg),
+		elasticbeanstalk:         elasticbeanstalk.NewFromConfig(cfg),
+		elasticsearchservice:     elasticsearchservice.NewFromConfig(cfg),
+		elb:                      elasticloadbalancing.NewFromConfig(cfg),
+		elbv2:                    elasticloadbalancingv2.NewFromConfig(cfg),
+		emr:                      emr.NewFromConfig(cfg),
+		fsx:                      fsx.NewFromConfig(cfg),
+		glue:                     glue.NewFromConfig(cfg),
+		iam:                      iam.NewFromConfig(cfg),
+		kinesis:                  kinesis.NewFromConfig(cfg),
+		lambda:                   lambda.NewFromConfig(cfg),
+		lightsail:                lightsail.NewFromConfig(cfg),
+		mediastore:               mediastore.NewFromConfig(cfg),
+		mq:                       mq.NewFromConfig(cfg),
+		neptune:                  neptune.NewFromConfig(cfg),
+		rds:                      rds.NewFromConfig(cfg),
+		redshift:                 redshift.NewFromConfig(cfg),
+		route53resolver:          route53resolver.NewFromConfig(cfg),
+		route53:                  route53.NewFromConfig(cfg),
+		s3:                       s3.NewFromConfig(cfg),
+		ses:                      ses.NewFromConfig(cfg),
+		sqs:                      sqs.NewFromConfig(cfg),
+		storagegateway:           storagegateway.NewFromConfig(cfg),
 	}
 	c.svc = svc
 }

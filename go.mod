@@ -1,12 +1,56 @@
 module github.com/cycloidio/terracognita
 
-go 1.17
+go 1.21
+
+toolchain go1.24.0
 
 require (
 	github.com/Azure/azure-sdk-for-go v65.0.0+incompatible
 	github.com/Azure/go-autorest/autorest v0.11.27
 	github.com/adrg/xdg v0.2.3
-	github.com/aws/aws-sdk-go v1.43.34
+	github.com/aws/aws-sdk-go-v2 v1.36.1
+	github.com/aws/aws-sdk-go-v2/config v1.29.6
+	github.com/aws/aws-sdk-go-v2/credentials v1.17.59
+	github.com/aws/aws-sdk-go-v2/service/apigateway v1.28.11
+	github.com/aws/aws-sdk-go-v2/service/athena v1.49.10
+	github.com/aws/aws-sdk-go-v2/service/autoscaling v1.51.12
+	github.com/aws/aws-sdk-go-v2/service/batch v1.49.12
+	github.com/aws/aws-sdk-go-v2/service/cloudfront v1.44.10
+	github.com/aws/aws-sdk-go-v2/service/cloudwatch v1.43.14
+	github.com/aws/aws-sdk-go-v2/service/configservice v1.51.12
+	github.com/aws/aws-sdk-go-v2/service/databasemigrationservice v1.47.0
+	github.com/aws/aws-sdk-go-v2/service/dax v1.23.15
+	github.com/aws/aws-sdk-go-v2/service/directconnect v1.30.12
+	github.com/aws/aws-sdk-go-v2/service/directoryservice v1.30.17
+	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.40.1
+	github.com/aws/aws-sdk-go-v2/service/ec2 v1.203.0
+	github.com/aws/aws-sdk-go-v2/service/ecs v1.53.14
+	github.com/aws/aws-sdk-go-v2/service/efs v1.34.11
+	github.com/aws/aws-sdk-go-v2/service/eks v1.58.0
+	github.com/aws/aws-sdk-go-v2/service/elasticache v1.44.12
+	github.com/aws/aws-sdk-go-v2/service/elasticbeanstalk v1.28.16
+	github.com/aws/aws-sdk-go-v2/service/elasticloadbalancing v1.28.17
+	github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2 v1.43.12
+	github.com/aws/aws-sdk-go-v2/service/elasticsearchservice v1.32.18
+	github.com/aws/aws-sdk-go-v2/service/emr v1.47.12
+	github.com/aws/aws-sdk-go-v2/service/fsx v1.52.0
+	github.com/aws/aws-sdk-go-v2/service/glue v1.105.9
+	github.com/aws/aws-sdk-go-v2/service/iam v1.39.1
+	github.com/aws/aws-sdk-go-v2/service/kinesis v1.32.18
+	github.com/aws/aws-sdk-go-v2/service/lambda v1.69.12
+	github.com/aws/aws-sdk-go-v2/service/lightsail v1.42.15
+	github.com/aws/aws-sdk-go-v2/service/mediastore v1.24.15
+	github.com/aws/aws-sdk-go-v2/service/mq v1.27.16
+	github.com/aws/aws-sdk-go-v2/service/neptune v1.35.17
+	github.com/aws/aws-sdk-go-v2/service/rds v1.93.12
+	github.com/aws/aws-sdk-go-v2/service/redshift v1.53.12
+	github.com/aws/aws-sdk-go-v2/service/route53 v1.48.7
+	github.com/aws/aws-sdk-go-v2/service/route53resolver v1.34.13
+	github.com/aws/aws-sdk-go-v2/service/s3 v1.76.1
+	github.com/aws/aws-sdk-go-v2/service/ses v1.29.10
+	github.com/aws/aws-sdk-go-v2/service/sqs v1.37.14
+	github.com/aws/aws-sdk-go-v2/service/storagegateway v1.35.0
+	github.com/aws/aws-sdk-go-v2/service/sts v1.33.14
 	github.com/chr4/pwgen v1.1.0
 	github.com/cycloidio/mxwriter v1.0.4
 	github.com/cycloidio/tfdocs v0.0.0-20230516095646-1dc8f8412d50
@@ -23,7 +67,6 @@ require (
 	github.com/hashicorp/terraform-provider-azurerm v1.44.1-0.20201029183808-d721bcc1bb55
 	github.com/hashicorp/terraform-provider-google v1.20.1-0.20210510171431-a764cf3da527
 	github.com/hashicorp/terraform-provider-vsphere v1.26.1-0.20220510172607-30f37d268d79
-	github.com/jinzhu/inflection v1.0.0
 	github.com/pascaldekloe/name v1.0.1
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.1.3
@@ -56,19 +99,22 @@ require (
 	github.com/apparentlymart/go-cidr v1.1.0 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
 	github.com/apparentlymart/go-versions v1.0.1 // indirect
-	github.com/aws/aws-sdk-go-v2 v1.16.2 // indirect
-	github.com/aws/aws-sdk-go-v2/config v1.15.0 // indirect
-	github.com/aws/aws-sdk-go-v2/credentials v1.10.0 // indirect
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.12.0 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.9 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.4.3 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/ini v1.3.7 // indirect
-	github.com/aws/aws-sdk-go-v2/service/iam v1.18.0 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.0 // indirect
-	github.com/aws/aws-sdk-go-v2/service/route53domains v1.12.3 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.11.0 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.16.0 // indirect
-	github.com/aws/smithy-go v1.11.2 // indirect
+	github.com/aws/aws-sdk-go v1.43.34 // indirect
+	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.6.8 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.16.28 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.32 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.6.32 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/ini v1.8.2 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/v4a v1.3.32 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.12.2 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/checksum v1.6.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.10.13 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.12.13 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/s3shared v1.18.13 // indirect
+	github.com/aws/aws-sdk-go-v2/service/route53domains v1.28.9 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.24.15 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.28.14 // indirect
+	github.com/aws/smithy-go v1.22.2 // indirect
 	github.com/beevik/etree v1.1.0 // indirect
 	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d // indirect
 	github.com/btubbs/datetime v0.1.0 // indirect
@@ -178,17 +224,14 @@ require (
 )
 
 // Force an specific version if not the AWS provider does not compile
-replace github.com/hashicorp/aws-sdk-go-base v0.6.0 => github.com/hashicorp/aws-sdk-go-base v0.5.0
-
-// If we  go to the 1.5.0 then github.com/hashicorp/terraform-plugin-test/ will break
-// as go-getter introduced a break from 1.4 -> 1.5
-replace github.com/hashicorp/go-getter v1.5.0 => github.com/hashicorp/go-getter v1.4.0
-
-// Fork of Azurerm that has the V2 of the SDK
-replace github.com/hashicorp/terraform-provider-azurerm => github.com/cycloidio/terraform-provider-azurerm v1.44.1-0.20230517144901-90a36c6b8ed4
-
-replace github.com/hashicorp/terraform-provider-aws => github.com/cycloidio/terraform-provider-aws v1.60.1-0.20220513132327-e2dbdf90e533
-
-replace github.com/hashicorp/terraform-provider-google => github.com/hashicorp/terraform-provider-google v1.20.1-0.20220201002249-bc5fcb3c89a5
-
-replace github.com/hashicorp/terraform => github.com/cycloidio/terraform v1.1.9-cy
+replace (
+	github.com/hashicorp/aws-sdk-go-base v0.6.0 => github.com/hashicorp/aws-sdk-go-base v0.5.0
+	// If we  go to the 1.5.0 then github.com/hashicorp/terraform-plugin-test/ will break
+	// as go-getter introduced a break from 1.4 -> 1.5
+	github.com/hashicorp/go-getter v1.5.0 => github.com/hashicorp/go-getter v1.4.0
+	github.com/hashicorp/terraform => github.com/cycloidio/terraform v1.1.9-cy
+	github.com/hashicorp/terraform-provider-aws => github.com/cycloidio/terraform-provider-aws v1.60.1-0.20220513132327-e2dbdf90e533
+	// Fork of Azurerm that has the V2 of the SDK
+	github.com/hashicorp/terraform-provider-azurerm => github.com/cycloidio/terraform-provider-azurerm v1.44.1-0.20230517144901-90a36c6b8ed4
+	github.com/hashicorp/terraform-provider-google => github.com/hashicorp/terraform-provider-google v1.20.1-0.20220201002249-bc5fcb3c89a5
+)
