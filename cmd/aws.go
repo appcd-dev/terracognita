@@ -60,14 +60,12 @@ var (
 				return err
 			}
 
-			ctx := context.Background()
-
-			awsP, err := aws.NewProvider(ctx, viper.GetString("access-key"), viper.GetString("secret-key"), viper.GetString("region"), viper.GetString("session-token"))
+			awsP, err := aws.NewProvider(cmd.Context(), viper.GetString("access-key"), viper.GetString("secret-key"), viper.GetString("region"), viper.GetString("session-token"))
 			if err != nil {
 				return err
 			}
 
-			err = importProvider(ctx, logger, awsP, tags)
+			err = importProvider(cmd.Context(), logger, awsP, tags)
 			if err != nil {
 				return err
 			}
@@ -103,7 +101,7 @@ func loadAWSCredentials(ctx context.Context) error {
 		return err
 	}
 
-	creds, err := cfg.Credentials.Retrieve(context.TODO())
+	creds, err := cfg.Credentials.Retrieve(ctx)
 	if err != nil {
 		return err
 	}

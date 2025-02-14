@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-//go:generate mockgen -destination=../mock/provider.go -mock_names=Provider=Provider -package mock github.com/cycloidio/terracognita/provider Provider
+//go:generate go tool mockgen -destination=../mock/provider.go -mock_names=Provider=Provider -package mock github.com/cycloidio/terracognita/provider Provider
 
 // Provider is the general interface used to abstract
 // a cloud provider from Terraform

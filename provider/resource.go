@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"reflect"
@@ -64,11 +65,11 @@ type Resource interface {
 	// it imported more than one state, this list does not
 	// include the actual Resource on parameters, so if
 	// len([]Resource) == 0 means only the Resource is imported
-	ImportState() ([]Resource, error)
+	ImportState(ctx context.Context) ([]Resource, error)
 
 	// Read read the remote information of the Resource to the
 	// state and calculates the ResourceInstanceObject
-	Read(f *filter.Filter) error
+	Read(ctx context.Context, f *filter.Filter) error
 
 	// State calculates the state of the Resource and
 	// writes it to w
@@ -206,7 +207,7 @@ func (r *resource) Data() *schema.ResourceData {
 
 func (r *resource) Provider() Provider { return r.provider }
 
-func (r *resource) ImportState() ([]Resource, error) {
+func (r *resource) ImportState(ctx context.Context) ([]Resource, error) {
 	logger := log.Get()
 	// If it does not support import do not try
 	if r.TFResource().Importer == nil {
@@ -214,7 +215,7 @@ func (r *resource) ImportState() ([]Resource, error) {
 		return nil, nil
 	}
 
-	irsresp := r.client.ImportResourceState(ImportResourceStateRequest{
+	irsresp := r.client.ImportResourceState(ctx, ImportResourceStateRequest{
 		TypeName: r.resourceType,
 		ID:       r.id,
 	})
@@ -261,13 +262,13 @@ func (r *resource) ImportState() ([]Resource, error) {
 	return resources, nil
 }
 
-func (r *resource) Read(f *filter.Filter) error {
+func (r *resource) Read(ctx context.Context, f *filter.Filter) error {
 	var err error
 	rrreq := ReadResourceRequest{
 		TypeName:   r.Type(),
 		PriorState: r.stateValue,
 	}
-	rrres := r.client.ReadResource(rrreq)
+	rrres := r.client.ReadResource(ctx, rrreq)
 	if err = rrres.Diagnostics.Err(); err != nil {
 		return errors.Wrapf(err, "could not read resource %s with id %s", r.resourceType, r.id)
 	}

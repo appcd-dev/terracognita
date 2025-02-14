@@ -67,7 +67,7 @@ import (
 func New(ctx context.Context, accessKey, secretKey, region, sessionToken string, config *aws.Config) (Reader, error) {
 	var c = connector{}
 
-	creds, ec2s, sts, err := configureAWS(accessKey, secretKey, region, sessionToken)
+	creds, ec2s, sts, err := configureAWS(ctx, accessKey, secretKey, region, sessionToken)
 	if err != nil {
 		return nil, err
 	}
@@ -164,13 +164,13 @@ const defaultRegion string = "eu-west-1"
 // a Security Token Service client.
 // The only AWS error code that this function return is
 // * EmptyStaticCreds
-func configureAWS(accessKey, secretKey, region, token string) (aws.CredentialsProvider, *ec2.Client, *sts.Client, error) {
+func configureAWS(ctx context.Context, accessKey, secretKey, region, token string) (aws.CredentialsProvider, *ec2.Client, *sts.Client, error) {
 	if region == "" {
 		region = defaultRegion
 	}
 
 	creds := aws.NewCredentialsCache(credentials.NewStaticCredentialsProvider(accessKey, secretKey, token))
-	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(region), config.WithCredentialsProvider(creds))
+	cfg, err := config.LoadDefaultConfig(ctx, config.WithRegion(region), config.WithCredentialsProvider(creds))
 	if err != nil {
 		return nil, nil, nil, err
 	}

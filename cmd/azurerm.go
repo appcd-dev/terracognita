@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"context"
 	"fmt"
 
 	kitlog "github.com/go-kit/kit/log"
@@ -46,10 +45,8 @@ var (
 				return fmt.Errorf("the flag 'resource-group-name' is required")
 			}
 
-			ctx := context.Background()
-
 			azureRMP, err := azurerm.NewProvider(
-				ctx,
+				cmd.Context(),
 				viper.GetString("client-id"),
 				viper.GetString("client-secret"),
 				viper.GetString("environment"),
@@ -66,7 +63,7 @@ var (
 				return err
 			}
 
-			err = importProvider(ctx, logger, azureRMP, tags)
+			err = importProvider(cmd.Context(), logger, azureRMP, tags)
 			if err != nil {
 				return err
 			}

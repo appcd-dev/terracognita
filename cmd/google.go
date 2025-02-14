@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"context"
-
 	kitlog "github.com/go-kit/kit/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -43,10 +41,8 @@ var (
 				return err
 			}
 
-			ctx := context.Background()
-
 			googleP, err := google.NewProvider(
-				ctx,
+				cmd.Context(),
 				viper.GetUint64("max-results"),
 				viper.GetString("project"),
 				viper.GetString("region"),
@@ -56,7 +52,7 @@ var (
 				return err
 			}
 
-			err = importProvider(ctx, logger, googleP, tags)
+			err = importProvider(cmd.Context(), logger, googleP, tags)
 			if err != nil {
 				return err
 			}

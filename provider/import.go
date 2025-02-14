@@ -106,7 +106,7 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 			fmt.Fprintf(out, "\rScanning %s [%d/%d]", t, i+1, resourceLen)
 
 			logger.Log("msg", "reading from TF")
-			res, err := re.ImportState()
+			res, err := re.ImportState(ctx)
 			if err != nil {
 				return err
 			}
@@ -122,7 +122,7 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 			// we create a new slice with those elements and iterate
 			// over it
 			for _, r := range append([]Resource{re}, res...) {
-				err = r.Read(f)
+				err = r.Read(ctx, f)
 				if err != nil {
 					// Errors are ignored. If a resource is invalid we assume it can be skipped, it can be related to inconsistencies in deployed resources.
 					// So instead of failing and stopping execution we ignore them and continue (we log them if -v is specified)

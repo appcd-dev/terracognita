@@ -36,7 +36,7 @@ func NewGRPCClient(pv *schema.Provider) *GRPCClient {
 }
 
 // ReadResource reads the Resource from the Provider
-func (c *GRPCClient) ReadResource(r ReadResourceRequest) (resp ReadResourceResponse) {
+func (c *GRPCClient) ReadResource(ctx context.Context, r ReadResourceRequest) (resp ReadResourceResponse) {
 	resSchema := c.getResourceSchema(r.TypeName)
 
 	mp, err := msgpack.Marshal(r.PriorState, resSchema.CoreConfigSchema().ImpliedType())
@@ -51,7 +51,7 @@ func (c *GRPCClient) ReadResource(r ReadResourceRequest) (resp ReadResourceRespo
 		Private:      r.Private,
 	}
 
-	protoResp, err := c.server.ReadResource(context.Background(), protoReq)
+	protoResp, err := c.server.ReadResource(ctx, protoReq)
 	if err != nil {
 		resp.Diagnostics = resp.Diagnostics.Append(grpcErr(err))
 		return resp
@@ -72,13 +72,13 @@ func (c *GRPCClient) ReadResource(r ReadResourceRequest) (resp ReadResourceRespo
 }
 
 // ImportResourceState imports the state of the resource from the Provider
-func (c *GRPCClient) ImportResourceState(r ImportResourceStateRequest) (resp ImportResourceStateResponse) {
+func (c *GRPCClient) ImportResourceState(ctx context.Context, r ImportResourceStateRequest) (resp ImportResourceStateResponse) {
 	protoReq := &tfprotov5.ImportResourceStateRequest{
 		TypeName: r.TypeName,
 		ID:       r.ID,
 	}
 
-	protoResp, err := c.server.ImportResourceState(context.Background(), protoReq)
+	protoResp, err := c.server.ImportResourceState(ctx, protoReq)
 	if err != nil {
 		resp.Diagnostics = resp.Diagnostics.Append(grpcErr(err))
 		return resp
