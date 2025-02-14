@@ -63,7 +63,7 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 		}
 	}
 
-	fmt.Fprintf(out, "Importing with filters: %s", f)
+	fmt.Fprintf(out, "Scanning with filters: %s", f)
 	logger.Log("filters", f.String())
 
 	interpolation := interpolator.New(p.String())
@@ -103,7 +103,7 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 		resourceLen := len(resources)
 		for i, re := range resources {
 			logger := kitlog.With(logger, "id", re.ID(), "total", resourceLen, "current", i+1)
-			fmt.Fprintf(out, "\rImporting %s [%d/%d]", t, i+1, resourceLen)
+			fmt.Fprintf(out, "\rScanning %s [%d/%d]", t, i+1, resourceLen)
 
 			logger.Log("msg", "reading from TF")
 			res, err := re.ImportState()
@@ -167,9 +167,9 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 			}
 		}
 		if resourceLen > 0 {
-			fmt.Fprintf(out, "\rImporting %s [%d/%d] Done!\n", t, resourceLen, resourceLen)
+			fmt.Fprintf(out, "\rScanning %s [%d/%d] Done!\n", t, resourceLen, resourceLen)
 		}
-		logger.Log("msg", "importing done")
+		logger.Log("msg", "Scanning done")
 	}
 
 	if hcl != nil {
