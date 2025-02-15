@@ -6,7 +6,6 @@ import (
 	"io"
 	"runtime"
 	"strings"
-	"sync"
 
 	kitlog "github.com/go-kit/kit/log"
 	"golang.org/x/sync/errgroup"
@@ -24,7 +23,6 @@ func readResource(ctx context.Context,
 	t string,
 	hcl, tfstate writer.Writer,
 	interpolation *interpolator.Interpolator,
-	lock *sync.Mutex,
 	f *filter.Filter,
 	logger kitlog.Logger,
 ) error {
@@ -64,9 +62,7 @@ func readResource(ctx context.Context,
 
 		if tfstate != nil {
 			logger.Log("msg", "calculating TFState")
-			lock.Lock()
 			err = r.State(tfstate)
-			lock.Unlock()
 			if err != nil {
 				return errors.Wrapf(err, "error while calculating the satate of resource %q", t)
 			}
@@ -86,9 +82,7 @@ func readResource(ctx context.Context,
 				}
 				attrs[attribute] = value
 			}
-			lock.Lock()
 			interpolation.AddResourceAttributes(fmt.Sprintf("%s.%s", r.Type(), r.Name()), attrs)
-			lock.Unlock()
 		}
 	}
 	return nil
@@ -145,8 +139,8 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 	logger.Log("filters", f.String())
 
 	interpolation := interpolator.New(p.String())
-	lock := &sync.Mutex{}
 	resTypeErrGroup, rtCtx := errgroup.WithContext(ctx)
+	resTypeErrGroup.SetLimit(3)
 	for _, t := range types {
 		t := t
 		resTypeErrGroup.Go(func() error {
@@ -190,7 +184,7 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 
 				logger.Log("msg", "reading from TF")
 				resErrGroup.Go(func() error {
-					return readResource(ectx, re, t, hcl, tfstate, interpolation, lock, f, logger)
+					return readResource(ectx, re, t, hcl, tfstate, interpolation, f, logger)
 				})
 			}
 			err := resErrGroup.Wait()

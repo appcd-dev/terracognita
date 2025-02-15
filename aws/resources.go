@@ -21,6 +21,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/iam"
 	"github.com/aws/aws-sdk-go-v2/service/lambda"
 	"github.com/aws/aws-sdk-go-v2/service/mediastore"
+	"github.com/aws/aws-sdk-go-v2/service/neptune"
+	neptunetypes "github.com/aws/aws-sdk-go-v2/service/neptune/types"
 	"github.com/aws/aws-sdk-go-v2/service/redshift"
 	"github.com/aws/aws-sdk-go-v2/service/route53"
 	"github.com/aws/aws-sdk-go-v2/service/ses"
@@ -2610,7 +2612,14 @@ func natGateways(ctx context.Context, a *aws, resourceType string, filters *filt
 }
 
 func neptuneClusters(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
-	neptuneClusters, err := a.awsr.GetNeptuneDBClusters(ctx, nil)
+	neptuneClusters, err := a.awsr.GetNeptuneDBClusters(ctx, &neptune.DescribeDBClustersInput{
+		Filters: []neptunetypes.Filter{
+			{
+				Name:   awssdk.String("engine"),
+				Values: []string{"neptune"},
+			},
+		},
+	})
 	if err != nil {
 		return nil, err
 	}
