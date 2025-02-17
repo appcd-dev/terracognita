@@ -68,7 +68,7 @@ func (w *Writer) Write(key string, value interface{}) error {
 	var md []addrs.ModuleInstanceStep = nil
 	if w.opts.HasModule() {
 		md = []addrs.ModuleInstanceStep{
-			addrs.ModuleInstanceStep{
+			{
 				Name: w.opts.Module,
 			},
 		}
@@ -101,7 +101,9 @@ func (w *Writer) Write(key string, value interface{}) error {
 		return err
 	}
 
+	w.state.Lock()
 	w.state.SetResourceInstanceCurrent(absAddr, src, absProviderConf)
+	w.state.Unlock()
 
 	log.Get().Log("func", "state.Write(State)", "msg", "writing to internal config", "key", key, "content", r)
 	w.Config[key] = r
