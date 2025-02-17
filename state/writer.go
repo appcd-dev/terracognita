@@ -106,10 +106,10 @@ func (w *Writer) Write(key string, value interface{}) error {
 
 	w.lock.Lock()
 	w.state.SetResourceInstanceCurrent(absAddr, src, absProviderConf)
-	w.lock.Unlock()
 
 	log.Get().Log("func", "state.Write(State)", "msg", "writing to internal config", "key", key, "content", r)
 	w.Config[key] = r
+	w.lock.Unlock()
 
 	return nil
 }
