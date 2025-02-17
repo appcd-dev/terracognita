@@ -9,6 +9,7 @@ import (
 	awssdk "github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/apigateway"
 	"github.com/aws/aws-sdk-go-v2/service/autoscaling"
+	"github.com/aws/aws-sdk-go-v2/service/cloudwatch"
 	"github.com/aws/aws-sdk-go-v2/service/dax"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	ec2types "github.com/aws/aws-sdk-go-v2/service/ec2/types"
@@ -25,6 +26,7 @@ import (
 	neptunetypes "github.com/aws/aws-sdk-go-v2/service/neptune/types"
 	"github.com/aws/aws-sdk-go-v2/service/redshift"
 	"github.com/aws/aws-sdk-go-v2/service/route53"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/service/ses"
 	sestypes "github.com/aws/aws-sdk-go-v2/service/ses/types"
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
@@ -914,7 +916,10 @@ func cloudfrontPublicKeys(ctx context.Context, a *aws, resourceType string, filt
 }
 
 func cloudwatchMetricAlarms(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
-	alarms, err := a.awsr.GetMetricAlarms(ctx, nil)
+	input := &cloudwatch.DescribeAlarmsInput{
+		MaxRecords: awssdk.Int32(100),
+	}
+	alarms, err := a.awsr.GetMetricAlarms(ctx, input)
 	if err != nil {
 		return nil, err
 	}
@@ -2063,6 +2068,7 @@ func iamRolePolicies(ctx context.Context, a *aws, resourceType string, filters *
 	for _, rn := range roleNames {
 		input := &iam.ListRolePoliciesInput{
 			RoleName: awssdk.String(rn),
+			MaxItems: awssdk.Int32(100),
 		}
 		rolePolicies, err := a.awsr.GetRolePolicies(ctx, input)
 		if err != nil {
@@ -2091,6 +2097,7 @@ func iamRolePolicyAttachments(ctx context.Context, a *aws, resourceType string, 
 	for _, rn := range roleNames {
 		input := &iam.ListAttachedRolePoliciesInput{
 			RoleName: awssdk.String(rn),
+			MaxItems: awssdk.Int32(100),
 		}
 		rolePolicies, err := a.awsr.GetAttachedRolePolicies(ctx, input)
 		if err != nil {
@@ -2110,7 +2117,10 @@ func iamRolePolicyAttachments(ctx context.Context, a *aws, resourceType string, 
 }
 
 func iamRoles(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
-	roles, err := a.awsr.GetRoles(ctx, nil)
+	input := &iam.ListRolesInput{
+		MaxItems: awssdk.Int32(100),
+	}
+	roles, err := a.awsr.GetRoles(ctx, input)
 	if err != nil {
 		return nil, err
 	}
@@ -2886,7 +2896,10 @@ func routeTables(ctx context.Context, a *aws, resourceType string, filters *filt
 }
 
 func s3Buckets(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
-	buckets, err := a.awsr.ListBuckets(ctx, nil)
+	input := &s3.ListBucketsInput{
+		MaxBuckets: awssdk.Int32(1000),
+	}
+	buckets, err := a.awsr.ListBuckets(ctx, input)
 	if err != nil {
 		return nil, err
 	}
