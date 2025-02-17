@@ -5,6 +5,7 @@ import (
 	"io"
 	"regexp"
 	"strings"
+	"sync"
 
 	"github.com/cycloidio/terracognita/errcode"
 	"github.com/cycloidio/terracognita/interpolator"
@@ -29,6 +30,7 @@ type Writer struct {
 	writer io.Writer
 	state  *states.SyncState
 	opts   *writer.Options
+	lock   *sync.Mutex
 }
 
 // NewWriter returns a TFStateWriter initialization
@@ -38,6 +40,7 @@ func NewWriter(w io.Writer, opts *writer.Options) *Writer {
 		writer: w,
 		state:  states.NewState().SyncWrapper(),
 		opts:   opts,
+		lock:   &sync.Mutex{},
 	}
 }
 
@@ -68,7 +71,7 @@ func (w *Writer) Write(key string, value interface{}) error {
 	var md []addrs.ModuleInstanceStep = nil
 	if w.opts.HasModule() {
 		md = []addrs.ModuleInstanceStep{
-			addrs.ModuleInstanceStep{
+			{
 				Name: w.opts.Module,
 			},
 		}
@@ -101,10 +104,12 @@ func (w *Writer) Write(key string, value interface{}) error {
 		return err
 	}
 
+	w.lock.Lock()
 	w.state.SetResourceInstanceCurrent(absAddr, src, absProviderConf)
 
 	log.Get().Log("func", "state.Write(State)", "msg", "writing to internal config", "key", key, "content", r)
 	w.Config[key] = r
+	w.lock.Unlock()
 
 	return nil
 }
