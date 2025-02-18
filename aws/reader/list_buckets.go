@@ -17,9 +17,26 @@ func (c *connector) ListBuckets(ctx context.Context, input *s3.ListBucketsInput)
 		c.svc.s3 = s3.NewFromConfig(c.svc.config)
 	}
 
-	opt, err := c.svc.s3.ListBuckets(ctx, input)
-	if err != nil {
-		return nil, err
+	opt := s3.ListBucketsOutput{}
+
+	hasNextToken := true
+	for hasNextToken {
+		o, err := c.svc.s3.ListBuckets(ctx, input)
+		if err != nil {
+			return nil, err
+		}
+		if o.Buckets == nil {
+			hasNextToken = false
+			continue
+		}
+
+		if input == nil {
+			input = &s3.ListBucketsInput{}
+		}
+		input.ContinuationToken = o.ContinuationToken
+		hasNextToken = o.ContinuationToken != nil
+
+		opt.Buckets = append(opt.Buckets, o.Buckets...)
 	}
 
 	newOpt := &s3.ListBucketsOutput{
