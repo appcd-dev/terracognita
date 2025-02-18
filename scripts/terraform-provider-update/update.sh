@@ -66,7 +66,7 @@ move_out_internal() {
 # Clone the provider code to update it and get the tag/commit
 update_terraform_provider() {
   PROVIDER_LOCAL_DIR=${TMP_DIR}/terraform-provider-${PROVIDER}
-  GIT_ORG=cycloidio
+  GIT_ORG=nasir-rabbani
   GIT_REPO=terraform-provider-${PROVIDER}
 
   # google|vsphere: do not have lib under internal and do not need a fork. Use the upstream repo
@@ -109,7 +109,7 @@ terracognita_fix_terraform() {
 }
 
 update_terracognita() {
-  GIT_ORG=cycloidio
+  GIT_ORG=nasir-rabbani
   GIT_REPO=terraform-provider-${PROVIDER}
 
   # google|vsphere: do not have lib under internal and do not need a fork. Use the upstream repo
