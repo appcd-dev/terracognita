@@ -56,10 +56,10 @@ func (w *Writer) Write(key string, value interface{}) error {
 	}
 
 	w.lock.Lock()
+	defer w.lock.Unlock()
 	if _, ok := w.Config[key]; ok {
 		return errors.Wrapf(errcode.ErrWriterAlreadyExistsKey, "with key %q", key)
 	}
-	w.lock.Unlock()
 
 	if len(strings.Split(key, ".")) != 2 {
 		return errors.Wrapf(errcode.ErrWriterInvalidKey, "with key %q", key)
@@ -106,8 +106,6 @@ func (w *Writer) Write(key string, value interface{}) error {
 		return err
 	}
 
-	w.lock.Lock()
-	defer w.lock.Unlock()
 	w.state.SetResourceInstanceCurrent(absAddr, src, absProviderConf)
 
 	log.Get().Log("func", "state.Write(State)", "msg", "writing to internal config", "key", key, "content", r)
