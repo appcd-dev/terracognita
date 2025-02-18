@@ -55,6 +55,8 @@ func (w *Writer) Write(key string, value interface{}) error {
 		return errcode.ErrWriterRequiredValue
 	}
 
+	w.lock.Lock()
+	defer w.lock.Unlock()
 	if _, ok := w.Config[key]; ok {
 		return errors.Wrapf(errcode.ErrWriterAlreadyExistsKey, "with key %q", key)
 	}
@@ -104,18 +106,19 @@ func (w *Writer) Write(key string, value interface{}) error {
 		return err
 	}
 
-	w.lock.Lock()
 	w.state.SetResourceInstanceCurrent(absAddr, src, absProviderConf)
 
 	log.Get().Log("func", "state.Write(State)", "msg", "writing to internal config", "key", key, "content", r)
 	w.Config[key] = r
-	w.lock.Unlock()
 
 	return nil
 }
 
 // Has checks if the given key it's already present or not
 func (w *Writer) Has(key string) (bool, error) {
+	w.lock.Lock()
+	defer w.lock.Unlock()
+
 	_, ok := w.Config[key]
 	return ok, nil
 }
