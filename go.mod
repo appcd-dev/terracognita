@@ -73,6 +73,7 @@ require (
 	github.com/stretchr/testify v1.7.2
 	github.com/vmware/govmomi v0.28.0
 	github.com/zclconf/go-cty v1.10.0
+	golang.org/x/sync v0.11.0
 	golang.org/x/text v0.22.0
 	google.golang.org/api v0.61.0
 	google.golang.org/grpc v1.47.0
@@ -213,7 +214,6 @@ require (
 	golang.org/x/mod v0.23.0 // indirect
 	golang.org/x/net v0.35.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8 // indirect
-	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/tools v0.30.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220609144429-65e65417b02f // indirect
