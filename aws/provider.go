@@ -165,12 +165,12 @@ func (a *aws) FixResource(t string, v cty.Value) (cty.Value, error) {
 				if gas, ok := path[0].(cty.GetAttrStep); ok {
 					switch gas.Name {
 					case "priority":
-						var sp string
+						var sp int
 						err := gocty.FromCtyValue(val, &sp)
 						if err != nil {
 							return false, errors.Wrapf(err, "failed to convert CTY value to GO type")
 						}
-						if sp == "99999" {
+						if sp == 99999 {
 							return false, fmt.Errorf("ignoring 'aws_alb_listener_rule' or 'aws_lb_listener_rule' with 'priority: 99999' name as it's managed for AWS")
 						}
 					}
