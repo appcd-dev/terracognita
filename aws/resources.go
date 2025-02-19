@@ -1904,10 +1904,11 @@ func iamGroupMemberships(ctx context.Context, a *aws, resourceType string, filte
 		importer := &schema.ResourceImporter{
 			State: func(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 				groupName := d.Id()
+				membershipID := resource.UniqueId()
 
 				d.Set("group", groupName)
-				d.SetId(resource.UniqueId())
-
+				d.SetId(membershipID)
+				d.Set("name", membershipID)
 				return []*schema.ResourceData{d}, nil
 			},
 		}
