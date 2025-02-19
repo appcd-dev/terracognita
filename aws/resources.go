@@ -24,6 +24,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/mediastore"
 	"github.com/aws/aws-sdk-go-v2/service/neptune"
 	neptunetypes "github.com/aws/aws-sdk-go-v2/service/neptune/types"
+	"github.com/aws/aws-sdk-go-v2/service/rds"
+	rdstypes "github.com/aws/aws-sdk-go-v2/service/rds/types"
 	"github.com/aws/aws-sdk-go-v2/service/redshift"
 	"github.com/aws/aws-sdk-go-v2/service/route53"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
@@ -2649,7 +2651,18 @@ func neptuneClusters(ctx context.Context, a *aws, resourceType string, filters *
 }
 
 func rdsClusters(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
-	rdsClusters, err := a.awsr.GetRDSDBClusters(ctx, nil)
+	rdsClusters, err := a.awsr.GetRDSDBClusters(ctx, &rds.DescribeDBClustersInput{
+		Filters: []rdstypes.Filter{
+			{
+				Name: awssdk.String("engine"),
+				Values: []string{
+					"aurora-postgresql",
+					"aurora-iopt1",
+					"aurora-mysql",
+				},
+			},
+		},
+	})
 	if err != nil {
 		return nil, err
 	}
