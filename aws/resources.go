@@ -2657,7 +2657,6 @@ func rdsClusters(ctx context.Context, a *aws, resourceType string, filters *filt
 				Name: awssdk.String("engine"),
 				Values: []string{
 					"aurora-postgresql",
-					"aurora-iopt1",
 					"aurora-mysql",
 				},
 			},
