@@ -59,11 +59,6 @@ const (
 	//EBSSnapshot
 
 	ALB
-	ALBListener
-	ALBListenerCertificate
-	ALBListenerRule
-	ALBTargetGroup
-	ALBTargetGroupAttachment
 	APIGatewayDeployment
 	APIGatewayResource
 	APIGatewayRestAPI
@@ -199,12 +194,7 @@ type rtFn func(ctx context.Context, a *aws, resourceType string, filters *filter
 
 var (
 	resources = map[ResourceType]rtFn{
-		ALB:                      cacheLoadBalancersV2,
-		ALBListener:              cacheLoadBalancersV2Listeners,
-		ALBListenerCertificate:   albListenerCertificates,
-		ALBListenerRule:          albListenerRules,
-		ALBTargetGroup:           albTargetGroups,
-		ALBTargetGroupAttachment: albTargetGroupAttachments,
+		ALB: cacheLoadBalancersV2,
 		//AMI:      ami,
 		APIGatewayDeployment:           apiGatewayDeployments,
 		APIGatewayResource:             apiGatewayResources,
@@ -287,10 +277,10 @@ var (
 		LB:                                         cacheLoadBalancersV2,
 		LBCookieStickinessPolicy:                   lbCookieStickinessPolicies,
 		LBListener:                                 cacheLoadBalancersV2Listeners,
-		LBListenerCertificate:                      albListenerCertificates,
-		LBListenerRule:                             albListenerRules,
-		LBTargetGroup:                              albTargetGroups,
-		LBTargetGroupAttachment:                    albTargetGroupAttachments,
+		LBListenerCertificate:                      lbListenerCertificates,
+		LBListenerRule:                             lbListenerRules,
+		LBTargetGroup:                              lbTargetGroups,
+		LBTargetGroupAttachment:                    lbTargetGroupAttachments,
 		LightsailInstance:                          lightsailInstances,
 		MediaStoreContainer:                        mediaStoreContainers,
 		MQBroker:                                   mqBrokers,
@@ -336,7 +326,7 @@ func initializeResource(a *aws, ID, t string) (provider.Resource, error) {
 	return provider.NewResource(ID, t, a), nil
 }
 
-func albListenerCertificates(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
+func lbListenerCertificates(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	// if both defined, keep only aws_alb_listener_certificate
 	if filters.IsIncluded("aws_alb_listener_certificate", "aws_lb_listener_certificate") && (!filters.IsExcluded("aws_alb_listener_certificate") && resourceType == "aws_lb_listener_certificate") {
 		return nil, nil
@@ -347,7 +337,7 @@ func albListenerCertificates(ctx context.Context, a *aws, resourceType string, f
 		albListernerIncluded = true
 	}
 
-	ALBListeners, err := getLoadBalancersV2ListenersArns(ctx, a, ALBListener.String(), filters)
+	ALBListeners, err := getLoadBalancersV2ListenersArns(ctx, a, LBListener.String(), filters)
 	if err != nil {
 		return nil, err
 	}
@@ -403,13 +393,13 @@ func albListenerCertificates(ctx context.Context, a *aws, resourceType string, f
 	return resources, nil
 }
 
-func albListenerRules(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
+func lbListenerRules(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	// if both defined, keep only aws_alb_listener_rule
 	if filters.IsIncluded("aws_alb_listener_rule", "aws_lb_listener_rule") && (!filters.IsExcluded("aws_alb_listener_rule") && resourceType == "aws_lb_listener_rule") {
 		return nil, nil
 	}
 
-	ALBListeners, err := getLoadBalancersV2ListenersArns(ctx, a, ALBListener.String(), filters)
+	ALBListeners, err := getLoadBalancersV2ListenersArns(ctx, a, LBListener.String(), filters)
 	if err != nil {
 		return nil, err
 	}
@@ -490,8 +480,8 @@ func albs(ctx context.Context, a *aws, resourceType string, _ *filter.Filter) ([
 	return resources, nil
 }
 
-func albTargetGroupAttachments(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
-	// if both defined, keep only aws_alb_target_group_attachment
+func lbTargetGroupAttachments(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
+	// if both defined, keep only aws_lb_target_group_attachment
 	if filters.IsIncluded("aws_alb_target_group_attachment", "aws_lb_target_group_attachment") && (!filters.IsExcluded("aws_alb_target_group_attachment") && resourceType == "aws_lb_target_group_attachment") {
 		return nil, nil
 	}
@@ -559,7 +549,7 @@ func albTargetGroupAttachments(ctx context.Context, a *aws, resourceType string,
 	return resources, nil
 }
 
-func albTargetGroups(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
+func lbTargetGroups(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	// if both defined, keep only aws_alb_target_group
 	if filters.IsIncluded("aws_alb_target_group", "aws_lb_target_group") && (!filters.IsExcluded("aws_alb_target_group") && resourceType == "aws_lb_target_group") {
 		return nil, nil
