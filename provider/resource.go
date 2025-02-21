@@ -211,7 +211,7 @@ func (r *resource) ImportState(ctx context.Context) ([]Resource, error) {
 	logger := log.Get()
 	// If it does not support import do not try
 	if r.TFResource().Importer == nil {
-		logger.Log("func", "ImportState", "resource", r.Type(), "msg", "This resource it's not Importable")
+		logger.Debug("This resource it's not Importable", "func", "ImportState", "resource", r.Type())
 		return nil, nil
 	}
 

@@ -3,15 +3,19 @@ package log
 import (
 	"io"
 	"log"
+	"log/slog"
 	"os"
 	"sync"
 
-	kitlog "github.com/go-kit/kit/log"
 	"github.com/hashicorp/terraform/logging"
 )
 
-var logger kitlog.Logger
+var logger *slog.Logger
 var once sync.Once
+
+func SetLogger(l *slog.Logger) {
+	logger = l
+}
 
 // Init initializes the log, it can only be called once,
 // repetitive calls to it will not change it.
@@ -21,8 +25,14 @@ var once sync.Once
 // Terraform
 func Init(out io.Writer, tflogs bool) {
 	once.Do(func() {
-		w := kitlog.NewSyncWriter(out)
-		logger = kitlog.NewLogfmtLogger(w)
+		level := slog.LevelInfo
+		if tflogs {
+			level = slog.LevelDebug
+		}
+
+		logHandler := slog.NewTextHandler(out, &slog.HandlerOptions{
+			Level: level,
+		})
 
 		if !tflogs {
 			os.Setenv("TF_LOG", "")
@@ -34,14 +44,14 @@ func Init(out io.Writer, tflogs bool) {
 			log.SetOutput(out)
 		}
 
-		logger = kitlog.With(logger, "ts", kitlog.DefaultTimestampUTC, "caller", kitlog.DefaultCaller)
+		SetLogger(slog.New(logHandler))
 	})
 }
 
 // Get returns the initialized logger,
 // if it has not been initialized it'll
 // initialize it with the default values
-func Get() kitlog.Logger {
+func Get() *slog.Logger {
 	Init(io.Discard, false)
 	return logger
 }

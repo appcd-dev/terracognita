@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"log/slog"
 	"runtime"
 	"strings"
 
-	kitlog "github.com/go-kit/kit/log"
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cycloidio/terracognita/errcode"
@@ -24,7 +24,7 @@ func readResource(ctx context.Context,
 	hcl, tfstate writer.Writer,
 	interpolation *interpolator.Interpolator,
 	f *filter.Filter,
-	logger kitlog.Logger,
+	logger *slog.Logger,
 ) error {
 	res, err := re.ImportState(ctx)
 	if err != nil {
@@ -47,13 +47,13 @@ func readResource(ctx context.Context,
 			// Errors are ignored. If a resource is invalid we assume it can be skipped, it can be related to inconsistencies in deployed resources.
 			// So instead of failing and stopping execution we ignore them and continue (we log them if -v is specified)
 
-			logger.Log("error", err)
+			logger.Error("error", err)
 
 			continue
 		}
 
 		if hcl != nil {
-			logger.Log("msg", "calculating HCL")
+			logger.Debug("calculating HCL")
 			err = r.HCL(hcl)
 			if err != nil {
 				return errors.Wrapf(err, "error while calculating the Config of resource %q", t)
@@ -61,7 +61,7 @@ func readResource(ctx context.Context,
 		}
 
 		if tfstate != nil {
-			logger.Log("msg", "calculating TFState")
+			logger.Debug("calculating TFState")
 			err = r.State(tfstate)
 			if err != nil {
 				return errors.Wrapf(err, "error while calculating the satate of resource %q", t)
@@ -91,8 +91,7 @@ func readResource(ctx context.Context,
 // Import imports from the Provider p all the resources filtered by f and writes
 // the result to the hcl or tfstate if those are not nil
 func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filter.Filter, out io.Writer) error {
-	logger := log.Get()
-	logger = kitlog.With(logger, "func", "provider.Import")
+	logger := log.Get().With("func", "provider.Import")
 
 	if err := f.Validate(); err != nil {
 		return err
@@ -136,7 +135,7 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 	}
 
 	fmt.Fprintf(out, "Scanning with filters: %s", f)
-	logger.Log("filters", f.String())
+	logger.Debug("filters", f.String())
 
 	interpolation := interpolator.New(p.String())
 	resTypeErrGroup, rtCtx := errgroup.WithContext(ctx)
@@ -144,14 +143,14 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 	for _, t := range types {
 		t := t
 		resTypeErrGroup.Go(func() error {
-			logger := kitlog.With(logger, "resource", t)
+			logger := logger.With("resource", t)
 
 			if f.IsExcluded(t) {
-				logger.Log("msg", "excluded")
+				logger.Debug("excluded")
 				return nil
 			}
 
-			logger.Log("msg", "fetching the list of resources")
+			logger.Debug("fetching the list of resources")
 
 			var resources []Resource
 
@@ -165,10 +164,10 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 					// we filter the error: if it's an error provider side, we continue
 					// the import but we print the error.
 					if errors.Is(err, errcode.ErrProviderAPI) {
-						logger.Log("msg", fmt.Sprintf("unable to import resource %s: %s\n", t, err.Error()))
+						logger.Debug(fmt.Sprintf("unable to import resource %s: %s\n", t, err.Error()))
 					} else if strings.Contains(err.Error(), "AccessDenied") {
 						// skip access denied errors, since we might not have access to all resources when trying to import based on tags
-						logger.Log("msg", fmt.Sprintf("unable to import resource, access denied %s: %s\n", t, err.Error()))
+						logger.Debug(fmt.Sprintf("unable to import resource, access denied %s: %s\n", t, err.Error()))
 					} else {
 						return errors.WithStack(err)
 					}
@@ -179,10 +178,10 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 			resErrGroup, ectx := errgroup.WithContext(rtCtx)
 			resErrGroup.SetLimit(runtime.NumCPU())
 			for i, re := range resources {
-				logger := kitlog.With(logger, "id", re.ID(), "total", resourceLen, "current", i+1)
+				logger := logger.With("id", re.ID(), "total", resourceLen, "current", i+1)
 				fmt.Fprintf(out, "\rScanning %s [%d/%d]", t, i+1, resourceLen)
 
-				logger.Log("msg", "reading from TF")
+				logger.Debug("reading from TF")
 				resErrGroup.Go(func() error {
 					return readResource(ectx, re, t, hcl, tfstate, interpolation, f, logger)
 				})
@@ -202,12 +201,12 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 	if err != nil {
 		return fmt.Errorf("error while reading the resources: %w", err)
 	}
-	logger.Log("msg", "Scanning done")
+	logger.Debug("Scanning done")
 
 	if hcl != nil {
 		hcl.Interpolate(interpolation)
 		fmt.Fprintf(out, "\rWriting HCL ...")
-		logger.Log("msg", "writing the HCL")
+		logger.Debug("writing the HCL")
 
 		err = hcl.Sync()
 		if err != nil {
@@ -215,13 +214,13 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 		}
 
 		fmt.Fprintf(out, "\rWriting HCL Done!\n")
-		logger.Log("msg", "writing the HCL done")
+		logger.Debug("writing the HCL done")
 	}
 
 	if tfstate != nil {
 		tfstate.Interpolate(interpolation)
 		fmt.Fprintf(out, "\rWriting TFState ...")
-		logger.Log("msg", "writing the TFState")
+		logger.Debug("writing the TFState")
 
 		err := tfstate.Sync()
 		if err != nil {
@@ -229,7 +228,7 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 		}
 
 		fmt.Fprintf(out, "\rWriting TFState Done!\n")
-		logger.Log("msg", "writing the TFState done")
+		logger.Debug("writing the TFState done")
 	}
 
 	return nil

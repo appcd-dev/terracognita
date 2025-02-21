@@ -47,7 +47,7 @@ type aws struct {
 
 // NewProvider returns an AWS Provider
 func NewProvider(ctx context.Context, accessKey, secretKey, region, sessionToken string) (provider.Provider, error) {
-	log.Get().Log("func", "reader.New", "msg", "configuring aws Reader")
+	log.Get().Debug("configuring aws Reader", "func", "reader.New")
 	awsr, err := reader.New(ctx, accessKey, secretKey, region, sessionToken, nil)
 	if err != nil {
 		return nil, fmt.Errorf("could not initialize 'reader' because: %s", err)
@@ -60,7 +60,7 @@ func NewProvider(ctx context.Context, accessKey, secretKey, region, sessionToken
 		Token:     sessionToken,
 	}
 
-	log.Get().Log("func", "aws.NewProvider", "msg", "configuring TF Client")
+	log.Get().Debug("configuring TF Client", "func", "aws.NewProvider")
 	awsClient, diags := cfg.Client(ctx)
 	if diags.HasError() {
 		var errdiags string
