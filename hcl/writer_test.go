@@ -29,7 +29,9 @@ func TestNewHCLWriter(t *testing.T) {
 		p.EXPECT().String().Return("aws").Times(2)
 		p.EXPECT().Source().Return("hashicorp/aws")
 		p.EXPECT().Version().Return("4.9.0")
-		p.EXPECT().TFProvider().Return(aws.Provider())
+		provider, err := aws.New(t.Context())
+		require.NoError(t, err)
+		p.EXPECT().TFProvider().Return(provider)
 		p.EXPECT().Configuration().Return(map[string]interface{}{
 			"region": "eu-west-1",
 		})
@@ -59,7 +61,9 @@ func TestNewHCLWriter(t *testing.T) {
 		p.EXPECT().String().Return("aws").Times(2)
 		p.EXPECT().Source().Return("hashicorp/aws")
 		p.EXPECT().Version().Return("4.9.0")
-		p.EXPECT().TFProvider().Return(aws.Provider())
+		provider, err := aws.New(t.Context())
+		require.NoError(t, err)
+		p.EXPECT().TFProvider().Return(provider)
 		p.EXPECT().Configuration().Return(map[string]interface{}{
 			"region": "eu-west-1",
 		})
@@ -351,14 +355,16 @@ resource "type" "name" {
 		p.EXPECT().String().Return("aws").Times(2)
 		p.EXPECT().Source().Return("hashicorp/aws")
 		p.EXPECT().Version().Return("4.9.0")
-		p.EXPECT().TFProvider().Return(aws.Provider())
+		provider, err := aws.New(t.Context())
+		require.NoError(t, err)
+		p.EXPECT().TFProvider().Return(provider)
 		p.EXPECT().Configuration().Return(map[string]interface{}{
 			"region": "eu-west-1",
 		})
 
 		hw := hcl.NewWriter(mx, p, &writer.Options{HCLProviderBlock: true, Interpolate: true})
 
-		err := hw.Write("type.name", value)
+		err = hw.Write("type.name", value)
 		require.NoError(t, err)
 
 		err = hw.Sync()
@@ -514,14 +520,16 @@ variable "type_name_key" {
 		p.EXPECT().String().Return("aws").Times(2)
 		p.EXPECT().Source().Return("hashicorp/aws")
 		p.EXPECT().Version().Return("4.9.0")
-		p.EXPECT().TFProvider().Return(aws.Provider())
+		provider, err := aws.New(t.Context())
+		require.NoError(t, err)
+		p.EXPECT().TFProvider().Return(provider)
 		p.EXPECT().Configuration().Return(map[string]interface{}{
 			"region": "eu-west-1",
 		})
 
 		hw := hcl.NewWriter(mx, p, &writer.Options{Interpolate: true, HCLProviderBlock: true, Module: "test"})
 
-		err := hw.Write("type.name", value)
+		err = hw.Write("type.name", value)
 		require.NoError(t, err)
 
 		err = hw.Write("type.name2", value2)
@@ -635,7 +643,9 @@ variable "type_name_tags" {
 		p.EXPECT().String().Return("aws").Times(2)
 		p.EXPECT().Source().Return("hashicorp/aws")
 		p.EXPECT().Version().Return("4.9.0")
-		p.EXPECT().TFProvider().Return(aws.Provider())
+		provider, err := aws.New(t.Context())
+		require.NoError(t, err)
+		p.EXPECT().TFProvider().Return(provider)
 		p.EXPECT().Configuration().Return(map[string]interface{}{
 			"region": "eu-west-1",
 		})
@@ -647,7 +657,7 @@ variable "type_name_tags" {
 			"type.key4.nested_key4": struct{}{},
 		}})
 
-		err := hw.Write("type.name", value)
+		err = hw.Write("type.name", value)
 		require.NoError(t, err)
 
 		err = hw.Write("type.name2", value2)

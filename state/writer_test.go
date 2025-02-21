@@ -43,7 +43,10 @@ func TestWrite(t *testing.T) {
 		)
 		defer ctrl.Finish()
 
-		tpt, err := util.HashicorpToZclonfType(aws.Provider().ResourcesMap[tp].CoreConfigSchema().ImpliedType())
+		provider1, err := aws.New(t.Context())
+		require.NoError(t, err)
+
+		tpt, err := util.HashicorpToZclonfType(provider1.ResourcesMap[tp].CoreConfigSchema().ImpliedType())
 		require.NoError(t, err)
 
 		s, err := hcl2shim.HCL2ValueFromFlatmap(map[string]string{"name": "Pepito"}, tpt)
@@ -51,8 +54,8 @@ func TestWrite(t *testing.T) {
 
 		res.EXPECT().Type().Return(tp)
 		res.EXPECT().Provider().Return(prv)
-		res.EXPECT().TFResource().Return(aws.Provider().ResourcesMap[tp])
-		res.EXPECT().ImpliedType().Return(aws.Provider().ResourcesMap[tp].CoreConfigSchema().ImpliedType())
+		res.EXPECT().TFResource().Return(provider1.ResourcesMap[tp])
+		res.EXPECT().ImpliedType().Return(provider1.ResourcesMap[tp].CoreConfigSchema().ImpliedType())
 		res.EXPECT().ResourceInstanceObject().Return(providers.ImportedResource{
 			TypeName: tp,
 			State:    s,
@@ -99,7 +102,10 @@ func TestWrite(t *testing.T) {
 		)
 		defer ctrl.Finish()
 
-		tpt, err := util.HashicorpToZclonfType(aws.Provider().ResourcesMap[tp].CoreConfigSchema().ImpliedType())
+		provider, err := aws.New(t.Context())
+		require.NoError(t, err)
+
+		tpt, err := util.HashicorpToZclonfType(provider.ResourcesMap[tp].CoreConfigSchema().ImpliedType())
 		require.NoError(t, err)
 
 		s, err := hcl2shim.HCL2ValueFromFlatmap(map[string]string{"name": "Pepito"}, tpt)
@@ -107,8 +113,8 @@ func TestWrite(t *testing.T) {
 
 		res.EXPECT().Type().Return(tp)
 		res.EXPECT().Provider().Return(prv)
-		res.EXPECT().TFResource().Return(aws.Provider().ResourcesMap[tp])
-		res.EXPECT().ImpliedType().Return(aws.Provider().ResourcesMap[tp].CoreConfigSchema().ImpliedType())
+		res.EXPECT().TFResource().Return(provider.ResourcesMap[tp])
+		res.EXPECT().ImpliedType().Return(provider.ResourcesMap[tp].CoreConfigSchema().ImpliedType())
 		res.EXPECT().ResourceInstanceObject().Return(providers.ImportedResource{
 			TypeName: tp,
 			State:    s,
@@ -189,7 +195,10 @@ func TestSync(t *testing.T) {
 
 		defer ctrl.Finish()
 
-		tpt, err := util.HashicorpToZclonfType(aws.Provider().ResourcesMap[tp].CoreConfigSchema().ImpliedType())
+		provider, err := aws.New(t.Context())
+		require.NoError(t, err)
+
+		tpt, err := util.HashicorpToZclonfType(provider.ResourcesMap[tp].CoreConfigSchema().ImpliedType())
 		require.NoError(t, err)
 
 		s, err := hcl2shim.HCL2ValueFromFlatmap(map[string]string{"name": "Pepito"}, tpt)
@@ -197,8 +206,8 @@ func TestSync(t *testing.T) {
 
 		res.EXPECT().Type().Return(tp)
 		res.EXPECT().Provider().Return(prv)
-		res.EXPECT().TFResource().Return(aws.Provider().ResourcesMap[tp])
-		res.EXPECT().ImpliedType().Return(aws.Provider().ResourcesMap[tp].CoreConfigSchema().ImpliedType())
+		res.EXPECT().TFResource().Return(provider.ResourcesMap[tp])
+		res.EXPECT().ImpliedType().Return(provider.ResourcesMap[tp].CoreConfigSchema().ImpliedType())
 		res.EXPECT().ResourceInstanceObject().Return(providers.ImportedResource{
 			TypeName: tp,
 			State:    s,
@@ -269,7 +278,10 @@ func TestSync(t *testing.T) {
 
 		defer ctrl.Finish()
 
-		tpt, err := util.HashicorpToZclonfType(aws.Provider().ResourcesMap[tp].CoreConfigSchema().ImpliedType())
+		provider, err := aws.New(t.Context())
+		require.NoError(t, err)
+
+		tpt, err := util.HashicorpToZclonfType(provider.ResourcesMap[tp].CoreConfigSchema().ImpliedType())
 		require.NoError(t, err)
 
 		s, err := hcl2shim.HCL2ValueFromFlatmap(map[string]string{"name": "Pepito"}, tpt)
@@ -277,8 +289,8 @@ func TestSync(t *testing.T) {
 
 		res.EXPECT().Type().Return(tp)
 		res.EXPECT().Provider().Return(prv)
-		res.EXPECT().TFResource().Return(aws.Provider().ResourcesMap[tp])
-		res.EXPECT().ImpliedType().Return(aws.Provider().ResourcesMap[tp].CoreConfigSchema().ImpliedType())
+		res.EXPECT().TFResource().Return(provider.ResourcesMap[tp])
+		res.EXPECT().ImpliedType().Return(provider.ResourcesMap[tp].CoreConfigSchema().ImpliedType())
 		res.EXPECT().ResourceInstanceObject().Return(providers.ImportedResource{
 			TypeName: tp,
 			State:    s,
@@ -390,9 +402,12 @@ func TestDependencies(t *testing.T) {
 
 		defer ctrl.Finish()
 
-		sgt, err := util.HashicorpToZclonfType(aws.Provider().ResourcesMap[sg].CoreConfigSchema().ImpliedType())
+		provider, err := aws.New(t.Context())
 		require.NoError(t, err)
-		sgrt, err := util.HashicorpToZclonfType(aws.Provider().ResourcesMap[sgr].CoreConfigSchema().ImpliedType())
+
+		sgt, err := util.HashicorpToZclonfType(provider.ResourcesMap[sg].CoreConfigSchema().ImpliedType())
+		require.NoError(t, err)
+		sgrt, err := util.HashicorpToZclonfType(provider.ResourcesMap[sgr].CoreConfigSchema().ImpliedType())
 		require.NoError(t, err)
 
 		stateSG, err := hcl2shim.HCL2ValueFromFlatmap(map[string]string{"id": "sg-1234", "name": "sg"}, sgt)
@@ -402,8 +417,8 @@ func TestDependencies(t *testing.T) {
 
 		resSG.EXPECT().Type().Return(sg)
 		resSG.EXPECT().Provider().Return(prv)
-		resSG.EXPECT().TFResource().Return(aws.Provider().ResourcesMap[sg])
-		resSG.EXPECT().ImpliedType().Return(aws.Provider().ResourcesMap[sg].CoreConfigSchema().ImpliedType())
+		resSG.EXPECT().TFResource().Return(provider.ResourcesMap[sg])
+		resSG.EXPECT().ImpliedType().Return(provider.ResourcesMap[sg].CoreConfigSchema().ImpliedType())
 		resSG.EXPECT().ResourceInstanceObject().Return(providers.ImportedResource{
 			TypeName: sg,
 			State:    stateSG,
@@ -417,8 +432,8 @@ func TestDependencies(t *testing.T) {
 
 		resSGR.EXPECT().Type().Return(sgr).AnyTimes()
 		resSGR.EXPECT().Provider().Return(prv)
-		resSGR.EXPECT().TFResource().Return(aws.Provider().ResourcesMap[sgr])
-		resSGR.EXPECT().ImpliedType().Return(aws.Provider().ResourcesMap[sgr].CoreConfigSchema().ImpliedType())
+		resSGR.EXPECT().TFResource().Return(provider.ResourcesMap[sgr])
+		resSGR.EXPECT().ImpliedType().Return(provider.ResourcesMap[sgr].CoreConfigSchema().ImpliedType())
 		resSGR.EXPECT().ResourceInstanceObject().Return(providers.ImportedResource{
 			TypeName: sgr,
 			State:    stateSGR,
@@ -539,9 +554,12 @@ func TestDependencies(t *testing.T) {
 
 		defer ctrl.Finish()
 
-		sgt, err := util.HashicorpToZclonfType(aws.Provider().ResourcesMap[sg].CoreConfigSchema().ImpliedType())
+		provider, err := aws.New(t.Context())
 		require.NoError(t, err)
-		sgrt, err := util.HashicorpToZclonfType(aws.Provider().ResourcesMap[sgr].CoreConfigSchema().ImpliedType())
+
+		sgt, err := util.HashicorpToZclonfType(provider.ResourcesMap[sg].CoreConfigSchema().ImpliedType())
+		require.NoError(t, err)
+		sgrt, err := util.HashicorpToZclonfType(provider.ResourcesMap[sgr].CoreConfigSchema().ImpliedType())
 		require.NoError(t, err)
 
 		stateSG, err := hcl2shim.HCL2ValueFromFlatmap(map[string]string{"id": "sg-1234", "name": "sg"}, sgt)
@@ -551,8 +569,8 @@ func TestDependencies(t *testing.T) {
 
 		resSG.EXPECT().Type().Return(sg)
 		resSG.EXPECT().Provider().Return(prv)
-		resSG.EXPECT().TFResource().Return(aws.Provider().ResourcesMap[sg])
-		resSG.EXPECT().ImpliedType().Return(aws.Provider().ResourcesMap[sg].CoreConfigSchema().ImpliedType())
+		resSG.EXPECT().TFResource().Return(provider.ResourcesMap[sg])
+		resSG.EXPECT().ImpliedType().Return(provider.ResourcesMap[sg].CoreConfigSchema().ImpliedType())
 		resSG.EXPECT().ResourceInstanceObject().Return(providers.ImportedResource{
 			TypeName: sg,
 			State:    stateSG,
@@ -566,8 +584,8 @@ func TestDependencies(t *testing.T) {
 
 		resSGR.EXPECT().Type().Return(sgr).AnyTimes()
 		resSGR.EXPECT().Provider().Return(prv)
-		resSGR.EXPECT().TFResource().Return(aws.Provider().ResourcesMap[sgr])
-		resSGR.EXPECT().ImpliedType().Return(aws.Provider().ResourcesMap[sgr].CoreConfigSchema().ImpliedType())
+		resSGR.EXPECT().TFResource().Return(provider.ResourcesMap[sgr])
+		resSGR.EXPECT().ImpliedType().Return(provider.ResourcesMap[sgr].CoreConfigSchema().ImpliedType())
 		resSGR.EXPECT().ResourceInstanceObject().Return(providers.ImportedResource{
 			TypeName: sgr,
 			State:    stateSGR,
@@ -683,9 +701,12 @@ func TestDependencies(t *testing.T) {
 
 		defer ctrl.Finish()
 
-		sgt, err := util.HashicorpToZclonfType(aws.Provider().ResourcesMap[sg].CoreConfigSchema().ImpliedType())
+		provider, err := aws.New(t.Context())
 		require.NoError(t, err)
-		sgrt, err := util.HashicorpToZclonfType(aws.Provider().ResourcesMap[sgr].CoreConfigSchema().ImpliedType())
+
+		sgt, err := util.HashicorpToZclonfType(provider.ResourcesMap[sg].CoreConfigSchema().ImpliedType())
+		require.NoError(t, err)
+		sgrt, err := util.HashicorpToZclonfType(provider.ResourcesMap[sgr].CoreConfigSchema().ImpliedType())
 		require.NoError(t, err)
 
 		stateSG, err := hcl2shim.HCL2ValueFromFlatmap(map[string]string{"id": "sg-1234", "name": "sg"}, sgt)
@@ -695,8 +716,8 @@ func TestDependencies(t *testing.T) {
 
 		resSG.EXPECT().Type().Return(sg)
 		resSG.EXPECT().Provider().Return(prv)
-		resSG.EXPECT().TFResource().Return(aws.Provider().ResourcesMap[sg])
-		resSG.EXPECT().ImpliedType().Return(aws.Provider().ResourcesMap[sg].CoreConfigSchema().ImpliedType())
+		resSG.EXPECT().TFResource().Return(provider.ResourcesMap[sg])
+		resSG.EXPECT().ImpliedType().Return(provider.ResourcesMap[sg].CoreConfigSchema().ImpliedType())
 		resSG.EXPECT().ResourceInstanceObject().Return(providers.ImportedResource{
 			TypeName: sg,
 			State:    stateSG,
@@ -706,8 +727,8 @@ func TestDependencies(t *testing.T) {
 
 		resSGR.EXPECT().Type().Return(sgr)
 		resSGR.EXPECT().Provider().Return(prv)
-		resSGR.EXPECT().TFResource().Return(aws.Provider().ResourcesMap[sgr])
-		resSGR.EXPECT().ImpliedType().Return(aws.Provider().ResourcesMap[sgr].CoreConfigSchema().ImpliedType())
+		resSGR.EXPECT().TFResource().Return(provider.ResourcesMap[sgr])
+		resSGR.EXPECT().ImpliedType().Return(provider.ResourcesMap[sgr].CoreConfigSchema().ImpliedType())
 		resSGR.EXPECT().ResourceInstanceObject().Return(providers.ImportedResource{
 			TypeName: sgr,
 			State:    stateSGR,
