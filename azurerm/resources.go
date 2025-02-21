@@ -2708,7 +2708,7 @@ func dataProtectionBackupInstanceDisks(ctx context.Context, a *azurerm, ar *Azur
 			return nil, errors.Wrap(err, "unable to list backup instance resources from reader")
 		}
 		logger := log.Get()
-		logger.Log("here", len(backupInstanceResources))
+		logger.Debug("here", len(backupInstanceResources))
 		for _, backupInstanceResource := range backupInstanceResources {
 			if props := backupInstanceResource.Properties; props != nil {
 				if info := backupInstanceResource.Properties.DataSourceInfo; info != nil {

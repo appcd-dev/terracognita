@@ -47,7 +47,7 @@ type azurerm struct {
 // NewProvider returns a AzureRM Provider
 func NewProvider(ctx context.Context, clientID, clientSecret, environment string, resourceGroupNames []string, subscriptionID, tenantID string) (provider.Provider, error) {
 	readers := make([]*AzureReader, 0, len(resourceGroupNames))
-	log.Get().Log("func", "azurerm.NewProvider", "msg", "loading Azure reader")
+	log.Get().Debug("loading Azure reader", "func", "azurerm.NewProvider")
 	for _, rgn := range resourceGroupNames {
 		reader, err := NewAzureReader(ctx, clientID, clientSecret, environment, rgn, subscriptionID, tenantID)
 		if err != nil {
@@ -56,7 +56,7 @@ func NewProvider(ctx context.Context, clientID, clientSecret, environment string
 		readers = append(readers, reader)
 	}
 
-	log.Get().Log("func", "azurerm.NewProvider", "msg", "loading TF provider")
+	log.Get().Debug("loading TF provider", "func", "azurerm.NewProvider")
 	tfp := tfazurerm.AzureProvider()
 
 	rawCfg := terraform.NewResourceConfigRaw(map[string]interface{}{
@@ -67,7 +67,7 @@ func NewProvider(ctx context.Context, clientID, clientSecret, environment string
 		"tenant_id":       tenantID,
 	})
 
-	log.Get().Log("func", "azurerm.NewProvider", "msg", "loading TF client")
+	log.Get().Debug("loading TF client", "func", "azurerm.NewProvider")
 	if diags := tfp.Configure(ctx, rawCfg); diags.HasError() {
 		return nil, fmt.Errorf("could not initialize 'terraform/azurerm.Provider.Configure()' because: %s", diags[0].Summary)
 	}

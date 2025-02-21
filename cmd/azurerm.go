@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 
-	kitlog "github.com/go-kit/kit/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -34,7 +33,7 @@ var (
 		PostRunE: postRunEOutput,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			logger := log.Get()
-			logger = kitlog.With(logger, "func", "cmd.azure.RunE")
+			logger = logger.With("func", "cmd.azure.RunE")
 			// Validate required flags
 			if err := requiredStringFlags(
 				"client-id", "client-secret", "subscription-id", "tenant-id",

@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/aws/aws-sdk-go-v2/config"
-	kitlog "github.com/go-kit/kit/log"
 
 	"github.com/cycloidio/terracognita/aws"
 	"github.com/cycloidio/terracognita/log"
@@ -46,7 +45,7 @@ var (
 		PostRunE: postRunEOutput,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			logger := log.Get()
-			logger = kitlog.With(logger, "func", "cmd.aws.RunE")
+			logger = logger.With("func", "cmd.aws.RunE")
 
 			loadAWSCredentials(cmd.Context())
 

@@ -10,8 +10,6 @@ import (
 	"strings"
 	"sync"
 
-	kitlog "github.com/go-kit/kit/log"
-
 	"github.com/cycloidio/mxwriter"
 	"github.com/cycloidio/terracognita/errcode"
 	"github.com/cycloidio/terracognita/interpolator"
@@ -112,6 +110,9 @@ func NewWriter(w io.Writer, pv provider.Provider, opts *writer.Options) *Writer 
 // Write expects a key similar to "aws_instance.your_name"
 // repeated keys will report an error
 func (w *Writer) Write(key string, value interface{}) error {
+	w.lock.Lock()
+	defer w.lock.Unlock()
+
 	if key == "" {
 		return errcode.ErrWriterRequiredKey
 	}
@@ -142,8 +143,6 @@ func (w *Writer) Write(key string, value interface{}) error {
 	} else {
 		category = ic.(string)
 	}
-	w.lock.Lock()
-	defer w.lock.Unlock()
 
 	if _, ok := w.Config[category]; !ok {
 		w.Config[category] = make(map[string]interface{})
@@ -160,7 +159,7 @@ func (w *Writer) Write(key string, value interface{}) error {
 	if _, ok := w.Config[category]["resource"].(map[string]map[string]interface{})[keys[0]]; !ok {
 		w.Config[category]["resource"].(map[string]map[string]interface{})[keys[0]] = make(map[string]interface{})
 	}
-	log.Get().Log("func", "writer.Write(HCL)", "msg", "writing to internal config", "key", keys[0], "content", string(b))
+	log.Get().Debug("writing to internal config", "func", "writer.Write(HCL)", "key", keys[0], "content", string(b))
 
 	w.Config[category]["resource"].(map[string]map[string]interface{})[keys[0]][name] = value
 
@@ -191,8 +190,6 @@ func (w *Writer) Has(key string) (bool, error) {
 // Sync writes the content of the Config to the
 // internal w with the correct format
 func (w *Writer) Sync() error {
-	logger := log.Get()
-	logger = kitlog.With(logger, "func", "writer.Write(HCL)")
 
 	categories := w.categories
 	if w.opts.HasModule() {

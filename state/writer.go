@@ -108,7 +108,7 @@ func (w *Writer) Write(key string, value interface{}) error {
 
 	w.state.SetResourceInstanceCurrent(absAddr, src, absProviderConf)
 
-	log.Get().Log("func", "state.Write(State)", "msg", "writing to internal config", "key", key, "content", r)
+	log.Get().Debug("writing to internal config", "func", "state.Write(State)", "key", key, "content", r)
 	w.Config[key] = r
 
 	return nil
@@ -130,7 +130,7 @@ func (w *Writer) Sync() error {
 	lstate := w.state.Lock()
 	defer w.state.Unlock()
 
-	log.Get().Log("func", "state.Sync(State)", "msg", "writting state to state file")
+	log.Get().Debug("writting state to state file", "func", "state.Sync(State)")
 	file := statemgr.NewStateFile()
 	file.State = lstate
 

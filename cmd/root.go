@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 	"os"
 	"path"
 	"path/filepath"
@@ -21,7 +22,6 @@ import (
 	"github.com/cycloidio/terracognita/state"
 	"github.com/cycloidio/terracognita/tag"
 	"github.com/cycloidio/terracognita/writer"
-	kitlog "github.com/go-kit/kit/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"gopkg.in/yaml.v2"
@@ -294,7 +294,7 @@ func getWriterOptions() (*writer.Options, error) {
 	}, nil
 }
 
-func importProvider(ctx context.Context, logger kitlog.Logger, p provider.Provider, tags []tag.Tag) error {
+func importProvider(ctx context.Context, logger *slog.Logger, p provider.Provider, tags []tag.Tag) error {
 	f := &filter.Filter{
 		Include: include,
 		Exclude: exclude,
@@ -309,19 +309,19 @@ func importProvider(ctx context.Context, logger kitlog.Logger, p provider.Provid
 	}
 
 	if hclOut != nil {
-		logger.Log("msg", "initializing HCL writer")
+		logger.Debug("initializing HCL writer")
 		hclW = hcl.NewWriter(hclOut, p, options)
 	}
 
 	if stateOut != nil {
-		logger.Log("msg", "initializing TFState writer")
+		logger.Debug("initializing TFState writer")
 		stateW = state.NewWriter(stateOut, options)
 	}
 
-	logger.Log("msg", "scanning")
+	logger.Debug("scanning")
 
 	fmt.Fprintf(logsOut, "Starting Terracognita with version %s\n", Version)
-	logger.Log("msg", "starting terracognita", "version", Version)
+	logger.Debug("starting terracognita", "version", Version)
 	err = provider.Import(ctx, p, hclW, stateW, f, logsOut)
 	if err != nil {
 		return errors.Wrap(err, "could not import from "+p.String())

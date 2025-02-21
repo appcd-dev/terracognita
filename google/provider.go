@@ -47,7 +47,7 @@ func NewProvider(ctx context.Context, maxResults uint64, project, region, creden
 	}
 
 	tfgoogle.ConfigureBasePaths(&cfg)
-	log.Get().Log("func", "google.NewProvider", "msg", "loading TF client")
+	log.Get().Debug("loading TF client", "func", "google.NewProvider")
 	if err := cfg.LoadAndValidate(ctx); err != nil {
 		return nil, fmt.Errorf("could not initialize 'terraform/google.Config.LoadAndValidate()' because: %s", err)
 	}
@@ -55,7 +55,7 @@ func NewProvider(ctx context.Context, maxResults uint64, project, region, creden
 	tfp := tfgoogle.Provider()
 	tfp.SetMeta(&cfg)
 
-	log.Get().Log("func", "google.NewProvider", "msg", "loading GCP client")
+	log.Get().Debug("loading GCP client", "func", "google.NewProvider")
 	reader, err := NewGcpReader(ctx, maxResults, project, region, credentials)
 	if err != nil {
 		return nil, fmt.Errorf("unable to initialize GCPReader: %v", err)
