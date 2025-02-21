@@ -181,7 +181,7 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 				logger := logger.With("id", re.ID(), "total", resourceLen, "current", i+1)
 				fmt.Fprintf(out, "\rScanning %s [%d/%d]", t, i+1, resourceLen)
 
-				logger.Info("reading from TF")
+				logger.Debug("reading from TF")
 				resErrGroup.Go(func() error {
 					return readResource(ectx, re, t, hcl, tfstate, interpolation, f, logger)
 				})
