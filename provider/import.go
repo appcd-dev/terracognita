@@ -47,7 +47,7 @@ func readResource(ctx context.Context,
 			// Errors are ignored. If a resource is invalid we assume it can be skipped, it can be related to inconsistencies in deployed resources.
 			// So instead of failing and stopping execution we ignore them and continue (we log them if -v is specified)
 
-			logger.Error("error", err)
+			logger.Error("error reading resource", "error", err)
 
 			continue
 		}
@@ -135,7 +135,7 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 	}
 
 	fmt.Fprintf(out, "Scanning with filters: %s", f)
-	logger.Debug("filters", f.String())
+	logger.Debug("current filter", "filters", f.String())
 
 	interpolation := interpolator.New(p.String())
 	resTypeErrGroup, rtCtx := errgroup.WithContext(ctx)
