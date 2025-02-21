@@ -13,7 +13,7 @@ import (
 	"github.com/cycloidio/terracognita/util"
 	"github.com/cycloidio/terracognita/writer"
 	"github.com/golang/mock/gomock"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
+	sdkV2Terraform "github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	aws "github.com/hashicorp/terraform-provider-aws/provider"
 	"github.com/hashicorp/terraform/configs/hcl2shim"
 	"github.com/hashicorp/terraform/providers"
@@ -424,7 +424,7 @@ func TestDependencies(t *testing.T) {
 			State:    stateSG,
 		}.AsInstanceObject())
 		attrsSG := make(map[string]string)
-		resSG.EXPECT().InstanceState().Return(&terraform.InstanceState{
+		resSG.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{
 			Attributes: attrsSG,
 		})
 
@@ -440,7 +440,7 @@ func TestDependencies(t *testing.T) {
 		}.AsInstanceObject())
 		attrsSGR := make(map[string]string)
 		attrsSGR["security-group-id"] = "sg-1234"
-		resSGR.EXPECT().InstanceState().Return(&terraform.InstanceState{
+		resSGR.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{
 			Attributes: attrsSGR,
 		})
 
@@ -576,7 +576,7 @@ func TestDependencies(t *testing.T) {
 			State:    stateSG,
 		}.AsInstanceObject())
 		attrsSG := make(map[string]string)
-		resSG.EXPECT().InstanceState().Return(&terraform.InstanceState{
+		resSG.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{
 			Attributes: attrsSG,
 		})
 
@@ -592,7 +592,7 @@ func TestDependencies(t *testing.T) {
 		}.AsInstanceObject())
 		attrsSGR := make(map[string]string)
 		attrsSGR["security-group-id"] = "sg-1234"
-		resSGR.EXPECT().InstanceState().Return(&terraform.InstanceState{
+		resSGR.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{
 			Attributes: attrsSGR,
 		})
 

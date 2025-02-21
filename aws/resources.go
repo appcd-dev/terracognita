@@ -34,7 +34,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
 	"github.com/cycloidio/terracognita/filter"
 	"github.com/cycloidio/terracognita/provider"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -534,7 +534,7 @@ func lbTargetGroupAttachments(ctx context.Context, a *aws, resourceType string, 
 					d.Set("port", tPort)
 					d.Set("target_group_arn", parts[2])
 
-					d.SetId(resource.PrefixedUniqueId(fmt.Sprintf("%s-", parts[2])))
+					d.SetId(id.PrefixedUniqueId(fmt.Sprintf("%s-", parts[2])))
 
 					return []*schema.ResourceData{d}, nil
 				},
@@ -1901,7 +1901,7 @@ func iamGroupMemberships(ctx context.Context, a *aws, resourceType string, filte
 		importer := &schema.ResourceImporter{
 			State: func(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 				groupName := d.Id()
-				membershipID := resource.UniqueId()
+				membershipID := id.UniqueId()
 
 				d.Set("group", groupName)
 				d.SetId(membershipID)
