@@ -1367,8 +1367,8 @@ github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223/go.mod h1:qRW
 github.com/mwitkow/go-proto-validators v0.0.0-20180403085117-0950a7990007/go.mod h1:m2XC9Qq0AlmmVksL6FktJCdTYyLk7V3fKyp0sl1yWQo=
 github.com/mwitkow/go-proto-validators v0.2.0/go.mod h1:ZfA1hW+UH/2ZHOWvQ3HnQaU0DtnpXu850MZiy+YUgcc=
 github.com/nakabonne/nestif v0.3.0/go.mod h1:dI314BppzXjJ4HsCnbo7XzrJHPszZsjnk5wEBSYHI2c=
-github.com/nasir-rabbani/terraform-provider-aws v0.0.0-20250221143811-ce940c4f06a6 h1:UdV9Xd1SlrNUSXizokYUGMxpQhEAJd7NTNWNaRZvqeA=
-github.com/nasir-rabbani/terraform-provider-aws v0.0.0-20250221143811-ce940c4f06a6/go.mod h1:ns6eFcAnp8ygUZbmM1/iaruKz4wR9sXz6Q3VNp1C+Hc=
+github.com/nasir-rabbani/terraform-provider-aws v0.0.0-20250221212118-443b3b4711d3 h1:9YIJYP9tqwYmhD6XlINEmuxy7XO9348R+eSRJxfAKHo=
+github.com/nasir-rabbani/terraform-provider-aws v0.0.0-20250221212118-443b3b4711d3/go.mod h1:ns6eFcAnp8ygUZbmM1/iaruKz4wR9sXz6Q3VNp1C+Hc=
 github.com/nbutton23/zxcvbn-go v0.0.0-20210217022336-fa2cb2858354/go.mod h1:KSVJerMDfblTH7p5MZaTt+8zaT2iEk3AkVb9PQdZuE8=
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e/go.mod h1:zD1mROLANZcx1PVRCS0qkT7pwLkGfwJo4zjcN/Tysno=
 github.com/nishanths/exhaustive v0.1.0/go.mod h1:S1j9110vxV1ECdCudXRkeMnFQ/DQk9ajLT0Uf2MYZQQ=
