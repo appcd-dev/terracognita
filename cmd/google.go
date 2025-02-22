@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	kitlog "github.com/go-kit/kit/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -30,7 +29,7 @@ var (
 		PostRunE: postRunEOutput,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			logger := log.Get()
-			logger = kitlog.With(logger, "func", "cmd.google.RunE")
+			logger = logger.With("func", "cmd.google.RunE")
 			// Validate required flags
 			if err := requiredStringFlags("region", "project", "credentials"); err != nil {
 				return err

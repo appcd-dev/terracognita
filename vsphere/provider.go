@@ -47,7 +47,7 @@ func NewProvider(ctx context.Context, soapURL, user, password, vsphereserver str
 		VSphereServer: vsphereserver,
 	}
 
-	log.Get().Log("func", "vsphere.Client", "msg", "configuring TF Client")
+	log.Get().Debug("configuring TF Client", "func", "vsphere.Client")
 	client, err := cfg.Client()
 	if err != nil {
 		return nil, fmt.Errorf("could not initialize VSphere client: %w", err)
@@ -65,7 +65,7 @@ func NewProvider(ctx context.Context, soapURL, user, password, vsphereserver str
 		"allow_unverified_ssl": insecure,
 	})
 
-	log.Get().Log("func", "vsphere.NewProvider", "msg", "loading TF client")
+	log.Get().Debug("loading TF client", "func", "vsphere.NewProvider")
 	if diags := tfp.Configure(ctx, rawCfg); diags.HasError() {
 		return nil, fmt.Errorf("could not initialize 'terraform/vsphere.Provider.Configure()' because: %s", diags[0].Summary)
 	}

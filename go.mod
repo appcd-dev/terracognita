@@ -54,7 +54,6 @@ require (
 	github.com/cycloidio/mxwriter v1.0.4
 	github.com/cycloidio/tfdocs v0.0.0-20230516095646-1dc8f8412d50
 	github.com/gertd/go-pluralize v0.2.1
-	github.com/go-kit/kit v0.9.0
 	github.com/golang/mock v1.6.0
 	github.com/hashicorp/go-azure-helpers v0.40.0
 	github.com/hashicorp/go-cty v1.4.1-0.20200723130312-85980079f637
@@ -344,7 +343,6 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/gammazero/deque v0.0.0-20180920172122-f6adf94963e4 // indirect
 	github.com/gammazero/workerpool v0.0.0-20181230203049-86a96b5d5d92 // indirect
-	github.com/go-logfmt/logfmt v0.4.0 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/gofrs/uuid v4.0.0+incompatible // indirect
@@ -392,7 +390,6 @@ require (
 	github.com/hashicorp/yamux v0.1.2 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
-	github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515 // indirect
 	github.com/kylelemons/godebug v1.1.0 // indirect
 	github.com/magiconair/properties v1.8.1 // indirect
 	github.com/manicminer/hamilton v0.44.0 // indirect
