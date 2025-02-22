@@ -61,8 +61,7 @@ func NewProvider(ctx context.Context, accessKey, secretKey, region, sessionToken
 	}
 
 	log.Get().Log("func", "aws.NewProvider", "msg", "configuring TF Client")
-	awsClient := &conns.AWSClient{}
-	awsClient, diags := cfg.ConfigureProvider(ctx, awsClient)
+	awsClient, diags := cfg.ConfigureProvider(ctx, &conns.AWSClient{})
 	if diags.HasError() {
 		var errdiags string
 		for i := range diags {
@@ -73,7 +72,7 @@ func NewProvider(ctx context.Context, accessKey, secretKey, region, sessionToken
 
 	tfp, err := tfaws.New(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("could not initialize 'terraform/aws.New()' because: %s", err)
+		return nil, fmt.Errorf("could not initialize 'terraform/provider.New()' because: %s", err)
 	}
 	tfp.SetMeta(awsClient)
 
