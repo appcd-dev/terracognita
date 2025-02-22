@@ -61,7 +61,7 @@ func NewProvider(ctx context.Context, accessKey, secretKey, region, sessionToken
 	}
 
 	log.Get().Log("func", "aws.NewProvider", "msg", "configuring TF Client")
-	awsClient, diags := cfg.ConfigureProvider(ctx, &conns.AWSClient{})
+	awsClient, diags := cfg.ConfigureProvider(ctx)
 	if diags.HasError() {
 		var errdiags string
 		for i := range diags {
@@ -74,6 +74,12 @@ func NewProvider(ctx context.Context, accessKey, secretKey, region, sessionToken
 	if err != nil {
 		return nil, fmt.Errorf("could not initialize 'terraform/provider.New()' because: %s", err)
 	}
+
+	// We had to explictiy set the ServicePackages because ConfigureProvider only sets awsConfig and the provider constructor
+	// sets the ServicePackages but misses the awsConfig
+	awsClient.SetServicePackages(ctx, cfg.ServicePackages(ctx, tfp))
+
+	// set the meta in provider with the AWSClient and the ServicePackages
 	tfp.SetMeta(awsClient)
 
 	return &aws{
