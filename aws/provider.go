@@ -21,7 +21,7 @@ import (
 )
 
 // version of the Terraform provider, this is automatically changed with the 'make update-terraform-provider'
-const version = "4.9.0"
+const version = "5.88.0"
 
 // skippableCodes is a list of codes
 // which won't make Terracognita failed
