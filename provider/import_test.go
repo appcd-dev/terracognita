@@ -11,7 +11,7 @@ import (
 	"github.com/cycloidio/terracognita/mock"
 	"github.com/cycloidio/terracognita/provider"
 	"github.com/golang/mock/gomock"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
+	sdkV2Terraform "github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -53,10 +53,10 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().ImportState(t.Context()).Return(nil, nil)
 		iamUser2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
-		instanceResource1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
-		instanceResource2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
-		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
-		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
+		instanceResource1.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
+		instanceResource2.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
+		iamUser1.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
+		iamUser2.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
 
 		instanceResource1.EXPECT().Read(t.Context(), f).Return(nil)
 		instanceResource2.EXPECT().Read(t.Context(), f).Return(nil)
@@ -115,8 +115,8 @@ func TestImport(t *testing.T) {
 		instanceResource1.EXPECT().ImportState(t.Context()).Return(nil, nil)
 		instanceResource2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
-		instanceResource1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
-		instanceResource2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
+		instanceResource1.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
+		instanceResource2.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
 
 		instanceResource1.EXPECT().Read(t.Context(), f).Return(nil)
 		instanceResource2.EXPECT().Read(t.Context(), f).Return(nil)
@@ -169,8 +169,8 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().ImportState(t.Context()).Return(nil, nil)
 		iamUser2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
-		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
-		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
+		iamUser1.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
+		iamUser2.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
 
 		iamUser1.EXPECT().Read(t.Context(), f).Return(nil)
 		iamUser2.EXPECT().Read(t.Context(), f).Return(nil)
@@ -220,8 +220,8 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().ID().Return("1")
 		iamUser2.EXPECT().ID().Return("2")
 
-		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
-		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
+		iamUser1.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
+		iamUser2.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
 
 		iamUser1.EXPECT().ImportState(t.Context()).Return(nil, nil)
 		iamUser2.EXPECT().ImportState(t.Context()).Return(nil, nil)
@@ -273,8 +273,8 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().ImportState(t.Context()).Return(nil, nil)
 		iamUser2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
-		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
-		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
+		iamUser1.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
+		iamUser2.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
 
 		iamUser1.EXPECT().Read(t.Context(), f).Return(errcode.ErrProviderResourceDoNotMatchTag)
 		iamUser2.EXPECT().Read(t.Context(), f).Return(nil)
@@ -318,8 +318,8 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().ImportState(t.Context()).Return(nil, nil)
 		iamUser2.EXPECT().ImportState(t.Context()).Return(nil, nil)
 
-		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
-		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
+		iamUser1.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
+		iamUser2.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
 
 		iamUser1.EXPECT().Read(t.Context(), f).Return(errcode.ErrProviderResourceDoNotMatchTag)
 		iamUser2.EXPECT().Read(t.Context(), f).Return(nil)
@@ -367,8 +367,8 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().Read(t.Context(), f).Return(errcode.ErrProviderResourceNotRead)
 		iamUser2.EXPECT().Read(t.Context(), f).Return(nil)
 
-		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
-		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
+		iamUser1.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
+		iamUser2.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
 
 		iamUser2.EXPECT().HCL(hw).Return(nil)
 
@@ -417,8 +417,8 @@ func TestImport(t *testing.T) {
 		iamUser1.EXPECT().Read(t.Context(), f).Return(errcode.ErrProviderResourceAutogenerated)
 		iamUser2.EXPECT().Read(t.Context(), f).Return(nil)
 
-		iamUser1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
-		iamUser2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
+		iamUser1.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
+		iamUser2.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
 
 		iamUser2.EXPECT().HCL(hw).Return(nil)
 
@@ -536,8 +536,8 @@ func TestImport(t *testing.T) {
 		instanceResource1.EXPECT().Read(t.Context(), f).Return(nil)
 		instanceResource2.EXPECT().Read(t.Context(), f).Return(nil)
 
-		instanceResource1.EXPECT().InstanceState().Return(&terraform.InstanceState{})
-		instanceResource2.EXPECT().InstanceState().Return(&terraform.InstanceState{})
+		instanceResource1.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
+		instanceResource2.EXPECT().InstanceState().Return(&sdkV2Terraform.InstanceState{})
 
 		instanceResource1.EXPECT().HCL(hw).Return(nil)
 		instanceResource2.EXPECT().HCL(hw).Return(nil)
