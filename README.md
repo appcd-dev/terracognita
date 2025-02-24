@@ -23,7 +23,7 @@ Terracognita currently imports AWS, GCP, AzureRM and VMware vSphere cloud provid
 Please see the following versions as follow:
 
 Providers:
- * AWS: v4.9.0
+ * AWS: v5.88.0
  * AzureRM: v3.20.0
  * Google: v4.9.0
  * vSphere: v2.2.0
