@@ -15,7 +15,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/batch v1.49.13
 	github.com/aws/aws-sdk-go-v2/service/cloudfront v1.44.11
 	github.com/aws/aws-sdk-go-v2/service/cloudwatch v1.43.15
-	github.com/aws/aws-sdk-go-v2/service/configservice v1.51.13
+	github.com/aws/aws-sdk-go-v2/service/configservice v1.51.14
 	github.com/aws/aws-sdk-go-v2/service/databasemigrationservice v1.49.1
 	github.com/aws/aws-sdk-go-v2/service/dax v1.23.16
 	github.com/aws/aws-sdk-go-v2/service/directconnect v1.30.13
@@ -40,7 +40,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/mediastore v1.24.16
 	github.com/aws/aws-sdk-go-v2/service/mq v1.27.17
 	github.com/aws/aws-sdk-go-v2/service/neptune v1.35.18
-	github.com/aws/aws-sdk-go-v2/service/rds v1.93.13
+	github.com/aws/aws-sdk-go-v2/service/rds v1.93.14
 	github.com/aws/aws-sdk-go-v2/service/redshift v1.53.13
 	github.com/aws/aws-sdk-go-v2/service/route53 v1.48.8
 	github.com/aws/aws-sdk-go-v2/service/route53resolver v1.34.14
@@ -60,7 +60,7 @@ require (
 	github.com/hashicorp/hcl/v2 v2.23.0
 	github.com/hashicorp/terraform v0.13.0
 	github.com/hashicorp/terraform-plugin-go v0.26.0
-	github.com/hashicorp/terraform-plugin-sdk/v2 v2.36.0
+	github.com/hashicorp/terraform-plugin-sdk/v2 v2.36.1
 	github.com/hashicorp/terraform-provider-aws v1.60.1-0.20210513231836-489654890359
 	github.com/hashicorp/terraform-provider-azurerm v1.44.1-0.20201029183808-d721bcc1bb55
 	github.com/hashicorp/terraform-provider-google v1.20.1-0.20210510171431-a764cf3da527
@@ -75,7 +75,7 @@ require (
 	golang.org/x/sync v0.11.0
 	golang.org/x/text v0.22.0
 	google.golang.org/api v0.162.0
-	google.golang.org/grpc v1.69.4
+	google.golang.org/grpc v1.70.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
@@ -127,14 +127,14 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/applicationsignals v1.7.11 // indirect
 	github.com/aws/aws-sdk-go-v2/service/appmesh v1.29.16 // indirect
 	github.com/aws/aws-sdk-go-v2/service/apprunner v1.32.16 // indirect
-	github.com/aws/aws-sdk-go-v2/service/appstream v1.43.3 // indirect
+	github.com/aws/aws-sdk-go-v2/service/appstream v1.44.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/appsync v1.43.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/auditmanager v1.37.16 // indirect
 	github.com/aws/aws-sdk-go-v2/service/autoscalingplans v1.24.16 // indirect
 	github.com/aws/aws-sdk-go-v2/service/backup v1.40.11 // indirect
 	github.com/aws/aws-sdk-go-v2/service/bcmdataexports v1.7.16 // indirect
-	github.com/aws/aws-sdk-go-v2/service/bedrock v1.26.7 // indirect
-	github.com/aws/aws-sdk-go-v2/service/bedrockagent v1.35.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/bedrock v1.26.8 // indirect
+	github.com/aws/aws-sdk-go-v2/service/bedrockagent v1.36.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/billing v1.1.8 // indirect
 	github.com/aws/aws-sdk-go-v2/service/budgets v1.29.11 // indirect
 	github.com/aws/aws-sdk-go-v2/service/chatbot v1.9.10 // indirect
@@ -143,7 +143,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/chimesdkvoice v1.20.9 // indirect
 	github.com/aws/aws-sdk-go-v2/service/cleanrooms v1.21.9 // indirect
 	github.com/aws/aws-sdk-go-v2/service/cloud9 v1.28.17 // indirect
-	github.com/aws/aws-sdk-go-v2/service/cloudcontrol v1.23.12 // indirect
+	github.com/aws/aws-sdk-go-v2/service/cloudcontrol v1.23.13 // indirect
 	github.com/aws/aws-sdk-go-v2/service/cloudformation v1.57.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/cloudfrontkeyvaluestore v1.8.16 // indirect
 	github.com/aws/aws-sdk-go-v2/service/cloudhsmv2 v1.29.8 // indirect
@@ -151,7 +151,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cloudtrail v1.47.5 // indirect
 	github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs v1.45.14 // indirect
 	github.com/aws/aws-sdk-go-v2/service/codeartifact v1.33.16 // indirect
-	github.com/aws/aws-sdk-go-v2/service/codebuild v1.52.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/codebuild v1.53.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/codecatalyst v1.17.16 // indirect
 	github.com/aws/aws-sdk-go-v2/service/codecommit v1.27.16 // indirect
 	github.com/aws/aws-sdk-go-v2/service/codeconnections v1.5.16 // indirect
@@ -201,7 +201,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/grafana v1.26.16 // indirect
 	github.com/aws/aws-sdk-go-v2/service/greengrass v1.27.16 // indirect
 	github.com/aws/aws-sdk-go-v2/service/groundstation v1.31.18 // indirect
-	github.com/aws/aws-sdk-go-v2/service/guardduty v1.52.11 // indirect
+	github.com/aws/aws-sdk-go-v2/service/guardduty v1.53.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/healthlake v1.29.4 // indirect
 	github.com/aws/aws-sdk-go-v2/service/identitystore v1.27.17 // indirect
 	github.com/aws/aws-sdk-go-v2/service/imagebuilder v1.40.8 // indirect
@@ -285,7 +285,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/s3control v1.53.5 // indirect
 	github.com/aws/aws-sdk-go-v2/service/s3outposts v1.28.16 // indirect
 	github.com/aws/aws-sdk-go-v2/service/s3tables v1.1.3 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sagemaker v1.176.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sagemaker v1.177.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/scheduler v1.12.18 // indirect
 	github.com/aws/aws-sdk-go-v2/service/schemas v1.28.18 // indirect
 	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.34.19 // indirect
@@ -325,14 +325,14 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/wellarchitected v1.34.16 // indirect
 	github.com/aws/aws-sdk-go-v2/service/worklink v1.23.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/workspaces v1.52.6 // indirect
-	github.com/aws/aws-sdk-go-v2/service/workspacesweb v1.25.10 // indirect
+	github.com/aws/aws-sdk-go-v2/service/workspacesweb v1.26.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/xray v1.30.13 // indirect
 	github.com/beevik/etree v1.5.0 // indirect
 	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d // indirect
 	github.com/btubbs/datetime v0.1.0 // indirect
 	github.com/cedar-policy/cedar-go v0.1.0 // indirect
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
-	github.com/cloudflare/circl v1.5.0 // indirect
+	github.com/cloudflare/circl v1.6.0 // indirect
 	github.com/coreos/go-systemd v0.0.0-20190620071333-e64a0ec8b42a // indirect
 	github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -348,10 +348,10 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/gofrs/uuid v4.0.0+incompatible // indirect
 	github.com/golang-jwt/jwt/v4 v4.4.1 // indirect
-	github.com/golang/glog v1.2.2 // indirect
+	github.com/golang/glog v1.2.3 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
-	github.com/google/go-cmp v0.6.0 // indirect
+	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/s2a-go v0.1.7 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
@@ -368,7 +368,7 @@ require (
 	github.com/hashicorp/go-getter v1.5.11 // indirect
 	github.com/hashicorp/go-hclog v1.6.3 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
-	github.com/hashicorp/go-plugin v1.6.2 // indirect
+	github.com/hashicorp/go-plugin v1.6.3 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.7 // indirect
 	github.com/hashicorp/go-safetemp v1.0.0 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
@@ -378,11 +378,11 @@ require (
 	github.com/hashicorp/logutils v1.0.0 // indirect
 	github.com/hashicorp/terraform-exec v0.22.0 // indirect
 	github.com/hashicorp/terraform-json v0.24.0 // indirect
-	github.com/hashicorp/terraform-plugin-framework v1.13.0 // indirect
+	github.com/hashicorp/terraform-plugin-framework v1.14.1 // indirect
 	github.com/hashicorp/terraform-plugin-framework-jsontypes v0.2.0 // indirect
 	github.com/hashicorp/terraform-plugin-framework-timeouts v0.5.0 // indirect
 	github.com/hashicorp/terraform-plugin-framework-timetypes v0.5.0 // indirect
-	github.com/hashicorp/terraform-plugin-framework-validators v0.16.0 // indirect
+	github.com/hashicorp/terraform-plugin-framework-validators v0.17.0 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.9.0 // indirect
 	github.com/hashicorp/terraform-plugin-mux v0.18.0 // indirect
 	github.com/hashicorp/terraform-plugin-testing v1.11.0 // indirect
@@ -396,7 +396,7 @@ require (
 	github.com/manicminer/hamilton v0.44.0 // indirect
 	github.com/manicminer/hamilton-autorest v0.2.0 // indirect
 	github.com/mattbaird/jsonpatch v0.0.0-20240118010651-0ba75a80ca38 // indirect
-	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
@@ -414,7 +414,7 @@ require (
 	github.com/shopspring/decimal v1.4.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/spf13/afero v1.10.0 // indirect
-	github.com/spf13/cast v1.7.0 // indirect
+	github.com/spf13/cast v1.7.1 // indirect
 	github.com/spf13/jwalterweatherman v1.0.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
@@ -434,18 +434,18 @@ require (
 	go.opentelemetry.io/otel v1.34.0 // indirect
 	go.opentelemetry.io/otel/metric v1.34.0 // indirect
 	go.opentelemetry.io/otel/trace v1.34.0 // indirect
-	golang.org/x/crypto v0.33.0 // indirect
+	golang.org/x/crypto v0.34.0 // indirect
 	golang.org/x/mod v0.23.0 // indirect
 	golang.org/x/net v0.35.0 // indirect
-	golang.org/x/oauth2 v0.23.0 // indirect
+	golang.org/x/oauth2 v0.24.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.30.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto v0.0.0-20240227224415-6ceb2ff114de // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20241015192408-796eee8c2d53 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20241209162323-e6fa225c2576 // indirect
-	google.golang.org/protobuf v1.36.3 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20241202173237-19429a94021a // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250219182151-9fdb1cabc7b2 // indirect
+	google.golang.org/protobuf v1.36.5 // indirect
 	gopkg.in/ini.v1 v1.66.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
@@ -457,7 +457,7 @@ replace (
 	// as go-getter introduced a break from 1.4 -> 1.5
 	github.com/hashicorp/go-getter => github.com/hashicorp/go-getter v1.4.0
 	github.com/hashicorp/terraform => github.com/cycloidio/terraform v1.1.9-cy
-	github.com/hashicorp/terraform-provider-aws => github.com/appcd-dev/terraform-provider-aws v0.0.0-20250224044323-5bfa3cc416f1
+	github.com/hashicorp/terraform-provider-aws => github.com/appcd-dev/terraform-provider-aws v0.0.0-20250225160743-7114ccd00f63
 	// Fork of Azurerm that has the V2 of the SDK
 	github.com/hashicorp/terraform-provider-azurerm => github.com/cycloidio/terraform-provider-azurerm v1.44.1-0.20230517144901-90a36c6b8ed4
 	github.com/hashicorp/terraform-provider-google => github.com/hashicorp/terraform-provider-google v1.20.1-0.20220201002249-bc5fcb3c89a5
