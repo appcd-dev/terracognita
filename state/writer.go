@@ -57,8 +57,9 @@ func (w *Writer) Write(key string, value interface{}) error {
 
 	w.lock.Lock()
 	defer w.lock.Unlock()
-	if _, ok := w.Config[key]; ok {
-		return errors.Wrapf(errcode.ErrWriterAlreadyExistsKey, "with key %q", key)
+	if val, ok := w.Config[key]; ok {
+		log.Get().Debug("resource key already exists", "func", "state.Write", "key", key, "value", value, "old_value", val)
+		return nil
 	}
 
 	if len(strings.Split(key, ".")) != 2 {

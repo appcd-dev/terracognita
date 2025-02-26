@@ -360,14 +360,14 @@ func (r *resource) State(w writer.Writer) error {
 
 			err := w.Write(fmt.Sprintf("%s.%s", r.resourceType, configName), r)
 			if err != nil {
-				return err
+				return fmt.Errorf("error writing resource %s: %w", r.resourceType, err)
 			}
 
 			r.configName = configName
 		} else {
 			err := w.Write(fmt.Sprintf("%s.%s", r.resourceType, r.configName), r)
 			if err != nil {
-				return err
+				return fmt.Errorf("error writing resource config: %s %s: %w", r.configName, r.resourceType, err)
 			}
 
 			return nil

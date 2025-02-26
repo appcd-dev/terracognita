@@ -64,7 +64,7 @@ func readResource(ctx context.Context,
 			logger.Debug("calculating TFState")
 			err = r.State(tfstate)
 			if err != nil {
-				return errors.Wrapf(err, "error while calculating the satate of resource %q", t)
+				return errors.Wrapf(err, "error while calculating the state of resource %q", t)
 			}
 		}
 		state := r.InstanceState()
@@ -164,12 +164,12 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 					// we filter the error: if it's an error provider side, we continue
 					// the import but we print the error.
 					if errors.Is(err, errcode.ErrProviderAPI) {
-						logger.Debug(fmt.Sprintf("unable to import resource %s: %s\n", t, err.Error()))
+						logger.Debug("unable to import resource", "error", err)
 					} else if strings.Contains(err.Error(), "AccessDenied") {
 						// skip access denied errors, since we might not have access to all resources when trying to import based on tags
-						logger.Debug(fmt.Sprintf("unable to import resource, access denied %s: %s\n", t, err.Error()))
+						logger.Debug("unable to import resource, access denied", "error", err)
 					} else {
-						return errors.WithStack(err)
+						return fmt.Errorf("error while fetching the resources of type: %s: %w", t, err)
 					}
 				}
 			}
