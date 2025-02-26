@@ -57,6 +57,9 @@ func (w *Writer) Write(key string, value interface{}) error {
 
 	w.lock.Lock()
 	defer w.lock.Unlock()
+	if w.Has(key) {
+		return nil
+	}
 	if _, ok := w.Config[key]; ok {
 		return errors.Wrapf(errcode.ErrWriterAlreadyExistsKey, "with key %q", key)
 	}
