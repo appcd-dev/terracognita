@@ -170,8 +170,8 @@ github.com/apparentlymart/go-textseg/v15 v15.0.0 h1:uYvfpb3DyLSCGWnctWKGj857c6ew
 github.com/apparentlymart/go-textseg/v15 v15.0.0/go.mod h1:K8XmNZdhEBkdlyDdvbmmsvpAG721bKi0joRfFdHIWJ4=
 github.com/apparentlymart/go-versions v1.0.1 h1:ECIpSn0adcYNsBfSRwdDdz9fWlL+S/6EUd9+irwkBgU=
 github.com/apparentlymart/go-versions v1.0.1/go.mod h1:YF5j7IQtrOAOnsGkniupEA5bfCjzd7i14yu0shZavyM=
-github.com/appcd-dev/terraform-provider-aws v0.0.0-20250225160743-7114ccd00f63 h1:8N/o1wUJ+jU4mAQRho3QOq0StbeHiQEgep4MLrLNXyw=
-github.com/appcd-dev/terraform-provider-aws v0.0.0-20250225160743-7114ccd00f63/go.mod h1:tKsCJ5vte+ohjeM/MB7ZETS0rMS5FEOyHgDJmo9iyZM=
+github.com/appcd-dev/terraform-provider-aws v0.0.0-20250224044323-5bfa3cc416f1 h1:Y44VKMi45LHt6cYbAWofylC1yTVG+CW9faICWcbbzH8=
+github.com/appcd-dev/terraform-provider-aws v0.0.0-20250224044323-5bfa3cc416f1/go.mod h1:PSoh4981S91NEhwP6KJfUyFNkEgUuscUt+gxAul48Jk=
 github.com/armon/circbuf v0.0.0-20150827004946-bbbad097214e/go.mod h1:3U/XgcO3hCbHZ8TKRvWD2dDTCfh9M9ya+I9JpbB7O8o=
 github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6/go.mod h1:grANhF5doyWs3UAsr3K4I6qtAmlQcZDesFNEHPZAzj8=
 github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da/go.mod h1:Q73ZrmVTwzkszR9V5SSuryQ31EELlFMUz1kKyl939pY=
