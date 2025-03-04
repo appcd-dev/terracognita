@@ -25,7 +25,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ecs v1.53.16
 	github.com/aws/aws-sdk-go-v2/service/efs v1.34.12
 	github.com/aws/aws-sdk-go-v2/service/eks v1.58.1
-	github.com/aws/aws-sdk-go-v2/service/elasticache v1.44.13
+	github.com/aws/aws-sdk-go-v2/service/elasticache v1.44.14
 	github.com/aws/aws-sdk-go-v2/service/elasticbeanstalk v1.28.17
 	github.com/aws/aws-sdk-go-v2/service/elasticloadbalancing v1.28.18
 	github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2 v1.43.13
@@ -192,7 +192,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/eventbridge v1.36.12 // indirect
 	github.com/aws/aws-sdk-go-v2/service/evidently v1.23.16 // indirect
 	github.com/aws/aws-sdk-go-v2/service/finspace v1.28.16 // indirect
-	github.com/aws/aws-sdk-go-v2/service/firehose v1.36.5 // indirect
+	github.com/aws/aws-sdk-go-v2/service/firehose v1.36.6 // indirect
 	github.com/aws/aws-sdk-go-v2/service/fis v1.32.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/fms v1.39.7 // indirect
 	github.com/aws/aws-sdk-go-v2/service/gamelift v1.39.7 // indirect
@@ -315,7 +315,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/timestreaminfluxdb v1.9.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/timestreamquery v1.29.10 // indirect
 	github.com/aws/aws-sdk-go-v2/service/timestreamwrite v1.29.17 // indirect
-	github.com/aws/aws-sdk-go-v2/service/transcribe v1.43.2 // indirect
+	github.com/aws/aws-sdk-go-v2/service/transcribe v1.43.3 // indirect
 	github.com/aws/aws-sdk-go-v2/service/transfer v1.56.4 // indirect
 	github.com/aws/aws-sdk-go-v2/service/verifiedpermissions v1.21.3 // indirect
 	github.com/aws/aws-sdk-go-v2/service/vpclattice v1.13.11 // indirect
@@ -434,7 +434,7 @@ require (
 	go.opentelemetry.io/otel v1.34.0 // indirect
 	go.opentelemetry.io/otel/metric v1.34.0 // indirect
 	go.opentelemetry.io/otel/trace v1.34.0 // indirect
-	golang.org/x/crypto v0.34.0 // indirect
+	golang.org/x/crypto v0.35.0 // indirect
 	golang.org/x/mod v0.23.0 // indirect
 	golang.org/x/net v0.35.0 // indirect
 	golang.org/x/oauth2 v0.24.0 // indirect
@@ -457,7 +457,7 @@ replace (
 	// as go-getter introduced a break from 1.4 -> 1.5
 	github.com/hashicorp/go-getter => github.com/hashicorp/go-getter v1.4.0
 	github.com/hashicorp/terraform => github.com/cycloidio/terraform v1.1.9-cy
-	github.com/hashicorp/terraform-provider-aws => github.com/appcd-dev/terraform-provider-aws v0.0.0-20250225160743-7114ccd00f63
+	github.com/hashicorp/terraform-provider-aws => github.com/appcd-dev/terraform-provider-aws v0.0.0-20250226151847-a6a74d24b57c
 	// Fork of Azurerm that has the V2 of the SDK
 	github.com/hashicorp/terraform-provider-azurerm => github.com/cycloidio/terraform-provider-azurerm v1.44.1-0.20230517144901-90a36c6b8ed4
 	github.com/hashicorp/terraform-provider-google => github.com/hashicorp/terraform-provider-google v1.20.1-0.20220201002249-bc5fcb3c89a5

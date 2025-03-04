@@ -170,8 +170,8 @@ github.com/apparentlymart/go-textseg/v15 v15.0.0 h1:uYvfpb3DyLSCGWnctWKGj857c6ew
 github.com/apparentlymart/go-textseg/v15 v15.0.0/go.mod h1:K8XmNZdhEBkdlyDdvbmmsvpAG721bKi0joRfFdHIWJ4=
 github.com/apparentlymart/go-versions v1.0.1 h1:ECIpSn0adcYNsBfSRwdDdz9fWlL+S/6EUd9+irwkBgU=
 github.com/apparentlymart/go-versions v1.0.1/go.mod h1:YF5j7IQtrOAOnsGkniupEA5bfCjzd7i14yu0shZavyM=
-github.com/appcd-dev/terraform-provider-aws v0.0.0-20250225160743-7114ccd00f63 h1:8N/o1wUJ+jU4mAQRho3QOq0StbeHiQEgep4MLrLNXyw=
-github.com/appcd-dev/terraform-provider-aws v0.0.0-20250225160743-7114ccd00f63/go.mod h1:tKsCJ5vte+ohjeM/MB7ZETS0rMS5FEOyHgDJmo9iyZM=
+github.com/appcd-dev/terraform-provider-aws v0.0.0-20250226151847-a6a74d24b57c h1:Q+61AKRTlcpcOcmz+EsxkDrfm73pYGfpp3wU4IC1o+Q=
+github.com/appcd-dev/terraform-provider-aws v0.0.0-20250226151847-a6a74d24b57c/go.mod h1:d1Vt+tBwbcEVJwoKcHrqCfPlaU2F3WXrRhUmfv5dIDI=
 github.com/armon/circbuf v0.0.0-20150827004946-bbbad097214e/go.mod h1:3U/XgcO3hCbHZ8TKRvWD2dDTCfh9M9ya+I9JpbB7O8o=
 github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6/go.mod h1:grANhF5doyWs3UAsr3K4I6qtAmlQcZDesFNEHPZAzj8=
 github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da/go.mod h1:Q73ZrmVTwzkszR9V5SSuryQ31EELlFMUz1kKyl939pY=
@@ -389,8 +389,8 @@ github.com/aws/aws-sdk-go-v2/service/efs v1.34.12 h1:hOC1GjuyZ6rDFbqy81dPR9mQn8R
 github.com/aws/aws-sdk-go-v2/service/efs v1.34.12/go.mod h1:q7ZhoArJh+cy9hJk690UevJptbCqsIOUhhEBMP8aE5o=
 github.com/aws/aws-sdk-go-v2/service/eks v1.58.1 h1:w/GEycBxTO4psb9Mw8g3b9/dktLE5GeYP1uj3nZ+85M=
 github.com/aws/aws-sdk-go-v2/service/eks v1.58.1/go.mod h1:iBFJ86tzXjNjl3J+gJ8Y9Xz/S9JRAE3bTchQcjoMxYU=
-github.com/aws/aws-sdk-go-v2/service/elasticache v1.44.13 h1:jUKlOrtcqvWeAzHsBYKVmX4OieFHqSSnT0AxiRk6Uu0=
-github.com/aws/aws-sdk-go-v2/service/elasticache v1.44.13/go.mod h1:IpBQulkSHiRNyLXiyYmUxv9lva9yYKvwtDUqOB9bEJc=
+github.com/aws/aws-sdk-go-v2/service/elasticache v1.44.14 h1:ihDVHK8MNRJj1r7ZpgVn2hv2t2Xndi+Ua+w9Bq5cNA0=
+github.com/aws/aws-sdk-go-v2/service/elasticache v1.44.14/go.mod h1:IpBQulkSHiRNyLXiyYmUxv9lva9yYKvwtDUqOB9bEJc=
 github.com/aws/aws-sdk-go-v2/service/elasticbeanstalk v1.28.17 h1:7V5zDW6NgWgqHTjAiUijI75J7PaB1sxutN6m+Mie/Ng=
 github.com/aws/aws-sdk-go-v2/service/elasticbeanstalk v1.28.17/go.mod h1:qKtWAhIHC1TDBDGIjLM4TUWk28U3QvqKln00pAPVDjA=
 github.com/aws/aws-sdk-go-v2/service/elasticloadbalancing v1.28.18 h1:Q59TDNnobz8VliHLFT4wSXSBxv/vBgcANThiHsJRYvA=
@@ -413,8 +413,8 @@ github.com/aws/aws-sdk-go-v2/service/evidently v1.23.16 h1:XnSA17jrSHzBjgShDaxlt
 github.com/aws/aws-sdk-go-v2/service/evidently v1.23.16/go.mod h1:8Dl0EcLFC7i2B6tN81eyZGnvboemTADmVSixqrcWLKU=
 github.com/aws/aws-sdk-go-v2/service/finspace v1.28.16 h1:DgHv70ENRYKGViPJlQH8ybNge686reykEh/kKKiQ/54=
 github.com/aws/aws-sdk-go-v2/service/finspace v1.28.16/go.mod h1:tdix8bNddoEjsfHL4PGkf6O5jFZ+TQZvP2ij8KHqHBU=
-github.com/aws/aws-sdk-go-v2/service/firehose v1.36.5 h1:HQ62G/XpxRhLiUKtPbX8gX+RMo2kzHDibIK0C+hmWBM=
-github.com/aws/aws-sdk-go-v2/service/firehose v1.36.5/go.mod h1:F92t0aKXhFnxpkl6Jme444UA7za9p2k22Jex2Z0oND8=
+github.com/aws/aws-sdk-go-v2/service/firehose v1.36.6 h1:LDsA1WNUMKmWVahRz2ryEwCsZb8cgbzkYoyQZ579BEA=
+github.com/aws/aws-sdk-go-v2/service/firehose v1.36.6/go.mod h1:F92t0aKXhFnxpkl6Jme444UA7za9p2k22Jex2Z0oND8=
 github.com/aws/aws-sdk-go-v2/service/fis v1.32.1 h1:jap7xmxX8bMfQejs7xL6GZCg/KaPei6mUcmKQLZcqp0=
 github.com/aws/aws-sdk-go-v2/service/fis v1.32.1/go.mod h1:5gGtYq3mgOI795EDK6ctmsQ8pEIp14KQZ36MNVghcsA=
 github.com/aws/aws-sdk-go-v2/service/fms v1.39.7 h1:WsMt1DE+DstbhrlyYuWKdsgiHh21HV0OS7bP8bCjTn0=
@@ -695,8 +695,8 @@ github.com/aws/aws-sdk-go-v2/service/timestreamquery v1.29.10 h1:Adn4dLjZyLRSKin
 github.com/aws/aws-sdk-go-v2/service/timestreamquery v1.29.10/go.mod h1:tzVbbR1VYG1yJnI9Le59Yoh6cFmlx020454kEMDogvU=
 github.com/aws/aws-sdk-go-v2/service/timestreamwrite v1.29.17 h1:jSvEYJL4iu1iw7b7n6SKO4GB71GjMldZskNqNi8x1sM=
 github.com/aws/aws-sdk-go-v2/service/timestreamwrite v1.29.17/go.mod h1:zHaQMoULEaXIgsOt2XJK7IgNysnRt8wKckOo06aFzLU=
-github.com/aws/aws-sdk-go-v2/service/transcribe v1.43.2 h1:4vz710+ufGyzhEB3l/pgSr46frJwdZa05Hp9PEf+uwo=
-github.com/aws/aws-sdk-go-v2/service/transcribe v1.43.2/go.mod h1:Tx8W5YzDX9rQOVbRuAQA/YZgqM+SXgry5rqN69f3nJI=
+github.com/aws/aws-sdk-go-v2/service/transcribe v1.43.3 h1:UgfnnIFLBJzF/aaWEWVV7jLO2+BqS2AgE0sqFkr8ep4=
+github.com/aws/aws-sdk-go-v2/service/transcribe v1.43.3/go.mod h1:Tx8W5YzDX9rQOVbRuAQA/YZgqM+SXgry5rqN69f3nJI=
 github.com/aws/aws-sdk-go-v2/service/transfer v1.56.4 h1:NINAiipRKTgKvxKE6zaRaz1eW6n2QMQhdWaNcvQWztQ=
 github.com/aws/aws-sdk-go-v2/service/transfer v1.56.4/go.mod h1:h9PTQSrllWcMGsAUApyBi5/ziNeOWtYjKvQb3sGowxA=
 github.com/aws/aws-sdk-go-v2/service/verifiedpermissions v1.21.3 h1:XJi/xAiRL68PqjomKg/SYgGk8A+pJIBaJxsWBhnsG0E=
@@ -1668,8 +1668,8 @@ golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97/go.mod h1:GvvjBRRGRdwPK5y
 golang.org/x/crypto v0.0.0-20210921155107-089bfa567519/go.mod h1:GvvjBRRGRdwPK5ydBHafDWAxML/pGHZbMvKqRZ5+Abc=
 golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
 golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
-golang.org/x/crypto v0.34.0 h1:+/C6tk6rf/+t5DhUketUbD1aNGqiSX3j15Z6xuIDlBA=
-golang.org/x/crypto v0.34.0/go.mod h1:dy7dXNW32cAb/6/PRuTNsix8T+vJAqvuIy5Bli/x0YQ=
+golang.org/x/crypto v0.35.0 h1:b15kiHdrGCHrP6LvwaQ3c03kgNhhiMgvlhxHQhmg2Xs=
+golang.org/x/crypto v0.35.0/go.mod h1:dy7dXNW32cAb/6/PRuTNsix8T+vJAqvuIy5Bli/x0YQ=
 golang.org/x/exp v0.0.0-20190121172915-509febef88a4/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
 golang.org/x/exp v0.0.0-20190306152737-a1d7652674e8/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
 golang.org/x/exp v0.0.0-20190510132918-efd6b22b2522/go.mod h1:ZjyILWgesfNpC6sMxTJOJm9Kp84zZh5NQWvqDGG3Qr8=
