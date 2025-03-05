@@ -4,82 +4,76 @@ import (
 	"context"
 	"fmt"
 
-	azureResourcesAPI "github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2019-05-01/resources"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
+	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/resources/armresources"
 	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/adal"
 	"github.com/Azure/go-autorest/autorest/azure"
-	"github.com/hashicorp/go-azure-helpers/authentication"
-	"github.com/hashicorp/go-azure-helpers/sender"
 )
 
 //go:generate go run ./cmd
 
 // AzureReader is the middleware between TC and AzureRM
 type AzureReader struct {
-	config     authentication.Config
-	authorizer autorest.Authorizer
-	env        *azure.Environment
+	subscriptionID string
+	authorizer     autorest.Authorizer
+	env            azure.Environment
 
-	resourceGroup azureResourcesAPI.Group
+	resourceGroup armresources.ResourceGroup
 }
 
 // NewAzureReader returns a AzureReader
 func NewAzureReader(ctx context.Context, clientID, clientSecret, environment, resourceGroupName, subscriptionID, tenantID string) (*AzureReader, error) {
+	env := azure.PublicCloud
+
+	switch environment {
+	case "AzureChinaCloud":
+		env = azure.ChinaCloud
+	case "AzureGermanCloud":
+		env = azure.GermanCloud
+	case "AzureUSGovernmentCloud":
+		env = azure.USGovernmentCloud
+	}
+
 	// Config
-	cfgBuilder := &authentication.Builder{
-		ClientID:       clientID,
-		ClientSecret:   clientSecret,
-		Environment:    environment,
-		SubscriptionID: subscriptionID,
-		TenantID:       tenantID,
-
-		SupportsClientSecretAuth: true,
-	}
-
-	cfg, err := cfgBuilder.Build()
+	cred, err := azidentity.NewClientSecretCredential(tenantID, clientID, clientSecret, nil)
 	if err != nil {
-		return nil, fmt.Errorf("could not build 'azure/authentication.Config' because: %s", err)
+		return nil, fmt.Errorf("could not initialize 'azidentity.ClientSecretCredential' because: %s", err)
 	}
-
-	// Authorizer
-	env, err := authentication.DetermineEnvironment(cfg.Environment)
+	oauthConfig, err := adal.NewOAuthConfig(env.ActiveDirectoryEndpoint, tenantID)
 	if err != nil {
-		return nil, fmt.Errorf("could not initialize 'azure.Environment.' because: %s", err)
+		return nil, fmt.Errorf("could not initialize 'adal.NewOAuthConfig' because: %s", err)
 	}
 
-	oauthConfig, err := cfg.BuildOAuthConfig(env.ActiveDirectoryEndpoint)
+	token, err := adal.NewServicePrincipalToken(*oauthConfig, clientID, clientSecret, env.ResourceManagerEndpoint)
 	if err != nil {
-		return nil, fmt.Errorf("could not initialize 'azure/authentication.OAuthConfig.' because: %s", err)
-	}
-	// OAuthConfigForTenant returns a pointer, which can be nil.
-	if oauthConfig == nil {
-		return nil, fmt.Errorf("could not configure OAuthConfig for tenant %s", cfg.TenantID)
+		return nil, fmt.Errorf("could not initialize 'adal.NewServicePrincipalToken' because: %s", err)
 	}
 
-	azureSender := sender.BuildSender("AzureRM")
-
-	auth, err := cfg.GetADALToken(ctx, azureSender, oauthConfig, env.ResourceManagerEndpoint)
-	if err != nil {
-		return nil, fmt.Errorf("could not initialize 'azure/autorest.Authorizer.' because: %s", err)
-	}
+	clientOptions := arm.ClientOptions{}
 
 	// Resource Group
-	client := azureResourcesAPI.NewGroupsClientWithBaseURI(env.ResourceManagerEndpoint, cfg.SubscriptionID)
-	client.Authorizer = auth
-	resourceGroup, err := client.Get(ctx, resourceGroupName)
+	client, err := armresources.NewResourceGroupsClient(subscriptionID, cred, &clientOptions)
 	if err != nil {
-		return nil, fmt.Errorf("could not 'azure/resources.GroupsClient.Get' the resource group because: %s", err)
+		return nil, fmt.Errorf("could not initialize 'armresources.ResourceGroupsClient' because: %s", err)
+	}
+
+	resourceGroup, err := client.Get(ctx, resourceGroupName, nil)
+	if err != nil {
+		return nil, fmt.Errorf("could not 'armresources.ResourceGroupsClient.Get' the resource group because: %s", err)
 	}
 
 	return &AzureReader{
-		config:        *cfg,
-		authorizer:    auth,
-		resourceGroup: resourceGroup,
-		env:           env,
+		subscriptionID: subscriptionID,
+		authorizer:     autorest.NewBearerAuthorizer(token),
+		resourceGroup:  resourceGroup.ResourceGroup,
+		env:            env,
 	}, nil
 }
 
 // GetResourceGroup returns the current Resource Group resource
-func (ar *AzureReader) GetResourceGroup() azureResourcesAPI.Group {
+func (ar *AzureReader) GetResourceGroup() armresources.ResourceGroup {
 	return ar.resourceGroup
 }
 

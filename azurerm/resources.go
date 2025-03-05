@@ -2713,7 +2713,7 @@ func dataProtectionBackupInstanceDisks(ctx context.Context, a *azurerm, ar *Azur
 			if props := backupInstanceResource.Properties; props != nil {
 				if info := backupInstanceResource.Properties.DataSourceInfo; info != nil {
 					if *info.ResourceType == "Microsoft.Compute/disks" {
-						r := provider.NewResource(fmt.Sprintf("/subscriptions/%s/resourceGroups/%s/providers/Microsoft.DataProtection/backupVaults/%s/backupInstances/%s", ar.config.SubscriptionID, ar.GetResourceGroupName(), vaultName, *backupInstanceResource.Name), resourceType, a)
+						r := provider.NewResource(fmt.Sprintf("/subscriptions/%s/resourceGroups/%s/providers/Microsoft.DataProtection/backupVaults/%s/backupInstances/%s", ar.subscriptionID, ar.GetResourceGroupName(), vaultName, *backupInstanceResource.Name), resourceType, a)
 						resources = append(resources, r)
 					}
 				}

@@ -72,8 +72,11 @@ dbuild: ## Builds the docker image with same name as the binary
 	@docker build -t $(BIN) .
 
 .PHONY: build
-build: ## Builds the binary
+build: go/dep ## Builds the binary
 	GO111MODULE=on CGO_ENABLED=0 GOARCH=amd64 go build -o $(BIN) ${LDFLAGS}
+
+go/dep:
+	go mod tidy && go mod vendor
 
 .PHONY: build-all build-compress
 build-all: ## Builds the binaries
