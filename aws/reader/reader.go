@@ -2,7 +2,7 @@ package reader
 
 import (
 	"context"
-
+	
 	"github.com/aws/aws-sdk-go-v2/service/apigateway"
 	apigatewaytypes "github.com/aws/aws-sdk-go-v2/service/apigateway/types"
 	"github.com/aws/aws-sdk-go-v2/service/athena"
@@ -39,12 +39,12 @@ import (
 	elasticachetypes "github.com/aws/aws-sdk-go-v2/service/elasticache/types"
 	"github.com/aws/aws-sdk-go-v2/service/elasticbeanstalk"
 	elasticbeanstalktypes "github.com/aws/aws-sdk-go-v2/service/elasticbeanstalk/types"
-	"github.com/aws/aws-sdk-go-v2/service/elasticsearchservice"
-	elasticsearchservicetypes "github.com/aws/aws-sdk-go-v2/service/elasticsearchservice/types"
 	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancing"
 	elasticloadbalancingtypes "github.com/aws/aws-sdk-go-v2/service/elasticloadbalancing/types"
 	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2"
 	elasticloadbalancingv2types "github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2/types"
+	"github.com/aws/aws-sdk-go-v2/service/elasticsearchservice"
+	elasticsearchservicetypes "github.com/aws/aws-sdk-go-v2/service/elasticsearchservice/types"
 	"github.com/aws/aws-sdk-go-v2/service/emr"
 	emrtypes "github.com/aws/aws-sdk-go-v2/service/emr/types"
 	"github.com/aws/aws-sdk-go-v2/service/fsx"
@@ -209,6 +209,10 @@ type Reader interface {
 	// GetInstances returns all EC2 instances based on the input given.
 	// Returned values are commented in the interface doc comment block.
 	GetInstances(ctx context.Context, input *ec2.DescribeInstancesInput) ([]ec2types.Instance, error)
+
+	// DescribeInstanceAttribute returns the EC2 instance attribute on the given input
+	// Returned values are commented in the interface doc comment block.
+	DescribeInstanceAttribute(ctx context.Context, input *ec2.DescribeInstanceAttributeInput) (*ec2.DescribeInstanceAttributeOutput, error)
 
 	// GetEC2InternetGateways returns the EC2 Internet Gateways on the given input
 	// Returned values are commented in the interface doc comment block.
@@ -1377,6 +1381,14 @@ func (c *connector) GetOwnImages(ctx context.Context, input *ec2.DescribeImagesI
 	return opt, nil
 }
 
+func (c *connector) DescribeInstanceAttribute(ctx context.Context, input *ec2.DescribeInstanceAttributeInput) (*ec2.DescribeInstanceAttributeOutput, error){
+	if c.svc.ec2 == nil {
+		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
+	}
+
+	return c.svc.ec2.DescribeInstanceAttribute(ctx, input)
+}
+
 func (c *connector) GetInstances(ctx context.Context, input *ec2.DescribeInstancesInput) ([]ec2types.Instance, error) {
 	if c.svc.ec2 == nil {
 		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
@@ -1390,6 +1402,7 @@ func (c *connector) GetInstances(ctx context.Context, input *ec2.DescribeInstanc
 		if err != nil {
 			return nil, err
 		}
+		
 		if o.Reservations == nil {
 			hasNextToken = false
 			continue

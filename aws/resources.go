@@ -2317,7 +2317,6 @@ func instances(ctx context.Context, a *aws, resourceType string, filters *filter
 		Filters:    toEC2Filters(filters),
 		MaxResults: awssdk.Int32(1000),
 	}
-
 	instances, err := a.awsr.GetInstances(ctx, input)
 	if err != nil {
 		return nil, err
@@ -2329,6 +2328,22 @@ func instances(ctx context.Context, a *aws, resourceType string, filters *filter
 		if err != nil {
 			return nil, err
 		}
+		importer := &schema.ResourceImporter{
+			State: func(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+				userData, err := a.awsr.DescribeInstanceAttribute(ctx, &ec2.DescribeInstanceAttributeInput{
+					InstanceId: awssdk.String(d.Id()),
+					Attribute:  ec2types.InstanceAttributeNameUserData,
+				})
+				if err != nil {
+					return nil, fmt.Errorf("error getting user data: %w", err)
+				}
+				d.Set("user_data_base64", userData.UserData.Value)
+				d.SetId(d.Id())
+				return []*schema.ResourceData{d}, nil
+			},
+		}
+
+		r.SetImporter(importer)
 		resources = append(resources, r)
 	}
 
