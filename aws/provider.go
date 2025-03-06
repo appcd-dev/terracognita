@@ -62,7 +62,7 @@ func NewProvider(ctx context.Context, accessKey, secretKey, region, sessionToken
 	}
 
 	log.Get().Debug("configuring TF Client", "func", "aws.NewProvider")
-	awsClient, diags := cfg.ConfigureProvider(ctx)
+	awsClient, diags := cfg.ConfigureProvider(ctx, &conns.AWSClient{})
 	if diags.HasError() {
 		var errdiags string
 		for i := range diags {

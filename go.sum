@@ -165,8 +165,8 @@ github.com/apparentlymart/go-versions v1.0.1 h1:ECIpSn0adcYNsBfSRwdDdz9fWlL+S/6E
 github.com/apparentlymart/go-versions v1.0.1/go.mod h1:YF5j7IQtrOAOnsGkniupEA5bfCjzd7i14yu0shZavyM=
 github.com/appcd-dev/terraform-plugin-log v0.0.0-20250303232725-1f784712e019 h1:t0Qq2YaY5ayrQXwksdyZgRtPfJ5ha2Wrkk9dnj8KX34=
 github.com/appcd-dev/terraform-plugin-log v0.0.0-20250303232725-1f784712e019/go.mod h1:2gI/2SyzLmW2CaLH37icgO++REiiXYv2lxtr1UxXoXc=
-github.com/appcd-dev/terraform-provider-aws v0.0.0-20250306060239-fe8fd4afb7a7 h1:/hbav51uFEBgiegdR3o6iSEx7KCCmAkNkh6/Mwy4lYw=
-github.com/appcd-dev/terraform-provider-aws v0.0.0-20250306060239-fe8fd4afb7a7/go.mod h1:tYcFIzOpnwqRcdwVA3Pjt3uqRc7VGeORpl97APY0xZw=
+github.com/appcd-dev/terraform-provider-aws v0.0.0-20250306061852-fc62e7c3f4a4 h1:fyPmtZFGoyRwZV7S32xjXghSeSCs70cBBQw7NEr4kyI=
+github.com/appcd-dev/terraform-provider-aws v0.0.0-20250306061852-fc62e7c3f4a4/go.mod h1:tYcFIzOpnwqRcdwVA3Pjt3uqRc7VGeORpl97APY0xZw=
 github.com/appcd-dev/terraform-provider-azurerm v0.0.0-20250304050902-62aff34b551c h1:6eMPt47iie910XJg7L4mLfm3+1VkYatzXp2WdKFi978=
 github.com/appcd-dev/terraform-provider-azurerm v0.0.0-20250304050902-62aff34b551c/go.mod h1:8XP2LHw3qRfliOvUGAOtzuoyXAzI34O27ja9hCYUiCE=
 github.com/appcd-dev/terraform-provider-google v0.0.0-20250304011815-54585f7b390a h1:hMwxiNM9oS+T7UOAFOK4Erf87VVrWRliPyLoyEfpdNA=
