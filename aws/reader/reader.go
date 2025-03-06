@@ -2,7 +2,7 @@ package reader
 
 import (
 	"context"
-	
+
 	"github.com/aws/aws-sdk-go-v2/service/apigateway"
 	apigatewaytypes "github.com/aws/aws-sdk-go-v2/service/apigateway/types"
 	"github.com/aws/aws-sdk-go-v2/service/athena"
@@ -1302,7 +1302,7 @@ func (c *connector) GetAddresses(ctx context.Context, input *ec2.DescribeAddress
 
 	opt := make([]ec2types.Address, 0)
 
-hasNextToken := true
+	hasNextToken := true
 	for hasNextToken {
 		o, err := c.svc.ec2.DescribeAddresses(ctx, input)
 		if err != nil {
@@ -1381,7 +1381,7 @@ func (c *connector) GetOwnImages(ctx context.Context, input *ec2.DescribeImagesI
 	return opt, nil
 }
 
-func (c *connector) DescribeInstanceAttribute(ctx context.Context, input *ec2.DescribeInstanceAttributeInput) (*ec2.DescribeInstanceAttributeOutput, error){
+func (c *connector) DescribeInstanceAttribute(ctx context.Context, input *ec2.DescribeInstanceAttributeInput) (*ec2.DescribeInstanceAttributeOutput, error) {
 	if c.svc.ec2 == nil {
 		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
@@ -1402,7 +1402,6 @@ func (c *connector) GetInstances(ctx context.Context, input *ec2.DescribeInstanc
 		if err != nil {
 			return nil, err
 		}
-		
 		if o.Reservations == nil {
 			hasNextToken = false
 			continue
