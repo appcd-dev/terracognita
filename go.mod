@@ -479,7 +479,7 @@ replace (
 	github.com/hashicorp/go-getter => github.com/hashicorp/go-getter v1.4.0
 	github.com/hashicorp/terraform => github.com/cycloidio/terraform v1.1.9-cy
 	github.com/hashicorp/terraform-plugin-log => github.com/appcd-dev/terraform-plugin-log v0.0.0-20250303232725-1f784712e019
-	github.com/hashicorp/terraform-provider-aws => github.com/appcd-dev/terraform-provider-aws v0.0.0-20250306061852-fc62e7c3f4a4
+	github.com/hashicorp/terraform-provider-aws => github.com/appcd-dev/terraform-provider-aws v0.0.0-20250306064850-2a22bed605d1
 	// Fork of Azurerm that has the V2 of the SDK
 	github.com/hashicorp/terraform-provider-azurerm => github.com/appcd-dev/terraform-provider-azurerm v0.0.0-20250304050902-62aff34b551c
 	github.com/hashicorp/terraform-provider-google => github.com/appcd-dev/terraform-provider-google v0.0.0-20250304011815-54585f7b390a
