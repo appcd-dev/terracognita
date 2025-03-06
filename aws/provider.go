@@ -3,6 +3,7 @@ package aws
 import (
 	"context"
 	"fmt"
+	"maps"
 	"regexp"
 
 	"github.com/aws/smithy-go"
@@ -61,7 +62,7 @@ func NewProvider(ctx context.Context, accessKey, secretKey, region, sessionToken
 	}
 
 	log.Get().Debug("configuring TF Client", "func", "aws.NewProvider")
-	awsClient, diags := cfg.ConfigureProvider(ctx, &conns.AWSClient{})
+	awsClient, diags := cfg.ConfigureProvider(ctx)
 	if diags.HasError() {
 		var errdiags string
 		for i := range diags {
@@ -77,7 +78,7 @@ func NewProvider(ctx context.Context, accessKey, secretKey, region, sessionToken
 
 	// We had to explictiy set the ServicePackages because ConfigureProvider only sets awsConfig and the provider constructor
 	// sets the ServicePackages but misses the awsConfig
-	awsClient.SetServicePackages(ctx, awsClient.ServicePackages(ctx))
+	awsClient.SetServicePackages(ctx, maps.Collect(awsClient.ServicePackages(ctx)))
 
 	// set the meta in provider with the AWSClient and the ServicePackages
 	tfp.SetMeta(awsClient)
