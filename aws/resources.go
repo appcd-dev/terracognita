@@ -2477,6 +2477,21 @@ func launchTemplates(ctx context.Context, a *aws, resourceType string, filters *
 		if err != nil {
 			return nil, err
 		}
+		importer := &schema.ResourceImporter{
+			StateContext: func(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+				userData, err := a.awsr.GetLaunchTemplateData(ctx, &ec2.GetLaunchTemplateDataInput{
+					InstanceId: i.LaunchTemplateId,
+				})
+				if err != nil {
+					return nil, fmt.Errorf("error getting launch user data: %w", err)
+				}
+				d.Set("user_data", userData.LaunchTemplateData.UserData)
+				d.SetId(d.Id())
+				return []*schema.ResourceData{d}, nil
+			},
+		}
+
+		r.SetImporter(importer)
 
 		resources = append(resources, r)
 	}
