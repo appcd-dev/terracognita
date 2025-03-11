@@ -2338,7 +2338,6 @@ func instances(ctx context.Context, a *aws, resourceType string, filters *filter
 					return nil, fmt.Errorf("error getting user data: %w", err)
 				}
 				d.Set("user_data_base64", userData.UserData.Value)
-				d.SetId(d.Id())
 				return []*schema.ResourceData{d}, nil
 			},
 		}
@@ -2479,14 +2478,16 @@ func launchTemplates(ctx context.Context, a *aws, resourceType string, filters *
 		}
 		importer := &schema.ResourceImporter{
 			StateContext: func(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-				userData, err := a.awsr.GetLaunchTemplateData(ctx, &ec2.GetLaunchTemplateDataInput{
-					InstanceId: i.LaunchTemplateId,
+				launchTemplateInfo, err := a.awsr.DescribeLaunchTemplateVersions(ctx, &ec2.DescribeLaunchTemplateVersionsInput{
+					LaunchTemplateId: i.LaunchTemplateId,
+					MaxResults:       awssdk.Int32(1),
 				})
 				if err != nil {
 					return nil, fmt.Errorf("error getting launch user data: %w", err)
 				}
-				d.Set("user_data", userData.LaunchTemplateData.UserData)
-				d.SetId(d.Id())
+				if len(launchTemplateInfo.LaunchTemplateVersions) != 0 {
+					d.Set("user_data", launchTemplateInfo.LaunchTemplateVersions[0].LaunchTemplateData.UserData)
+				}
 				return []*schema.ResourceData{d}, nil
 			},
 		}

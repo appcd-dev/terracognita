@@ -214,9 +214,9 @@ type Reader interface {
 	// Returned values are commented in the interface doc comment block.
 	DescribeInstanceAttribute(ctx context.Context, input *ec2.DescribeInstanceAttributeInput) (*ec2.DescribeInstanceAttributeOutput, error)
 
-	// GetLaunchTemplateData returns the EC2 instance data on the given input
+	// DescribeLaunchTemplateVersions returns the EC2 instance data on the given input
 	// Returned values are commented in the interface doc comment block.
-	GetLaunchTemplateData(ctx context.Context, input *ec2.GetLaunchTemplateDataInput) (*ec2.GetLaunchTemplateDataOutput, error)
+	DescribeLaunchTemplateVersions(ctx context.Context, input *ec2.DescribeLaunchTemplateVersionsInput) (*ec2.DescribeLaunchTemplateVersionsOutput, error) // 
 
 	// GetEC2InternetGateways returns the EC2 Internet Gateways on the given input
 	// Returned values are commented in the interface doc comment block.
@@ -1484,12 +1484,12 @@ func (c *connector) GetKeyPairs(ctx context.Context, input *ec2.DescribeKeyPairs
 	return opt, nil
 }
 
-func (c *connector) GetLaunchTemplateData(ctx context.Context, input *ec2.GetLaunchTemplateDataInput) (*ec2.GetLaunchTemplateDataOutput, error) {
+func (c *connector) DescribeLaunchTemplateVersions(ctx context.Context, input *ec2.DescribeLaunchTemplateVersionsInput) (*ec2.DescribeLaunchTemplateVersionsOutput, error) {
 	if c.svc.ec2 == nil {
 		c.svc.ec2 = ec2.NewFromConfig(c.svc.config)
 	}
 
-	return c.svc.ec2.GetLaunchTemplateData(ctx, input)
+	return c.svc.ec2.DescribeLaunchTemplateVersions(ctx, input)
 }
 
 func (c *connector) GetLaunchTemplates(ctx context.Context, input *ec2.DescribeLaunchTemplatesInput) ([]ec2types.LaunchTemplate, error) {
