@@ -47,7 +47,7 @@ func readResource(ctx context.Context,
 			// Errors are ignored. If a resource is invalid we assume it can be skipped, it can be related to inconsistencies in deployed resources.
 			// So instead of failing and stopping execution we ignore them and continue (we log them if -v is specified)
 
-			logger.Warn("error reading resource", "error", err)
+			logger.Debug("error reading resource", "error", err)
 
 			continue
 		}
