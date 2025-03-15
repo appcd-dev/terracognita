@@ -28,13 +28,20 @@ type Tag struct {
 }
 
 // New initializes a tag with the format NAME:VALUE that we use
-func New(t string) (Tag, error) {
-	values := strings.Split(t, "=")
-	if len(values) != 2 {
-		values = strings.Split(t, ":")
-		if len(values) != 2 {
-			return Tag{}, errcode.ErrTagInvalidForamt
+func New(t string) (tag Tag, err error) {
+	for _, d := range []string{"=", ":"} {
+		tag, err = new(t, d)
+		if err == nil {
+			return tag, nil
 		}
+	}
+	return Tag{}, err
+}
+
+func new(t string, delimitter string) (Tag, error) {
+	values := strings.Split(t, delimitter)
+	if len(values) != 2 {
+		return Tag{}, errcode.ErrTagInvalidForamt
 	}
 	return Tag{Name: values[0], Value: values[1]}, nil
 }

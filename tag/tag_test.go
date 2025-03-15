@@ -17,7 +17,7 @@ import (
 func TestToEC2Filer(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {
 		tt := tag.Tag{Name: "tag-name", Value: "tag-value"}
-		assert.Equal(t, &ec2types.Filter{
+		assert.Equal(t, ec2types.Filter{
 			Name:   aws.String("tag:tag-name"),
 			Values: []string{"tag-value"},
 		}, tt.ToEC2Filter())
@@ -64,7 +64,7 @@ func TestNew(t *testing.T) {
 		{
 			Name: "Success",
 			STag: "key=val:what",
-			ETag: tag.Tag{Name: "key=val", Value: "what"},
+			ETag: tag.Tag{Name: "key", Value: "val:what"},
 		},
 		{
 			Name: "Success",
