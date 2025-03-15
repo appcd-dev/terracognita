@@ -6,6 +6,7 @@ import (
 
 	"github.com/cycloidio/terracognita/errcode"
 	"github.com/cycloidio/terracognita/tag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/pkg/errors"
 )
 
@@ -17,6 +18,7 @@ type Filter struct {
 	Include []string
 	Exclude []string
 	Targets []string
+	Fn      func(*schema.ResourceData) bool
 
 	exclude map[string]struct{}
 	include map[string]struct{}
