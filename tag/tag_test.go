@@ -57,6 +57,21 @@ func TestNew(t *testing.T) {
 			ETag: tag.Tag{Name: "key", Value: "val"},
 		},
 		{
+			Name: "Success",
+			STag: "key=val",
+			ETag: tag.Tag{Name: "key", Value: "val"},
+		},
+		{
+			Name: "Success",
+			STag: "key=val:what",
+			ETag: tag.Tag{Name: "key=val", Value: "what"},
+		},
+		{
+			Name: "Success",
+			STag: "key:val=what",
+			ETag: tag.Tag{Name: "key:val", Value: "what"},
+		},
+		{
 			Name:  "ErrorEmpty",
 			STag:  "",
 			Error: true,
@@ -182,7 +197,7 @@ func TestGetNameFromTag(t *testing.T) {
 func createSRD(t *testing.T, schemaKey, tagKey, tagValue string) *schema.ResourceData {
 	r := &schema.Resource{
 		Schema: map[string]*schema.Schema{
-			schemaKey: &schema.Schema{
+			schemaKey: {
 				Type:     schema.TypeMap,
 				Optional: false,
 			},
@@ -206,20 +221,20 @@ func createSRD(t *testing.T, schemaKey, tagKey, tagValue string) *schema.Resourc
 func createSRDOtherTags(t *testing.T, schemaKey, tagKey, tagValue string) *schema.ResourceData {
 	r := &schema.Resource{
 		Schema: map[string]*schema.Schema{
-			schemaKey: &schema.Schema{
+			schemaKey: {
 				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"key": &schema.Schema{
+						"key": {
 							Type:     schema.TypeString,
 							Optional: true,
 						},
-						"value": &schema.Schema{
+						"value": {
 							Type:     schema.TypeString,
 							Optional: true,
 						},
-						"propagate_at_launch": &schema.Schema{
+						"propagate_at_launch": {
 							Type:     schema.TypeBool,
 							Optional: true,
 						},
