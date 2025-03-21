@@ -12,7 +12,8 @@ import (
 	"github.com/hashicorp/go-cty/cty"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	tfgoogle "github.com/hashicorp/terraform-provider-google/google"
+	tfprovider "github.com/hashicorp/terraform-provider-google/google/provider"
+	"github.com/hashicorp/terraform-provider-google/google/transport"
 	googleapi "google.golang.org/api/googleapi"
 
 	"github.com/pkg/errors"
@@ -40,19 +41,20 @@ type google struct {
 
 // NewProvider returns a Gooogle Provider
 func NewProvider(ctx context.Context, maxResults uint64, project, region, credentials string) (provider.Provider, error) {
-	cfg := tfgoogle.Config{
+	cfg := transport.Config{
 		Credentials: credentials,
 		Project:     project,
 		Region:      region,
 	}
 
-	tfgoogle.ConfigureBasePaths(&cfg)
+	// tfgoogle.ConfigureBasePaths(&cfg)
+	transport.ConfigureBasePaths(&cfg)
 	log.Get().Debug("loading TF client", "func", "google.NewProvider")
 	if err := cfg.LoadAndValidate(ctx); err != nil {
 		return nil, fmt.Errorf("could not initialize 'terraform/google.Config.LoadAndValidate()' because: %s", err)
 	}
 
-	tfp := tfgoogle.Provider()
+	tfp := tfprovider.Provider()
 	tfp.SetMeta(&cfg)
 
 	log.Get().Debug("loading GCP client", "func", "google.NewProvider")
@@ -74,8 +76,8 @@ func (g *google) HasResourceType(t string) bool {
 	return err == nil
 }
 
-func (g *google) Region() string                        { return g.tfGoogleClient.(*tfgoogle.Config).Region }
-func (g *google) Project() string                       { return g.tfGoogleClient.(*tfgoogle.Config).Project }
+func (g *google) Region() string                        { return g.tfGoogleClient.(*transport.Config).Region }
+func (g *google) Project() string                       { return g.tfGoogleClient.(*transport.Config).Project }
 func (g *google) String() string                        { return "google" }
 func (g *google) TagKey() string                        { return "labels" }
 func (g *google) Source() string                        { return "hashicorp/google" }
