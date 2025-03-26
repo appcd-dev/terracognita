@@ -40,11 +40,12 @@ type google struct {
 }
 
 // NewProvider returns a Gooogle Provider
-func NewProvider(ctx context.Context, maxResults uint64, project, region, credentials string) (provider.Provider, error) {
+func NewProvider(ctx context.Context, maxResults uint64, project, region, credentials, accessToken string) (provider.Provider, error) {
 	cfg := transport.Config{
 		Credentials: credentials,
 		Project:     project,
 		Region:      region,
+		AccessToken: accessToken,
 	}
 
 	// tfgoogle.ConfigureBasePaths(&cfg)

@@ -46,6 +46,7 @@ var (
 				viper.GetString("project"),
 				viper.GetString("region"),
 				viper.GetString("credentials"),
+				viper.GetString("access-token"),
 			)
 			if err != nil {
 				return err
