@@ -128,7 +128,7 @@ func GetResources(ctx context.Context, p Provider, f *filter.Filter) (result []R
 		return nil, err
 	}
 	typesWithIDs := f.TargetsTypesWithIDs()
-	logger.Debug("current filter", "filters", f.String())
+	logger.Debug("current filter", "filters", f.String(), "types", types)
 	resTypeErrGroup, rtCtx := errgroup.WithContext(ctx)
 	resTypeErrGroup.SetLimit(runtime.NumCPU())
 	for _, t := range types {
