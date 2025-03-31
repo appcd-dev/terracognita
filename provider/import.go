@@ -88,6 +88,84 @@ func readResource(ctx context.Context,
 	return nil
 }
 
+func getResourceTypes(p Provider, f *filter.Filter) ([]string, error) {
+	// Validate if the Exclude filter is right
+	if len(f.Exclude) != 0 {
+		for _, e := range f.Exclude {
+			if !p.HasResourceType(e) {
+				return nil, errors.Wrapf(errcode.ErrProviderResourceNotSupported, "type %s on Exclude filter", e)
+			}
+		}
+	}
+	types := make([]string, 0)
+	if len(f.Targets) != 0 {
+		typesWithIDs := f.TargetsTypesWithIDs()
+		for k := range typesWithIDs {
+			if !p.HasResourceType(k) {
+				return nil, errors.Wrapf(errcode.ErrProviderResourceNotSupported, "type %s on Target filter", k)
+			}
+			types = append(types, k)
+		}
+		return types, nil
+	}
+	// Validate if the Include filter is right
+	if len(f.Include) != 0 {
+		for _, i := range f.Include {
+			if !p.HasResourceType(i) {
+				return nil, errors.Wrapf(errcode.ErrProviderResourceNotSupported, "type %s on Include filter", i)
+			}
+		}
+		return f.Include, nil
+	}
+	return p.ResourceTypes(), nil
+
+}
+
+func GetResources(ctx context.Context, p Provider, f *filter.Filter) (result []Resource, err error) {
+	logger := log.Get().With("func", "provider.GetResources")
+	types, err := getResourceTypes(p, f)
+	if err != nil {
+		return nil, err
+	}
+	typesWithIDs := f.TargetsTypesWithIDs()
+	logger.Debug("current filter", "filters", f.String())
+	resTypeErrGroup, rtCtx := errgroup.WithContext(ctx)
+	resTypeErrGroup.SetLimit(runtime.NumCPU())
+	for _, t := range types {
+		t := t
+		resTypeErrGroup.Go(func() error {
+			logger := logger.With("resource", t)
+			if f.IsExcluded(t) {
+				logger.Debug("excluded")
+				return nil
+			}
+			if typesWithIDs != nil {
+				for _, ID := range typesWithIDs[t] {
+					result = append(result, NewResource(ID, t, p))
+				}
+				return nil
+			}
+
+			logger.Debug("fetching the list of resources")
+
+			resources, err := p.Resources(rtCtx, t, f)
+			if err != nil {
+				return fmt.Errorf("error while fetching the resources of type: %s: %w", t, err)
+			}
+			logger.Debug("fetched the list of resources", "count", len(resources))
+
+			result = append(result, resources...)
+			return nil
+		})
+	}
+	err = resTypeErrGroup.Wait()
+	if err != nil {
+		return nil, fmt.Errorf("error while reading the resources: %w", err)
+	}
+	logger.Debug("Scanning done")
+	return result, nil
+}
+
 // Import imports from the Provider p all the resources filtered by f and writes
 // the result to the hcl or tfstate if those are not nil
 func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filter.Filter, out io.Writer) error {
@@ -96,43 +174,12 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 	if err := f.Validate(); err != nil {
 		return err
 	}
-
-	var (
-		err          error
-		types        []string
-		typesWithIDs map[string][]string
-	)
-
-	if len(f.Targets) != 0 {
-		typesWithIDs = f.TargetsTypesWithIDs()
-		for k := range typesWithIDs {
-			if !p.HasResourceType(k) {
-				return errors.Wrapf(errcode.ErrProviderResourceNotSupported, "type %s on Target filter", k)
-			}
-			types = append(types, k)
-		}
-	} else {
-		// Validate if the Include filter is right
-		if len(f.Include) != 0 {
-			for _, i := range f.Include {
-				if !p.HasResourceType(i) {
-					return errors.Wrapf(errcode.ErrProviderResourceNotSupported, "type %s on Include filter", i)
-				}
-			}
-			types = f.Include
-		} else {
-			types = p.ResourceTypes()
-		}
-
-		// Validate if the Exclude filter is right
-		if len(f.Exclude) != 0 {
-			for _, e := range f.Exclude {
-				if !p.HasResourceType(e) {
-					return errors.Wrapf(errcode.ErrProviderResourceNotSupported, "type %s on Exclude filter", e)
-				}
-			}
-		}
+	types, err := getResourceTypes(p, f)
+	if err != nil {
+		return err
 	}
+
+	typesWithIDs := f.TargetsTypesWithIDs()
 
 	fmt.Fprintf(out, "Scanning with filters: %s", f)
 	logger.Debug("current filter", "filters", f.String())
@@ -159,7 +206,7 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 					resources = append(resources, NewResource(ID, t, p))
 				}
 			} else {
-				resources, err = p.Resources(ctx, t, f)
+				resources, err = p.Resources(rtCtx, t, f)
 				if err != nil {
 					// we filter the error: if it's an error provider side, we continue
 					// the import but we print the error.
