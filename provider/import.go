@@ -139,7 +139,7 @@ func GetResources(ctx context.Context, p Provider, f *filter.Filter) (result []R
 				logger.Debug("excluded")
 				return nil
 			}
-			if typesWithIDs != nil {
+			if len(typesWithIDs) != 0 {
 				for _, ID := range typesWithIDs[t] {
 					result = append(result, NewResource(ID, t, p))
 				}
@@ -201,7 +201,7 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 
 			var resources []Resource
 
-			if typesWithIDs != nil {
+			if len(typesWithIDs) != 0 {
 				for _, ID := range typesWithIDs[t] {
 					resources = append(resources, NewResource(ID, t, p))
 				}
