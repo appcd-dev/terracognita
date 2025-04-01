@@ -162,8 +162,16 @@ func GetResources(ctx context.Context, p Provider, f *filter.Filter) (result []R
 	if err != nil {
 		return nil, fmt.Errorf("error while reading the resources: %w", err)
 	}
+	errGroup, ectx := errgroup.WithContext(ctx)
+	errGroup.SetLimit(runtime.NumCPU())
+	for i := range result {
+		r := result[i]
+		errGroup.Go(func() error {
+			return readResource(ectx, r, r.Type(), nil, nil, nil, f, logger)
+		})
+	}
 	logger.Debug("Scanning done")
-	return result, nil
+	return result, errGroup.Wait()
 }
 
 // Import imports from the Provider p all the resources filtered by f and writes
