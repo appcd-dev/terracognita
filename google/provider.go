@@ -119,7 +119,7 @@ func (g *google) Resources(ctx context.Context, t string, f *filter.Filter) ([]p
 
 		}
 
-		return nil, errors.Wrapf(err, "error while reading from resource %q", t)
+		return nil, errors.Wrapf(unwrapErr, " ")
 	}
 
 	return resources, nil
