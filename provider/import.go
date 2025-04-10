@@ -169,7 +169,7 @@ func Import(ctx context.Context, p Provider, hcl, tfstate writer.Writer, f *filt
 						// skip access denied errors, since we might not have access to all resources when trying to import based on tags
 						logger.Debug("unable to import resource, access denied", "error", err)
 					} else {
-						return fmt.Errorf("error while fetching the resources of type: %s: %w", t, err)
+						logger.Info(" ", "error", err, "resource_type", t)
 					}
 				}
 			}
