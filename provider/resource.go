@@ -299,9 +299,6 @@ func (r *resource) Read(ctx context.Context, f *filter.Filter) error {
 	// We don't do it if explicitly set on
 	// the resource to not do it as it means
 	// it has been done already
-	if f.Fn != nil && !f.Fn(r.data) {
-		return errors.WithStack(errcode.ErrProviderResourceFiltered)
-	}
 	if !r.ignoreTagFilter {
 		for _, t := range f.Tags {
 			// Default match key
