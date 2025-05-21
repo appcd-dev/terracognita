@@ -190,6 +190,862 @@ const (
 	VPCEndpoint
 	VPCPeeringConnection
 	VPNGateway
+
+	// Add stubs for new AWS services (NOOP handlers)
+	AccessAnalyzer
+	Account
+	ACM
+	ACMPCA
+	AlexaForBusiness
+	AMP
+	Amplify
+	AmplifyBackend
+	AmplifyUIBuilder
+	APIGatewayManagementAPI
+	APIGatewayV2
+	AppConfig
+	AppConfigData
+	AppFabric
+	AppFlow
+	AppIntegrations
+	ApplicationAutoScaling
+	ApplicationCostProfiler
+	ApplicationDiscoveryService
+	ApplicationInsights
+	ApplicationSignals
+	AppMesh
+	AppRunner
+	AppStream
+	AppSync
+	AppTest
+	ARCZonalShift
+	Artifact
+	Athena
+	AuditManager
+	AutoscalingPlans
+	B2BI
+	Backup
+	BackupGateway
+	BackupStorage
+	Batch
+	BCMDataExports
+	Bedrock
+	BedrockAgent
+	BedrockAgentRuntime
+	BedrockRuntime
+	BillingConductor
+	Braket
+	Budgets
+	Chatbot
+	Chime
+	ChimeSDKIdentity
+	ChimeSDKMediaPipelines
+	ChimeSDKMeetings
+	ChimeSDKMessaging
+	ChimeSDKVoice
+	CleanRooms
+	CleanRoomsML
+	Cloud9
+	CloudControl
+	CloudDirectory
+	CloudFormation
+	CloudFrontKeyValueStore
+	CloudHSM
+	CloudHSMV2
+	CloudSearch
+	CloudSearchDomain
+	CloudTrail
+	CloudTrailData
+	CloudWatch
+	CloudWatchEvents
+	CloudWatchLogs
+	CodeArtifact
+	CodeBuild
+	CodeCatalyst
+	CodeCommit
+	CodeDeploy
+	CodeGuruProfiler
+	CodeGuruReviewer
+	CodeGuruSecurity
+	CodePipeline
+	CodeStar
+	CodeStarConnections
+	CodeStarNotifications
+	CognitoIdentity
+	CognitoIdentityProvider
+	CognitoSync
+	Comprehend
+	ComprehendMedical
+	ComputeOptimizer
+	ConfigService
+	Connect
+	ConnectCases
+	ConnectContactLens
+	ConnectParticipant
+	ControlTower
+	CostAndUsageReportService
+	CostExplorer
+	CostOptimizationHub
+	CustomerProfiles
+	DataExchange
+	DataPipeline
+	DataSync
+	DataZone
+	Deadline
+	Detective
+	DeviceFarm
+	DevOpsGuru
+	DirectConnect
+	DLM
+	DocDB
+	DocDBElastic
+	DRS
+	DynamoDBStreams
+	EC2InstanceConnect
+	ECR
+	ECRPublic
+	EFS
+	EKSAUTH
+	ElasticInference
+	ElasticTranscoder
+	EMR
+	EMRContainers
+	EMRServerless
+	EntityResolution
+	EventBridge
+	Evidently
+	FinSpace
+	FinSpaceData
+	Firehose
+	FIS
+	FMS
+	Forecast
+	ForecastQuery
+	FraudDetector
+	FSx
+	GameLift
+	GameSparks
+	Glacier
+	GlobalAccelerator
+	Grafana
+	Greengrass
+	GreengrassV2
+	GroundStation
+	GuardDuty
+	Health
+	HealthLake
+	Honeycode
+	IAM
+	IdentityStore
+	ImageBuilder
+	ImportExport
+	Inspector
+	Inspector2
+	InternetMonitor
+	IoT
+	IoT1ClickDevicesService
+	IoT1ClickProjects
+	IoTAnalytics
+	IoTDataPlane
+	IoTEvents
+	IoTEventsData
+	IoTFleetHub
+	IoTFleetWise
+	IoTJobsDataPlane
+	IoTRoboRunner
+	IoTSecureTunneling
+	IoTSiteWise
+	IoTThingsGraph
+	IoTTwinMaker
+	IoTWireless
+	IVS
+	IVSRealtime
+	IVSChat
+	Kafka
+	KafkaConnect
+	Kendra
+	KendraRanking
+	Keyspaces
+	KinesisAnalytics
+	KinesisAnalyticsV2
+	KinesisVideo
+	KinesisVideoArchivedMedia
+	KinesisVideoAsset
+	KinesisVideoMedia
+	KinesisVideoStreaming
+	KinesisVideoSignaling
+	KinesisVideoWebRTCStorage
+	KMS
+	LakeFormation
+	LaunchWizard
+	LexModelBuilding
+	LexModelsV2
+	LexRuntime
+	LexRuntimeV2
+	LicenseManager
+	LicenseManagerLinuxSubscriptions
+	LicenseManagerUserSubscriptions
+	Location
+	LookoutEquipment
+	LookoutMetrics
+	LookoutVision
+	M2
+	MachineLearning
+	Macie
+	Macie2
+	ManagedBlockchain
+	ManagedBlockchainQuery
+	MarketplaceAgreement
+	MarketplaceCatalog
+	MarketplaceCommerceAnalytics
+	MarketplaceEntitlement
+	MarketplaceMetering
+	MediaConnect
+	MediaConvert
+	MediaLive
+	MediaPackage
+	MediaPackageV2
+	MediaPackageVod
+	MediaStoreData
+	MediaTailor
+	MedicalImaging
+	MemoryDB
+	MeteringMarketplace
+	MGH
+	MGN
+	MigrationHubConfig
+	MigrationHubOrchestrator
+	MigrationHubRefactorSpaces
+	MigrationHubStrategy
+	Mobile
+	MobileAnalytics
+	MTurk
+	MWAA
+	NeptuneData
+	NetworkFirewall
+	NetworkManager
+	NetworkMonitor
+	Nimble
+	OAM
+	Omics
+	OpenSearch
+	OpenSearchServerless
+	OpenSearchService
+	OpsWorks
+	OpsWorksCM
+	Organizations
+	OSIS
+	Outposts
+	Panorama
+	PaymentCryptography
+	PaymentCryptographyData
+	PCAConnectorAD
+	Personalize
+	PersonalizeEvents
+	PersonalizeRuntime
+	PI
+	Pinpoint
+	PinpointEmail
+	PinpointSMSVoice
+	PinpointSMSVoiceV2
+	Pipes
+	Polly
+	Pricing
+	PrivateNetworks
+	Proton
+	QBusiness
+	QConnect
+	QLDB
+	QLDBSession
+	QuickSight
+	RAM
+	Rbin
+	RDSData
+	RDSDataService
+	RedshiftData
+	RedshiftDataAPIService
+	RedshiftServerless
+	Rekognition
+	RepostSpace
+	ResilienceHub
+	ResourceExplorer2
+	ResourceGroups
+	ResourceGroupsTagging
+	ResourceGroupsTaggingAPI
+	RoboMaker
+	RolesAnywhere
+	Route53Domains
+	Route53RecoveryCluster
+	Route53RecoveryControlConfig
+	Route53RecoveryReadiness
+	Route53Resolver
+	RUM
+	S3Control
+	S3Outposts
+	SageMaker
+	SageMakerA2IRuntime
+	SageMakerEdge
+	SageMakerEdgeManager
+	SageMakerFeatureStoreRuntime
+	SageMakerGeospatial
+	SageMakerMetrics
+	SageMakerRuntime
+	SavingsPlans
+	Scheduler
+	Schemas
+	SDB
+	SecretsManager
+	SecurityHub
+	SecurityLake
+	ServerlessApplicationRepository
+	ServerlessAppRepo
+	ServiceCatalog
+	ServiceCatalogAppRegistry
+	ServiceDiscovery
+	ServiceQuotas
+	SESV2
+	Shield
+	Signer
+	SimSpaceWeaver
+	SMS
+	Snowball
+	SnowDeviceManagement
+	SSM
+	SSMContacts
+	SSMIncidents
+	SSO
+	SSOAdmin
+	SSOOIDC
+	StepFunctions
+	STS
+	SupplyChain
+	Support
+	SupportApp
+	SWF
+	Synthetics
+	Textract
+	TimestreamInfluxDB
+	TimestreamQuery
+	TimestreamWrite
+	TNB
+	Transcribe
+	TranscribeService
+	TranscribeStreaming
+	TranscribeStreamingService
+	Transfer
+	Translate
+	TrustedAdvisor
+	VerifiedPermissions
+	VoiceID
+	VPCCtxProtoParser
+	VPCLattice
+	WAF
+	WAFRegional
+	WAFv2
+	WellArchitected
+	Wisdom
+	WorkDocs
+	WorkLink
+	WorkMail
+	WorkMailMessageFlow
+	WorkSpaces
+	WorkSpacesThinClient
+	WorkSpacesWeb
+	XRay
+)
+
+type rtFn func(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error)
+
+var (
+	resources = map[ResourceType]rtFn{
+		ALB: cacheLoadBalancersV2,
+		//AMI:      ami,
+		APIGatewayDeployment:           apiGatewayDeployments,
+		APIGatewayResource:             apiGatewayResources,
+		APIGatewayRestAPI:              apiGatewayRestApis,
+		APIGatewayStage:                apiGatewayStages,
+		AthenaWorkgroup:                athenaWorkgroups,
+		AutoscalingGroup:               autoscalingGroups,
+		AutoscalingPolicy:              autoscalingPolicies,
+		AutoscalingSchedule:            autoscalingSchedules,
+		BatchJobDefinition:             batchJobDefinitions,
+		CloudfrontDistribution:         cloudfrontDistributions,
+		CloudfrontOriginAccessIdentity: cloudfrontOriginAccessIdentities,
+		CloudfrontPublicKey:            cloudfrontPublicKeys,
+		CloudwatchMetricAlarm:          cloudwatchMetricAlarms,
+		CloudwatchLogGroup:             cloudwatchLogGroups,
+		DaxCluster:                     daxClusters,
+		DBInstance:                     dbInstances,
+		DBParameterGroup:               dbParameterGroups,
+		DBSubnetGroup:                  dbSubnetGroups,
+		DirectoryServiceDirectory:      directoryServiceDirectories,
+		DmsReplicationInstance:         dmsReplicationInstances,
+		DXGateway:                      dxGateways,
+		DynamodbGlobalTable:            dynamodbGlobalTables,
+		DynamodbTable:                  dynamodbTables,
+		//EBSSnapshot:         ebsSnapshots,
+		EBSVolume:                                  ebsVolumes,
+		ECSCluster:                                 cacheECSClusters,
+		ECSService:                                 ecsServices,
+		ECSTaskDefinition:                          ecsTaskDefinitions,
+		EC2TransitGateway:                          ec2TransitGateways,
+		EC2TransitGatewayVPCAttachment:             ec2TransitGatewayVPCAttachment,
+		EC2TransitGatewayRouteTable:                cacheTransitGatewayRouteTables,
+		EC2TransitGatewayMulticastDomain:           ec2TransitGatewayMulticastDomain,
+		EC2TransitGatewayPeeringAttachment:         ec2TransitGatewayPeeringAttachments,
+		EC2TransitGatewayPeeringAttachmentAccepter: ec2TransitGatewayPeeringAttachments,
+		EC2TransitGatewayPrefixListReference:       ec2TransitGatewayPrefixListReferences,
+		EC2TransitGatewayRoute:                     ec2TransitGatewayRoutes,
+		EC2TransitGatewayRouteTableAssociation:     ec2TransitGatewayRouteTableAssociations,
+		EC2TransitGatewayRouteTablePropagation:     ec2TransitGatewayRouteTablePropagations,
+		EC2TransitGatewayVPCAttachmentAccepter:     ec2TransitGatewayVPCAttachment,
+		EFSFileSystem:                              efsFileSystems,
+		EIP:                                        eips,
+		EKSCluster:                                 eksClusters,
+		ElasticacheCluster:                         elasticacheClusters,
+		ElasticacheReplicationGroup:                elasticacheReplicationGroups,
+		ElasticBeanstalkApplication:                elasticBeanstalkApplications,
+		ElasticsearchDomain:                        elasticsearchDomains,
+		ElasticsearchDomainPolicy:                  elasticsearchDomains,
+		ELB:                                        elbs,
+		EMRCluster:                                 emrClusters,
+		FsxLustreFileSystem:                        fsxLustreFileSystems,
+		GlueCatalogDatabase:                        cacheGlueDatabases,
+		GlueCatalogTable:                           glueCatalogTables,
+		IAMAccessKey:                               iamAccessKeys,
+		IAMAccountAlias:                            iamAccountAliases,
+		IAMAccountPasswordPolicy:                   iamAccountPasswordPolicy,
+		IAMGroup:                                   cacheIAMGroups,
+		IAMGroupMembership:                         iamGroupMemberships,
+		IAMGroupPolicyAttachment:                   iamGroupPolicyAttachments,
+		IAMGroupPolicy:                             iamGroupPolicies,
+		IAMInstanceProfile:                         iamInstanceProfiles,
+		IAMOpenidConnectProvider:                   iamOpenidConnectProviders,
+		IAMPolicy:                                  iamPolicies,
+		IAMRole:                                    cacheIAMRoles,
+		IAMRolePolicyAttachment:                    iamRolePolicyAttachments,
+		IAMRolePolicy:                              iamRolePolicies,
+		IAMSAMLProvider:                            iamSAMLProviders,
+		IAMServerCertificate:                       iamServerCertificates,
+		IAMUser:                                    cacheIAMUsers,
+		IAMUserGroupMembership:                     iamUserGroupMemberships,
+		IAMUserPolicyAttachment:                    iamUserPolicyAttachments,
+		IAMUserPolicy:                              iamUserPolicies,
+		IAMUserSSHKey:                              iamUserSSHKeys,
+		Instance:                                   instances,
+		InternetGateway:                            internetGateways,
+		KeyPair:                                    keyPairs,
+		KinesisStream:                              kinesisStreams,
+		LambdaFunction:                             lambdaFunctions,
+		LaunchConfiguration:                        launchConfigurations,
+		LaunchTemplate:                             launchTemplates,
+		LB:                                         cacheLoadBalancersV2,
+		LBCookieStickinessPolicy:                   lbCookieStickinessPolicies,
+		LBListener:                                 cacheLoadBalancersV2Listeners,
+		LBListenerCertificate:                      lbListenerCertificates,
+		LBListenerRule:                             lbListenerRules,
+		LBTargetGroup:                              lbTargetGroups,
+		LBTargetGroupAttachment:                    lbTargetGroupAttachments,
+		LightsailInstance:                          lightsailInstances,
+		MediaStoreContainer:                        mediaStoreContainers,
+		MQBroker:                                   mqBrokers,
+		NatGateway:                                 natGateways,
+		NeptuneCluster:                             neptuneClusters,
+		RDSCluster:                                 rdsClusters,
+		RDSGlobalCluster:                           rdsGlobalClusters,
+		RedshiftCluster:                            redshiftClusters,
+		Route53DelegationSet:                       route53DelegationSets,
+		Route53HealthCheck:                         route53HealthChecks,
+		Route53QueryLog:                            route53QueryLogs,
+		Route53Record:                              route53Records,
+		Route53ResolverEndpoint:                    route53ResolverEndpoints,
+		Route53ResolverRuleAssociation:             route53ResolverRuleAssociation,
+		Route53ZoneAssociation:                     route53ZoneAssociations,
+		Route53Zone:                                cacheRoute53Zones,
+		RouteTable:                                 routeTables,
+		//S3BucketObject:      s3_bucket_objects,
+		S3Bucket:                     s3Buckets,
+		SecurityGroup:                securityGroups,
+		SESActiveReceiptRuleSet:      sesActiveReceiptRuleSets,
+		SESConfigurationSet:          sesConfigurationSets,
+		SESDomainDKIM:                sesDomainGeneral,
+		SESDomainIdentity:            cacheSESDomainIdentities,
+		SESDomainMailFrom:            sesDomainGeneral,
+		SESIdentityNotificationTopic: sesIdentityNotificationTopics,
+		SESReceiptFilter:             sesReceiptFilters,
+		SESReceiptRule:               sesReceiptRules,
+		SESReceiptRuleSet:            sesReceiptRuleSets,
+		SESTemplate:                  sesTemplates,
+		SQSQueue:                     sqsQueues,
+		StoragegatewayGateway:        storagegatewayGateways,
+		Subnet:                       subnets,
+		VolumeAttachment:             volumeAttachments,
+		VPCPeeringConnection:         vpcPeeringConnections,
+		VPC:                          vpcs,
+		VPCEndpoint:                  vpcEndpoints,
+		VPNGateway:                   vpnGateways,
+
+		// Register new AWS service stubs as NOOPs
+		AccessAnalyzer: accessAnalyzer,
+		Account: account,
+		ACM: acm,
+		ACMPCA: acmpca,
+		AlexaForBusiness: alexaForBusiness,
+		AMP: amp,
+		Amplify: amplify,
+		AmplifyBackend: amplifyBackend,
+		AmplifyUIBuilder: amplifyUIBuilder,
+		APIGatewayManagementAPI: apiGatewayManagementAPI,
+		APIGatewayV2: apiGatewayV2,
+		AppConfig: appConfig,
+		AppConfigData: appConfigData,
+		AppFabric: appFabric,
+		AppFlow: appFlow,
+		AppIntegrations: appIntegrations,
+		ApplicationAutoScaling: applicationAutoScaling,
+		ApplicationCostProfiler: applicationCostProfiler,
+		ApplicationDiscoveryService: applicationDiscoveryService,
+		ApplicationInsights: applicationInsights,
+		ApplicationSignals: applicationSignals,
+		AppMesh: appMesh,
+		AppRunner: appRunner,
+		AppStream: appStream,
+		AppSync: appSync,
+		AppTest: appTest,
+		ARCZonalShift: arcZonalShift,
+		Artifact: artifact,
+		Athena: athena,
+		AuditManager: auditManager,
+		AutoscalingPlans: autoscalingPlans,
+		B2BI: b2bi,
+		Backup: backup,
+		BackupGateway: backupGateway,
+		BackupStorage: backupStorage,
+		Batch: batch,
+		BCMDataExports: bcmDataExports,
+		Bedrock: bedrock,
+		BedrockAgent: bedrockAgent,
+		BedrockAgentRuntime: bedrockAgentRuntime,
+		BedrockRuntime: bedrockRuntime,
+		BillingConductor: billingConductor,
+		Braket: braket,
+		Budgets: budgets,
+		Chatbot: chatbot,
+		Chime: chime,
+		ChimeSDKIdentity: chimeSDKIdentity,
+		ChimeSDKMediaPipelines: chimeSDKMediaPipelines,
+		ChimeSDKMeetings: chimeSDKMeetings,
+		ChimeSDKMessaging: chimeSDKMessaging,
+		ChimeSDKVoice: chimeSDKVoice,
+		CleanRooms: cleanRooms,
+		CleanRoomsML: cleanRoomsML,
+		Cloud9: cloud9,
+		CloudControl: cloudControl,
+		CloudDirectory: cloudDirectory,
+		CloudFormation: cloudFormation,
+		CloudFrontKeyValueStore: cloudFrontKeyValueStore,
+		CloudHSM: cloudHSM,
+		CloudHSMV2: cloudHSMV2,
+		CloudSearch: cloudSearch,
+		CloudSearchDomain: cloudSearchDomain,
+		CloudTrail: cloudTrail,
+		CloudTrailData: cloudTrailData,
+		CloudWatch: cloudWatch,
+		CloudWatchEvents: cloudWatchEvents,
+		CloudWatchLogs: cloudWatchLogs,
+		CodeArtifact: codeArtifact,
+		CodeBuild: codeBuild,
+		CodeCatalyst: codeCatalyst,
+		CodeCommit: codeCommit,
+		CodeDeploy: codeDeploy,
+		CodeGuruProfiler: codeGuruProfiler,
+		CodeGuruReviewer: codeGuruReviewer,
+		CodeGuruSecurity: codeGuruSecurity,
+		CodePipeline: codePipeline,
+		CodeStar: codeStar,
+		CodeStarConnections: codeStarConnections,
+		CodeStarNotifications: codeStarNotifications,
+		CognitoIdentity: cognitoIdentity,
+		CognitoIdentityProvider: cognitoIdentityProvider,
+		CognitoSync: cognitoSync,
+		Comprehend: comprehend,
+		ComprehendMedical: comprehendMedical,
+		ComputeOptimizer: computeOptimizer,
+		ConfigService: configService,
+		Connect: connect,
+		ConnectCases: connectCases,
+		ConnectContactLens: connectContactLens,
+		ConnectParticipant: connectParticipant,
+		ControlTower: controlTower,
+		CostAndUsageReportService: costAndUsageReportService,
+		CostExplorer: costExplorer,
+		CostOptimizationHub: costOptimizationHub,
+		CustomerProfiles: customerProfiles,
+		DataExchange: dataExchange,
+		DataPipeline: dataPipeline,
+		DataSync: dataSync,
+		DataZone: dataZone,
+		Deadline: deadline,
+		Detective: detective,
+		DeviceFarm: deviceFarm,
+		DevOpsGuru: devOpsGuru,
+		DirectConnect: directConnect,
+		DLM: dlm,
+		DocDB: docDB,
+		DocDBElastic: docDBElastic,
+		DRS: drs,
+		DynamoDBStreams: dynamoDBStreams,
+		EC2InstanceConnect: ec2InstanceConnect,
+		ECR: ecr,
+		ECRPublic: ecrPublic,
+		EFS: efs,
+		EKSAUTH: eksauth,
+		ElasticInference: elasticInference,
+		ElasticTranscoder: elasticTranscoder,
+		EMR: emr,
+		EMRContainers: emrContainers,
+		EMRServerless: emrServerless,
+		EntityResolution: entityResolution,
+		EventBridge: eventBridge,
+		Evidently: evidently,
+		FinSpace: finSpace,
+		FinSpaceData: finSpaceData,
+		Firehose: firehose,
+		FIS: fis,
+		FMS: fms,
+		Forecast: forecast,
+		ForecastQuery: forecastQuery,
+		FraudDetector: fraudDetector,
+		FSx: fsx,
+		GameLift: gameLift,
+		GameSparks: gameSparks,
+		Glacier: glacier,
+		GlobalAccelerator: globalAccelerator,
+		Grafana: grafana,
+		Greengrass: greengrass,
+		GreengrassV2: greengrassV2,
+		GroundStation: groundStation,
+		GuardDuty: guardDuty,
+		Health: health,
+		HealthLake: healthLake,
+		Honeycode: honeycode,
+		IAM: iam,
+		IdentityStore: identityStore,
+		ImageBuilder: imageBuilder,
+		ImportExport: importExport,
+		Inspector: inspector,
+		Inspector2: inspector2,
+		InternetMonitor: internetMonitor,
+		IoT: ioT,
+		IoT1ClickDevicesService: ioT1ClickDevicesService,
+		IoT1ClickProjects: ioT1ClickProjects,
+		IoTAnalytics: ioTAnalytics,
+		IoTDataPlane: ioTDataPlane,
+		IoTEvents: ioTEvents,
+		IoTEventsData: ioTEventsData,
+		IoTFleetHub: ioTFleetHub,
+		IoTFleetWise: ioTFleetWise,
+		IoTJobsDataPlane: ioTJobsDataPlane,
+		IoTRoboRunner: ioTRoboRunner,
+		IoTSecureTunneling: ioTSecureTunneling,
+		IoTSiteWise: ioTSiteWise,
+		IoTThingsGraph: ioTThingsGraph,
+		IoTTwinMaker: ioTTwinMaker,
+		IoTWireless: ioTWireless,
+		IVS: ivs,
+		IVSRealtime: ivsRealtime,
+		IVSChat: ivsChat,
+		Kafka: kafka,
+		KafkaConnect: kafkaConnect,
+		Kendra: kendra,
+		KendraRanking: kendraRanking,
+		Keyspaces: keyspaces,
+		KinesisAnalytics: kinesisAnalytics,
+		KinesisAnalyticsV2: kinesisAnalyticsV2,
+		KinesisVideo: kinesisVideo,
+		KinesisVideoArchivedMedia: kinesisVideoArchivedMedia,
+		KinesisVideoAsset: kinesisVideoAsset,
+		KinesisVideoMedia: kinesisVideoMedia,
+		KinesisVideoStreaming: kinesisVideoStreaming,
+		KinesisVideoSignaling: kinesisVideoSignaling,
+		KinesisVideoWebRTCStorage: kinesisVideoWebRTCStorage,
+		KMS: kms,
+		LakeFormation: lakeFormation,
+		LaunchWizard: launchWizard,
+		LexModelBuilding: lexModelBuilding,
+		LexModelsV2: lexModelsV2,
+		LexRuntime: lexRuntime,
+		LexRuntimeV2: lexRuntimeV2,
+		LicenseManager: licenseManager,
+		LicenseManagerLinuxSubscriptions: licenseManagerLinuxSubscriptions,
+		LicenseManagerUserSubscriptions: licenseManagerUserSubscriptions,
+		Location: location,
+		LookoutEquipment: lookoutEquipment,
+		LookoutMetrics: lookoutMetrics,
+		LookoutVision: lookoutVision,
+		M2: m2,
+		MachineLearning: machineLearning,
+		Macie: macie,
+		Macie2: macie2,
+		ManagedBlockchain: managedBlockchain,
+		ManagedBlockchainQuery: managedBlockchainQuery,
+		MarketplaceAgreement: marketplaceAgreement,
+		MarketplaceCatalog: marketplaceCatalog,
+		MarketplaceCommerceAnalytics: marketplaceCommerceAnalytics,
+		MarketplaceEntitlement: marketplaceEntitlement,
+		MarketplaceMetering: marketplaceMetering,
+		MediaConnect: mediaConnect,
+		MediaConvert: mediaConvert,
+		MediaLive: mediaLive,
+		MediaPackage: mediaPackage,
+		MediaPackageV2: mediaPackageV2,
+		MediaPackageVod: mediaPackageVod,
+		MediaStoreData: mediaStoreData,
+		MediaTailor: mediaTailor,
+		MedicalImaging: medicalImaging,
+		MemoryDB: memoryDB,
+		MeteringMarketplace: meteringMarketplace,
+		MGH: mgh,
+		MGN: mgn,
+		MigrationHubConfig: migrationHubConfig,
+		MigrationHubOrchestrator: migrationHubOrchestrator,
+		MigrationHubRefactorSpaces: migrationHubRefactorSpaces,
+		MigrationHubStrategy: migrationHubStrategy,
+		Mobile: mobile,
+		MobileAnalytics: mobileAnalytics,
+		MTurk: mTurk,
+		MWAA: mwaa,
+		NeptuneData: neptuneData,
+		NetworkFirewall: networkFirewall,
+		NetworkManager: networkManager,
+		NetworkMonitor: networkMonitor,
+		Nimble: nimble,
+		OAM: oam,
+		Omics: omics,
+		OpenSearch: openSearch,
+		OpenSearchServerless: openSearchServerless,
+		OpenSearchService: openSearchService,
+		OpsWorks: opsWorks,
+		OpsWorksCM: opsWorksCM,
+		Organizations: organizations,
+		OSIS: osis,
+		Outposts: outposts,
+		Panorama: panorama,
+		PaymentCryptography: paymentCryptography,
+		PaymentCryptographyData: paymentCryptographyData,
+		PCAConnectorAD: pcaConnectorAD,
+		Personalize: personalize,
+		PersonalizeEvents: personalizeEvents,
+		PersonalizeRuntime: personalizeRuntime,
+		PI: pi,
+		Pinpoint: pinpoint,
+		PinpointEmail: pinpointEmail,
+		PinpointSMSVoice: pinpointSMSVoice,
+		PinpointSMSVoiceV2: pinpointSMSVoiceV2,
+		Pipes: pipes,
+		Polly: polly,
+		Pricing: pricing,
+		PrivateNetworks: privateNetworks,
+		Proton: proton,
+		QBusiness: qBusiness,
+		QConnect: qConnect,
+		QLDB: qldb,
+		QLDBSession: qldbSession,
+		QuickSight: quickSight,
+		RAM: ram,
+		Rbin: rbin,
+		RDSData: rdsData,
+		RDSDataService: rdsDataService,
+		RedshiftData: redshiftData,
+		RedshiftDataAPIService: redshiftDataAPIService,
+		RedshiftServerless: redshiftServerless,
+		Rekognition: rekognition,
+		RepostSpace: repostSpace,
+		ResilienceHub: resilienceHub,
+		ResourceExplorer2: resourceExplorer2,
+		ResourceGroups: resourceGroups,
+		ResourceGroupsTagging: resourceGroupsTagging,
+		ResourceGroupsTaggingAPI: resourceGroupsTaggingAPI,
+		RoboMaker: roboMaker,
+		RolesAnywhere: rolesAnywhere,
+		Route53Domains: route53Domains,
+		Route53RecoveryCluster: route53RecoveryCluster,
+		Route53RecoveryControlConfig: route53RecoveryControlConfig,
+		Route53RecoveryReadiness: route53RecoveryReadiness,
+		Route53Resolver: route53Resolver,
+		RUM: rum,
+		S3Control: s3Control,
+		S3Outposts: s3Outposts,
+		SageMaker: sageMaker,
+		SageMakerA2IRuntime: sageMakerA2IRuntime,
+		SageMakerEdge: sageMakerEdge,
+		SageMakerEdgeManager: sageMakerEdgeManager,
+		SageMakerFeatureStoreRuntime: sageMakerFeatureStoreRuntime,
+		SageMakerGeospatial: sageMakerGeospatial,
+		SageMakerMetrics: sageMakerMetrics,
+		SageMakerRuntime: sageMakerRuntime,
+		SavingsPlans: savingsPlans,
+		Scheduler: scheduler,
+		Schemas: schemas,
+		SDB: sdb,
+		SecretsManager: secretsManager,
+		SecurityHub: securityHub,
+		SecurityLake: securityLake,
+		ServerlessApplicationRepository: serverlessApplicationRepository,
+		ServerlessAppRepo: serverlessAppRepo,
+		ServiceCatalog: serviceCatalog,
+		ServiceCatalogAppRegistry: serviceCatalogAppRegistry,
+		ServiceDiscovery: serviceDiscovery,
+		ServiceQuotas: serviceQuotas,
+		SESV2: sesv2,
+		Shield: shield,
+		Signer: signer,
+		SimSpaceWeaver: simSpaceWeaver,
+		SMS: sms,
+		Snowball: snowball,
+		SnowDeviceManagement: snowDeviceManagement,
+		SSM: ssm,
+		SSMContacts: ssmContacts,
+		SSMIncidents: ssmIncidents,
+		SSO: sso,
+		SSOAdmin: ssoAdmin,
+		SSOOIDC: ssooidc,
+		StepFunctions: stepFunctions,
+		STS: sts,
+		SupplyChain: supplyChain,
+		Support: support,
+		SupportApp: supportApp,
+		SWF: swf,
+		Synthetics: synthetics,
+		Textract: textract,
+		TimestreamInfluxDB: timestreamInfluxDB,
+		TimestreamQuery: timestreamQuery,
+		TimestreamWrite: timestreamWrite,
+		TNB: tnb,
+		Transcribe: transcribe,
+		TranscribeService: transcribeService,
+		TranscribeStreaming: transcribeStreaming,
+		TranscribeStreamingService: transcribeStreamingService,
+		Transfer: transfer,
+		Translate: translate,
+		TrustedAdvisor: trustedAdvisor,
+		VerifiedPermissions: verifiedPermissions,
+		VoiceID: voiceID
+		VPCCtxProtoParser: vpcCtxProtoParser,
+		VPCLattice: vpcLattice,
+		WAF: waf,
+		WAFRegional: wafRegional,
+		WAFv2: wafv2,
+		WellArchitected: wellArchitected,
+		Wisdom: wisdom,
+		WorkDocs: workDocs,
+		WorkLink: workLink,
+		WorkMail: workMail,
+		WorkMailMessageFlow: workMailMessageFlow,
+		WorkSpaces: workSpaces,
+		WorkSpacesThinClient: workSpacesThinClient,
+		WorkSpacesWeb: workSpacesWeb,
+		XRay: xray,
 )
 
 type rtFn func(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error)
@@ -3342,30 +4198,50 @@ func vpnGateways(ctx context.Context, a *aws, resourceType string, filters *filt
 	return resources, nil
 }
 
-func toEC2Filters(filters *filter.Filter) []ec2types.Filter {
-	tags := filters.Tags
-	if len(tags) == 0 {
-		return nil
-	}
-	filtersEc2 := make([]ec2types.Filter, 0, len(tags))
-
-	for _, t := range tags {
-		filtersEc2 = append(filtersEc2, t.ToEC2Filter())
-	}
-
-	return filtersEc2
-}
-
-func toRedshiftTag(filters *filter.Filter) ([]string, []string) {
-	tags := filters.Tags
-	if len(tags) == 0 {
-		return nil, nil
-	}
-	filtersRedshiftTagKey := make([]string, 0, len(tags))
-	filtersRedshiftTagValue := make([]string, 0, len(tags))
-	for _, t := range tags {
-		filtersRedshiftTagKey = append(filtersRedshiftTagKey, t.Name)
-		filtersRedshiftTagValue = append(filtersRedshiftTagValue, t.Value)
-	}
-	return filtersRedshiftTagKey, filtersRedshiftTagValue
-}
+// NOOP stub handlers for new AWS services
+func accessAnalyzer(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func account(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func acm(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func acmpca(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func alexaForBusiness(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func amp(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func amplify(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func amplifyBackend(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func amplifyUIBuilder(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func apiGatewayManagementAPI(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func apiGatewayV2(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func appConfig(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func appConfigData(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func appFabric(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func appFlow(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func appIntegrations(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func applicationAutoScaling(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func applicationCostProfiler(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func applicationDiscoveryService(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func applicationInsights(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func applicationSignals(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func appMesh(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func appRunner(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func appStream(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func appSync(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func appTest(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func arcZonalShift(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func artifact(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func athena(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func auditManager(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func autoscalingPlans(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func b2bi(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func backup(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func backupGateway(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func backupStorage(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func batch(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func bcmDataExports(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func bedrock(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func bedrockAgent(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func bedrockAgentRuntime(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func bedrockRuntime(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func billingConductor(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func braket(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func budgets(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func chatbot(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) { return nil, nil }
+func chime(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource,
