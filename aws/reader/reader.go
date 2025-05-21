@@ -4639,6 +4639,9 @@ func (c *connector) GetStorageGatewayGateways(ctx context.Context, input *storag
 }
 
 func (c *connector) GetCloudWatchLogGroups(ctx context.Context, input *cloudwatchlogs.DescribeLogGroupsInput) ([]cloudwatchlogstypes.LogGroup, error) {
+	if input == nil {
+		input = &cloudwatchlogs.DescribeLogGroupsInput{}
+	}
 	if c.svc.cloudwatchlogs == nil {
 		c.svc.cloudwatchlogs = cloudwatchlogs.NewFromConfig(c.svc.config)
 	}
