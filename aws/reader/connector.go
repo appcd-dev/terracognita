@@ -14,6 +14,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/batch"
 	"github.com/aws/aws-sdk-go-v2/service/cloudfront"
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatch"
+	"github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs"
 	"github.com/aws/aws-sdk-go-v2/service/configservice"
 	"github.com/aws/aws-sdk-go-v2/service/databasemigrationservice"
 	"github.com/aws/aws-sdk-go-v2/service/dax"
@@ -114,6 +115,7 @@ type serviceConnector struct {
 	batch                    *batch.Client
 	cloudfront               *cloudfront.Client
 	cloudwatch               *cloudwatch.Client
+	cloudwatchlogs           *cloudwatchlogs.Client
 	configservice            *configservice.Client
 	databasemigrationservice *databasemigrationservice.Client
 	dax                      *dax.Client
@@ -221,59 +223,73 @@ func (c *connector) setRegion(ctx context.Context, ec2 *ec2.Client, region strin
 }
 
 func (c *connector) setService(config *aws.Config) {
-	if config != nil {
-		config.Credentials = c.creds
-	} else {
-		config = &aws.Config{
-			Region:      c.region,
-			Credentials: c.creds,
-		}
-	}
-
-	cfg := *config
-
-	svc := &serviceConnector{
-		config:                   cfg,
+	c.svc = &serviceConnector{
+		config:                   *config,
 		region:                   c.region,
-		apigateway:               apigateway.NewFromConfig(cfg),
-		athena:                   athena.NewFromConfig(cfg),
-		autoscaling:              autoscaling.NewFromConfig(cfg),
-		batch:                    batch.NewFromConfig(cfg),
-		cloudfront:               cloudfront.NewFromConfig(cfg),
-		cloudwatch:               cloudwatch.NewFromConfig(cfg),
-		configservice:            configservice.NewFromConfig(cfg),
-		databasemigrationservice: databasemigrationservice.NewFromConfig(cfg),
-		dax:                      dax.NewFromConfig(cfg),
-		directconnect:            directconnect.NewFromConfig(cfg),
-		directoryservice:         directoryservice.NewFromConfig(cfg),
-		dynamodb:                 dynamodb.NewFromConfig(cfg),
-		ec2:                      ec2.NewFromConfig(cfg),
-		ecs:                      ecs.NewFromConfig(cfg),
-		efs:                      efs.NewFromConfig(cfg),
-		eks:                      eks.NewFromConfig(cfg),
-		elasticache:              elasticache.NewFromConfig(cfg),
-		elasticbeanstalk:         elasticbeanstalk.NewFromConfig(cfg),
-		elasticsearchservice:     elasticsearchservice.NewFromConfig(cfg),
-		elb:                      elasticloadbalancing.NewFromConfig(cfg),
-		elbv2:                    elasticloadbalancingv2.NewFromConfig(cfg),
-		emr:                      emr.NewFromConfig(cfg),
-		fsx:                      fsx.NewFromConfig(cfg),
-		glue:                     glue.NewFromConfig(cfg),
-		iam:                      iam.NewFromConfig(cfg),
-		kinesis:                  kinesis.NewFromConfig(cfg),
-		lambda:                   lambda.NewFromConfig(cfg),
-		lightsail:                lightsail.NewFromConfig(cfg),
-		mediastore:               mediastore.NewFromConfig(cfg),
-		mq:                       mq.NewFromConfig(cfg),
-		neptune:                  neptune.NewFromConfig(cfg),
-		rds:                      rds.NewFromConfig(cfg),
-		redshift:                 redshift.NewFromConfig(cfg),
-		route53resolver:          route53resolver.NewFromConfig(cfg),
-		route53:                  route53.NewFromConfig(cfg),
-		s3:                       s3.NewFromConfig(cfg),
-		ses:                      ses.NewFromConfig(cfg),
-		sqs:                      sqs.NewFromConfig(cfg),
-		storagegateway:           storagegateway.NewFromConfig(cfg),
+		apigateway:               apigateway.NewFromConfig(*config),
+		athena:                   athena.NewFromConfig(*config),
+		autoscaling:              autoscaling.NewFromConfig(*config),
+		batch:                    batch.NewFromConfig(*config),
+		cloudfront:               cloudfront.NewFromConfig(*config),
+		cloudwatch:               cloudwatch.NewFromConfig(*config),
+		cloudwatchlogs:           cloudwatchlogs.NewFromConfig(*config),
+		configservice:            configservice.NewFromConfig(*config),
+		databasemigrationservice: databasemigrationservice.NewFromConfig(*config),
+		dax:                      dax.NewFromConfig(*config),
+		directconnect:            directconnect.NewFromConfig(*config),
+		directoryservice:         directoryservice.NewFromConfig(*config),
+		dynamodb:                 dynamodb.NewFromConfig(*config),
+		ec2:                      ec2.NewFromConfig(*config),
+		ecs:                      ecs.NewFromConfig(*config),
+		efs:                      efs.NewFromConfig(*config),
+		eks:                      eks.NewFromConfig(*config),
+		elasticache:              elasticache.NewFromConfig(*config),
+		elasticbeanstalk:         elasticbeanstalk.NewFromConfig(*config),
+		elasticsearchservice:     elasticsearchservice.NewFromConfig(*config),
+		elb:                      elasticloadbalancing.NewFromConfig(*config),
+		elbv2:                    elasticloadbalancingv2.NewFromConfig(*config),
+		emr:                      emr.NewFromConfig(*config),
+		fsx:                      fsx.NewFromConfig(*config),
+		glue:                     glue.NewFromConfig(*config),
+		iam:                      iam.NewFromConfig(*config),
+		kinesis:                  kinesis.NewFromConfig(*config),
+		lambda:                   lambda.NewFromConfig(*config),
+		lightsail:                lightsail.NewFromConfig(*config),
+		mediastore:               mediastore.NewFromConfig(*config),
+		mq:                       mq.NewFromConfig(*config),
+		neptune:                  neptune.NewFromConfig(*config),
+		rds:                      rds.NewFromConfig(*config),
+		redshift:                 redshift.NewFromConfig(*config),
+		route53resolver:          route53resolver.NewFromConfig(*config),
+		route53:                  route53.NewFromConfig(*config),
+		s3:                       s3.NewFromConfig(*config),
+		ses:                      ses.NewFromConfig(*config),
+		sqs:                      sqs.NewFromConfig(*config),
+		storagegateway:           storagegateway.NewFromConfig(*config),
 	}
-	c.svc = svc
+}
+
+func (c *connector) GetCloudWatchLogGroups(ctx context.Context, input *cloudwatchlogs.DescribeLogGroupsInput) ([]cloudwatchlogstypes.LogGroup, error) {
+	if c.svc.cloudwatchlogs == nil {
+		return nil, errors.New("cloudwatchlogs client is not initialized")
+	}
+	opt := make([]cloudwatchlogstypes.LogGroup, 0)
+	hasNextToken := true
+	for hasNextToken {
+		o, err := c.svc.cloudwatchlogs.DescribeLogGroups(ctx, input)
+		if err != nil {
+			return nil, err
+		}
+		if o.LogGroups == nil {
+			hasNextToken = false
+			continue
+		}
+		if input == nil {
+			input = &cloudwatchlogs.DescribeLogGroupsInput{}
+		}
+		input.NextToken = o.NextToken
+		hasNextToken = o.NextToken != nil
+		opt = append(opt, o.LogGroups...)
+	}
+	return opt, nil
 }

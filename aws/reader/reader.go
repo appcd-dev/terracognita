@@ -15,6 +15,8 @@ import (
 	cloudfronttypes "github.com/aws/aws-sdk-go-v2/service/cloudfront/types"
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatch"
 	cloudwatchtypes "github.com/aws/aws-sdk-go-v2/service/cloudwatch/types"
+	"github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs"
+	cloudwatchlogstypes "github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs/types"
 	"github.com/aws/aws-sdk-go-v2/service/configservice"
 	configservicetypes "github.com/aws/aws-sdk-go-v2/service/configservice/types"
 	"github.com/aws/aws-sdk-go-v2/service/databasemigrationservice"
@@ -646,6 +648,9 @@ type Reader interface {
 	// GetStorageGatewayGateways returns the StorageGateway Gateways on the given input
 	// Returned values are commented in the interface doc comment block.
 	GetStorageGatewayGateways(ctx context.Context, input *storagegateway.ListGatewaysInput) ([]storagegatewaytypes.GatewayInfo, error)
+
+	// GetCloudWatchLogGroups returns all CloudWatch Log Groups based on the input given.
+	GetCloudWatchLogGroups(ctx context.Context, input *cloudwatchlogs.DescribeLogGroupsInput) ([]cloudwatchlogstypes.LogGroup, error)
 }
 
 func (c *connector) GetAPIGatewayDeployments(ctx context.Context, input *apigateway.GetDeploymentsInput) ([]apigatewaytypes.Deployment, error) {
@@ -1686,6 +1691,7 @@ func (c *connector) GetVolumes(ctx context.Context, input *ec2.DescribeVolumesIn
 		}
 		if o.Volumes == nil {
 			hasNextToken = false
+
 			continue
 		}
 
@@ -1771,7 +1777,7 @@ func (c *connector) GetVpcPeeringConnections(ctx context.Context, input *ec2.Des
 
 	opt := make([]ec2types.VpcPeeringConnection, 0)
 
-	hasNextToken := true
+hasNextToken := true
 	for hasNextToken {
 		o, err := c.svc.ec2.DescribeVpcPeeringConnections(ctx, input)
 		if err != nil {
@@ -3466,7 +3472,7 @@ func (c *connector) GetSAMLProviders(ctx context.Context, input *iam.ListSAMLPro
 
 	opt := make([]iamtypes.SAMLProviderListEntry, 0)
 
-	hasNextToken := true
+hasNextToken := true
 	for hasNextToken {
 		o, err := c.svc.iam.ListSAMLProviders(ctx, input)
 		if err != nil {
@@ -4626,6 +4632,37 @@ func (c *connector) GetStorageGatewayGateways(ctx context.Context, input *storag
 		hasNextToken = o.Marker != nil
 
 		opt = append(opt, o.Gateways...)
+
+	}
+
+	return opt, nil
+}
+
+func (c *connector) GetCloudWatchLogGroups(ctx context.Context, input *cloudwatchlogs.DescribeLogGroupsInput) ([]cloudwatchlogstypes.LogGroup, error) {
+	if c.svc.cloudwatchlogs == nil {
+		c.svc.cloudwatchlogs = cloudwatchlogs.NewFromConfig(c.svc.config)
+	}
+
+	opt := make([]cloudwatchlogstypes.LogGroup, 0)
+
+	hasNextToken := true
+	for hasNextToken {
+		o, err := c.svc.cloudwatchlogs.DescribeLogGroups(ctx, input)
+		if err != nil {
+			return nil, err
+		}
+		if o.LogGroups == nil {
+			hasNextToken = false
+			continue
+		}
+
+		if input == nil {
+			input = &cloudwatchlogs.DescribeLogGroupsInput{}
+		}
+		input.NextToken = o.NextToken
+		hasNextToken = o.NextToken != nil
+
+		opt = append(opt, o.LogGroups...)
 
 	}
 

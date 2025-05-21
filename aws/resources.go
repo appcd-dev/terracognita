@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/apigateway"
 	"github.com/aws/aws-sdk-go-v2/service/autoscaling"
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatch"
+	"github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs"
 	"github.com/aws/aws-sdk-go-v2/service/dax"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	ec2types "github.com/aws/aws-sdk-go-v2/service/ec2/types"
@@ -74,6 +75,7 @@ const (
 	CloudfrontOriginAccessIdentity
 	CloudfrontPublicKey
 	CloudwatchMetricAlarm
+	CloudwatchLogGroup
 	DaxCluster
 	DBInstance
 	DBParameterGroup
@@ -209,6 +211,7 @@ var (
 		CloudfrontOriginAccessIdentity: cloudfrontOriginAccessIdentities,
 		CloudfrontPublicKey:            cloudfrontPublicKeys,
 		CloudwatchMetricAlarm:          cloudwatchMetricAlarms,
+		CloudwatchLogGroup:             cloudwatchLogGroups,
 		DaxCluster:                     daxClusters,
 		DBInstance:                     dbInstances,
 		DBParameterGroup:               dbParameterGroups,
