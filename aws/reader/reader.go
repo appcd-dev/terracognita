@@ -649,7 +649,7 @@ type Reader interface {
 	// Returned values are commented in the interface doc comment block.
 	GetStorageGatewayGateways(ctx context.Context, input *storagegateway.ListGatewaysInput) ([]storagegatewaytypes.GatewayInfo, error)
 
-	// GetCloudWatchLogGroups returns all CloudWatch Log Groups based on the input given.
+	// GetCloudwatchLogGroups returns all Cloudwatch Log Groups based on the input given.
 	GetCloudWatchLogGroups(ctx context.Context, input *cloudwatchlogs.DescribeLogGroupsInput) ([]cloudwatchlogstypes.LogGroup, error)
 }
 
