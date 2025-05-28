@@ -15,6 +15,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/batch v1.49.13
 	github.com/aws/aws-sdk-go-v2/service/cloudfront v1.44.11
 	github.com/aws/aws-sdk-go-v2/service/cloudwatch v1.43.15
+	github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs v1.45.14
 	github.com/aws/aws-sdk-go-v2/service/configservice v1.51.14
 	github.com/aws/aws-sdk-go-v2/service/databasemigrationservice v1.49.1
 	github.com/aws/aws-sdk-go-v2/service/dax v1.23.16
@@ -153,7 +154,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cloudhsmv2 v1.29.8 // indirect
 	github.com/aws/aws-sdk-go-v2/service/cloudsearch v1.26.15 // indirect
 	github.com/aws/aws-sdk-go-v2/service/cloudtrail v1.47.5 // indirect
-	github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs v1.45.14 // indirect
 	github.com/aws/aws-sdk-go-v2/service/codeartifact v1.33.16 // indirect
 	github.com/aws/aws-sdk-go-v2/service/codebuild v1.53.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/codecatalyst v1.17.16 // indirect

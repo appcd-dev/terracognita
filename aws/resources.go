@@ -211,7 +211,7 @@ var (
 		CloudfrontOriginAccessIdentity: cloudfrontOriginAccessIdentities,
 		CloudfrontPublicKey:            cloudfrontPublicKeys,
 		CloudwatchMetricAlarm:          cloudwatchMetricAlarms,
-		CloudwatchLogGroup:             cloudwatchLogGroups,
+		CloudwatchLogGroup:             cloudwatchLogGroup,
 		DaxCluster:                     daxClusters,
 		DBInstance:                     dbInstances,
 		DBParameterGroup:               dbParameterGroups,
@@ -908,6 +908,29 @@ func cloudfrontPublicKeys(ctx context.Context, a *aws, resourceType string, filt
 	}
 
 	return resources, nil
+}
+
+func cloudwatchLogGroup(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
+	input := &cloudwatchlogs.DescribeLogGroupsInput{
+		Limit: awssdk.Int32(100),
+	}
+	logGroups, err := a.awsr.GetCloudWatchLogGroups(ctx, input)
+	if err != nil {
+		return nil, err
+	}
+
+	resources := make([]provider.Resource, 0)
+	for _, i := range logGroups {
+		r, err := initializeResource(a, *i.LogGroupName, resourceType)
+		if err != nil {
+			return nil, err
+		}
+
+		resources = append(resources, r)
+	}
+
+	return resources, nil
+
 }
 
 func cloudwatchMetricAlarms(ctx context.Context, a *aws, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
