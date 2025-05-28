@@ -29,7 +29,7 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
-            go mod tidy && go mod vendor
+            go mod tidy && go mod download
             make lint
             go test ./...
       - name: golangci-lint
