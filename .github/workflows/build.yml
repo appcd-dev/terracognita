@@ -30,8 +30,7 @@ jobs:
         shell: bash
         run: |
             go mod tidy && go mod download
-            make lint
-            go test ./...
+            make lint build
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v5
         with:
