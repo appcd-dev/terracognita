@@ -449,6 +449,7 @@ require (
 	go4.org/netipx v0.0.0-20231129151722-fdeea329fbba // indirect
 	golang.org/x/crypto v0.35.0 // indirect
 	golang.org/x/exp v0.0.0-20240409090435-93d18d7e34b8 // indirect
+	golang.org/x/lint v0.0.0-20201208152925-83fdc39ff7b5 // indirect
 	golang.org/x/mod v0.23.0 // indirect
 	golang.org/x/net v0.35.0 // indirect
 	golang.org/x/oauth2 v0.26.0 // indirect
@@ -481,5 +482,6 @@ replace (
 tool (
 	github.com/dmarkham/enumer
 	github.com/golang/mock/mockgen
+	golang.org/x/lint/golint
 	golang.org/x/tools/cmd/goimports
 )

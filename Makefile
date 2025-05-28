@@ -41,7 +41,7 @@ $(ENUMER):
 	@go install github.com/dmarkham/enumer
 
 $(GOLINT):
-	@go install golang.org/x/lint/golint
+	@go tool golint
 
 .PHONY: lint
 lint: $(GOLINT) $(GOIMPORTS) ## Runs the linter
