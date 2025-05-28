@@ -40,12 +40,9 @@ $(GOIMPORTS):
 $(ENUMER):
 	@go install github.com/dmarkham/enumer
 
-$(GOLINT):
-	@go tool golint
-
 .PHONY: lint
-lint: $(GOLINT) $(GOIMPORTS) ## Runs the linter
-	@GO111MODULE=on golint -set_exit_status ./... && test -z "`go list -f {{.Dir}} ./... | xargs goimports -l | tee /dev/stderr`"
+lint:  $(GOIMPORTS) ## Runs the linter
+	@GO111MODULE=on go tool golint -set_exit_status ./... && test -z "`go list -f {{.Dir}} ./... | xargs goimports -l | tee /dev/stderr`"
 
 .PHONY: generate
 generate: $(MOCKGEN) $(GOIMPORTS) $(ENUMER) ## Generates the needed code

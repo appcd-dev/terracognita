@@ -120,7 +120,7 @@ For both providers, you need to add your component to this places or equivalent:
 :warning: your component name must exactly map the name as in Terraform documentation. Example: `ComputeInstance` will be later used as `google_compute_instance` :warning:.
 
 ```go
-//go:generate enumer -type ResourceType -addprefix google_ -transform snake -linecomment
+//go:generate go tool enumer -type ResourceType -addprefix google_ -transform snake -linecomment
 ```
 
 This means you will need to generate some code.

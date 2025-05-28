@@ -13,7 +13,7 @@ import (
 // from the Provider
 type ResourceType int
 
-//go:generate enumer -type ResourceType -addprefix vsphere_ -transform snake -linecomment
+//go:generate go tool enumer -type ResourceType -addprefix vsphere_ -transform snake -linecomment
 const (
 	_ ResourceType = iota
 

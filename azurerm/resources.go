@@ -16,7 +16,7 @@ import (
 // from the Provider
 type ResourceType int
 
-//go:generate enumer -type ResourceType -addprefix azurerm_ -transform snake -linecomment
+//go:generate go tool enumer -type ResourceType -addprefix azurerm_ -transform snake -linecomment
 const (
 	ResourceGroup ResourceType = iota
 	// Compute Resources

@@ -2,7 +2,7 @@ package writer
 
 import "github.com/cycloidio/terracognita/interpolator"
 
-//go:generate mockgen -destination=../mock/writer.go -mock_names=Writer=Writer -package mock github.com/cycloidio/terracognita/writer Writer
+//go:generate go tool mockgen -destination=../mock/writer.go -mock_names=Writer=Writer -package mock github.com/cycloidio/terracognita/writer Writer
 
 const (
 	// ResourceCategoryKey is an internal key used to specify the category of
