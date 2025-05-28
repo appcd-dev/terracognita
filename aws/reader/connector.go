@@ -268,28 +268,3 @@ func (c *connector) setService(config *aws.Config) {
 		storagegateway:           storagegateway.NewFromConfig(*config),
 	}
 }
-
-func (c *connector) GetCloudWatchLogGroups(ctx context.Context, input *cloudwatchlogs.DescribeLogGroupsInput) ([]cloudwatchlogstypes.LogGroup, error) {
-	if c.svc.cloudwatchlogs == nil {
-		return nil, errors.New("cloudwatchlogs client is not initialized")
-	}
-	opt := make([]cloudwatchlogstypes.LogGroup, 0)
-	hasNextToken := true
-	for hasNextToken {
-		o, err := c.svc.cloudwatchlogs.DescribeLogGroups(ctx, input)
-		if err != nil {
-			return nil, err
-		}
-		if o.LogGroups == nil {
-			hasNextToken = false
-			continue
-		}
-		if input == nil {
-			input = &cloudwatchlogs.DescribeLogGroupsInput{}
-		}
-		input.NextToken = o.NextToken
-		hasNextToken = o.NextToken != nil
-		opt = append(opt, o.LogGroups...)
-	}
-	return opt, nil
-}

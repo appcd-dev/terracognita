@@ -15,7 +15,7 @@ import (
 // Cloud-sql: sql_databases_instance (except the on-prem type ones)
 // Storage: storage_buckets
 
-//compute instances
+// compute instances
 func cacheComputeInstances(ctx context.Context, g *google, rt string, filters *filter.Filter) ([]provider.Resource, error) {
 	rs, err := g.cache.Get(rt)
 	if err != nil {

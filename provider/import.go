@@ -121,6 +121,7 @@ func getResourceTypes(p Provider, f *filter.Filter) ([]string, error) {
 
 }
 
+// GetResources returns all the resources of the Provider p filtered by f
 func GetResources(ctx context.Context, p Provider, f *filter.Filter) (result []Resource, err error) {
 	logger := log.Get().With("func", "provider.GetResources")
 	types, err := getResourceTypes(p, f)

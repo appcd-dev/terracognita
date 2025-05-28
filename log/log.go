@@ -13,6 +13,7 @@ import (
 var logger *slog.Logger
 var once sync.Once
 
+// SetLogger sets the logger to be used by the program.
 func SetLogger(l *slog.Logger) {
 	logger = l
 }

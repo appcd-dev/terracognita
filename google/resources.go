@@ -14,7 +14,7 @@ import (
 // from the Provider
 type ResourceType int
 
-//go:generate enumer -type ResourceType -addprefix google_ -transform snake -linecomment
+//go:generate go tool enumer -type ResourceType -addprefix google_ -transform snake -linecomment
 const (
 	// compute engine
 	ComputeInstance ResourceType = iota
@@ -675,7 +675,7 @@ func computeTargetTCPProxy(ctx context.Context, g *google, resourceType string, 
 	return resources, nil
 }
 
-//cloud dns
+// cloud dns
 func dnsManagedZone(ctx context.Context, g *google, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	zones, err := g.gcpr.ListDNSManagedZones(ctx)
 	if err != nil {
@@ -777,7 +777,7 @@ func sqlDatabaseInstance(ctx context.Context, g *google, resourceType string, fi
 	return resources, nil
 }
 
-//sqlDatabase
+// sqlDatabase
 func sqlDatabase(ctx context.Context, g *google, resourceType string, filters *filter.Filter) ([]provider.Resource, error) {
 	sqlDatabaseInstances, err := getSQLDatabaseInstances(ctx, g, SQLDatabaseInstance.String(), filters)
 	if err != nil {

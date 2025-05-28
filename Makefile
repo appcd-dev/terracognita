@@ -40,12 +40,9 @@ $(GOIMPORTS):
 $(ENUMER):
 	@go install github.com/dmarkham/enumer
 
-$(GOLINT):
-	@go install golang.org/x/lint/golint
-
 .PHONY: lint
-lint: $(GOLINT) $(GOIMPORTS) ## Runs the linter
-	@GO111MODULE=on golint -set_exit_status ./... && test -z "`go list -f {{.Dir}} ./... | xargs goimports -l | tee /dev/stderr`"
+lint:  $(GOIMPORTS) ## Runs the linter
+	@GO111MODULE=on go tool golint -set_exit_status ./... && test -z "`go list -f {{.Dir}} ./... | xargs goimports -l | tee /dev/stderr`"
 
 .PHONY: generate
 generate: $(MOCKGEN) $(GOIMPORTS) $(ENUMER) ## Generates the needed code
@@ -61,7 +58,7 @@ test: ## Runs the tests
 		-u $(shell id -u):$(shell id -g) \
 		-v $(shell go env GOCACHE):/tmp/gocach \
 		-e "GOCACHE=/tmp/gocach" \
-		-v $(GOPATH)/pkg/mod:/go/pkg/mod golang:1.17 \
+		-v $(GOPATH)/pkg/mod:/go/pkg/mod golang:alpine \
 		go test ./...
 
 .PHONY: ci
