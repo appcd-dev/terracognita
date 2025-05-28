@@ -4,9 +4,6 @@ on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-        - feature/aws-add-new-resource-types
 
 jobs:
   test:
