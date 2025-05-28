@@ -58,7 +58,7 @@ test: ## Runs the tests
 		-u $(shell id -u):$(shell id -g) \
 		-v $(shell go env GOCACHE):/tmp/gocach \
 		-e "GOCACHE=/tmp/gocach" \
-		-v $(GOPATH)/pkg/mod:/go/pkg/mod golang:1.17 \
+		-v $(GOPATH)/pkg/mod:/go/pkg/mod golang:alpine \
 		go test ./...
 
 .PHONY: ci
