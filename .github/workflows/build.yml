@@ -26,10 +26,6 @@ jobs:
         run: |
             go fmt ./...
             git diff
-      - name: Run tests
-        shell: bash
-        run: |
-            go mod tidy && go mod download
             make lint build
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v5
