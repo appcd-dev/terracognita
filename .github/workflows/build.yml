@@ -22,15 +22,10 @@ jobs:
         with:
             cache: true
             go-version-file: ./go.mod
-      - name: go format check
-        id: go-fmt-check
-        uses: Jerome1337/gofmt-action@v1.0.5
-        if: github.event_name == 'pull_request'
-        with:
-          gofmt-flags: "-l -d"
       - name: fail on git diff
         run: |
-          git diff
+            go fmt ./...
+            git diff
       - name: Run tests
         shell: bash
         run: |

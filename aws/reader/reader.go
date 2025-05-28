@@ -1777,7 +1777,7 @@ func (c *connector) GetVpcPeeringConnections(ctx context.Context, input *ec2.Des
 
 	opt := make([]ec2types.VpcPeeringConnection, 0)
 
-hasNextToken := true
+	hasNextToken := true
 	for hasNextToken {
 		o, err := c.svc.ec2.DescribeVpcPeeringConnections(ctx, input)
 		if err != nil {
@@ -3472,7 +3472,7 @@ func (c *connector) GetSAMLProviders(ctx context.Context, input *iam.ListSAMLPro
 
 	opt := make([]iamtypes.SAMLProviderListEntry, 0)
 
-hasNextToken := true
+	hasNextToken := true
 	for hasNextToken {
 		o, err := c.svc.iam.ListSAMLProviders(ctx, input)
 		if err != nil {
